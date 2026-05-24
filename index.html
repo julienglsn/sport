@@ -1913,7 +1913,7 @@ async function saveManualForm(sport, existingActivity){
       if(f.key==='distance_m') activity.distance_m = !isNaN(raw) ? Math.round(raw*1000) : null;
       else activity[f.key] = !isNaN(raw) ? raw : null;
     } else if(f.type==='number'){
-      activity[f.key] = el?.value ? parseInt(el.value)||null : null;
+      activity[f.key] = (el?.value !== '' && el?.value != null) ? (parseInt(el.value) ?? null) : null;
     } else if(f.type==='text'){
       activity[f.key] = el?.value?.trim() || null;
     } else if(f.type==='select-holes'){
