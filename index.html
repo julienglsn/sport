@@ -1808,10 +1808,10 @@ async function showManualForm(sport, linkedSessionId, existingActivity){
   cfg.fields.forEach(f=>{
     fieldsHtml += '<div class="modal-field"><label>'+f.label+(f.required?' *':'')+'</label>';
     if(f.type==='datetime-local'){
-      fieldsHtml += '<input class="modal-input" id="mf-'+f.key+'" type="datetime-local" value="'+(ex[f.key]?new Date(ex[f.key]).toISOString().slice(0,16):now)+'" max="'+now+'">';
+      fieldsHtml += '<input class="modal-input" id="mf-'+f.key+'" type="datetime-local" lang="en-CA" value="'+(ex[f.key]?new Date(ex[f.key]).toISOString().slice(0,16):now)+'" max="'+now+'">';
     } else if(f.type==='date-only'){
       const dv = ex.date ? new Date(ex.date).toISOString().slice(0,10) : now.slice(0,10);
-      fieldsHtml += '<input class="modal-input" id="mf-'+f.key+'" type="date" value="'+dv+'" max="'+now.slice(0,10)+'">';
+      fieldsHtml += '<input class="modal-input" id="mf-'+f.key+'" type="date" lang="en-CA" value="'+dv+'" max="'+now.slice(0,10)+'">';
     } else if(f.type==='number'){
       fieldsHtml += '<input class="modal-input" id="mf-'+f.key+'" type="number" inputmode="decimal" placeholder="—" value="'+(ex[f.key]||'')+'">';
     } else if(f.type==='decimal'){
@@ -3300,7 +3300,7 @@ function renderFreeLog(){
 
   // Date
   h += '<div class="dpr" style="margin-top:14px"><label>📅 Date</label>';
-  h += '<input class="di" type="date" id="l-date" value="'+logDate+'" max="'+todayKey()+'" onchange="logDate=this.value"></div>';
+  h += '<input class="di" type="date" lang="en-CA" id="l-date" value="'+logDate+'" max="'+todayKey()+'" onchange="logDate=this.value"></div>';
 
   // Feeling
   h += '<div class="slabel" style="margin-bottom:8px">Ressenti</div><div class="frow">';
@@ -3648,7 +3648,7 @@ function renderLog(container){
   let h = '';
 
   h += '<div class="dpr" style="margin-top:14px"><label>📅 Date</label>';
-  h += '<input class="di" type="date" id="l-date" value="'+logDate+'" max="'+todayKey()+'" onchange="logDate=this.value"></div>';
+  h += '<input class="di" type="date" lang="en-CA" id="l-date" value="'+logDate+'" max="'+todayKey()+'" onchange="logDate=this.value"></div>';
 
   h += '<div class="slabel" style="margin-bottom:8px">Ressenti</div><div class="frow">';
   h += '<button class="fbtn" onclick="setF(\'1\',this)" title="Jambes lourdes, manque d&#39;énergie total"><div class="fbtn-num">1</div><div class="fbtn-lbl">Épuisé</div></button>';
@@ -4202,7 +4202,7 @@ function startEdit(i, ev){
   let h = '';
   // Date
   h += '<div class="edit-field"><label>📅 Date</label>';
-  h += '<input class="di" type="date" id="edit-date-'+i+'" value="'+dateVal+'" max="'+todayKey()+'"></div>';
+  h += '<input class="di" type="date" lang="en-CA" id="edit-date-'+i+'" value="'+dateVal+'" max="'+todayKey()+'"></div>';
   // Feeling
   h += '<div class="edit-field"><label>Ressenti</label><div class="frow" style="margin-bottom:0">';
     h += '<button class="fbtn'+( entry.feeling==='1'?' active':'')+'" onclick="pickEditFeel(this)" data-feel="1" title="Jambes lourdes, manque d&#39;énergie total"><div class="fbtn-num">1</div><div class="fbtn-lbl">Épuisé</div></button>';
