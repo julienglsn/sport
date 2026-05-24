@@ -4296,12 +4296,12 @@ function _mkChart(id, config){
 
 const _baseScales = (yLabel, y2Label) => {
   const s = {
-    x: { grid:{ color:CJ_GRID()() }, ticks:{ color:CJ_TICK()(), font:{size:10}, maxRotation:45 } },
-    y: { grid:{ color:CJ_GRID()() }, ticks:{ color:CJ_TICK()(), font:{size:11} },
-         title: yLabel ? {display:true, text:yLabel, color:CJ_TICK()(), font:{size:10}} : {display:false} }
+    x: { grid:{ color:CJ_GRID() }, ticks:{ color:CJ_TICK(), font:{size:10}, maxRotation:45 } },
+    y: { grid:{ color:CJ_GRID() }, ticks:{ color:CJ_TICK(), font:{size:11} },
+         title: yLabel ? {display:true, text:yLabel, color:CJ_TICK(), font:{size:10}} : {display:false} }
   };
-  if(y2Label) s.y2 = { position:'right', grid:{display:false}, ticks:{color:CJ_TICK()(), font:{size:11}},
-    title:{display:true, text:y2Label, color:CJ_TICK()(), font:{size:10}} };
+  if(y2Label) s.y2 = { position:'right', grid:{display:false}, ticks:{color:CJ_TICK(), font:{size:11}},
+    title:{display:true, text:y2Label, color:CJ_TICK(), font:{size:10}} };
   return s;
 };
 
