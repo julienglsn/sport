@@ -1397,10 +1397,16 @@ function setProfile(id){
   document.querySelectorAll('.profile-btn').forEach(b=>{
     b.classList.toggle('active', parseInt(b.dataset.pid)===id);
   });
-  // Réinitialiser les données de feeling pour forcer le re-rendu avec le bon profil
+  // Réinitialiser toutes les données de feeling pour forcer le re-rendu avec le bon profil
   _homeFeelingActs = [];
+  if(typeof _cachedMuscuActs !== 'undefined') _cachedMuscuActs = [];
   if(typeof _destroyChart === 'function'){
-    _destroyChart('home-feeling-chart');
+    ['home-feeling-chart','muscu-feeling-chart','course-feeling-chart','velo-feeling-chart','golf-feeling-chart',
+     'muscu-intensity-chart','muscu-lift-chart','muscu-vol-chart',
+     'course-pace-chart','course-km-chart','course-scatter-chart',
+     'velo-speed-chart','velo-km-chart','velo-scatter-chart',
+     'golf-score-chart','golf-course-chart','golf-holes-chart'
+    ].forEach(id=>_destroyChart(id));
   }
   // Recharger la section courante
   if(currentSection==='home'){
@@ -1422,7 +1428,9 @@ async function dbLoad(type){
   } catch(e){
     console.warn('Supabase load error', e);
     const local = JSON.parse(localStorage.getItem('junella_acts')||'[]');
-    const result = type ? local.filter(a=>a.type===type) : local;
+    const result = (type
+      ? local.filter(a=>a.type===type && (a.profile_id===activeProfile||!a.profile_id))
+      : local.filter(a=>a.profile_id===activeProfile||!a.profile_id));
     if(!result.length) _showToast('Connexion impossible — données indisponibles.');
     else _showToast('Mode hors-ligne — données locales affichées.');
     return result;
