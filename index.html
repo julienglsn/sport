@@ -814,6 +814,14 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
         </div>
       </div>
 
+      <!-- Calendrier · 3 mois -->
+      <div>
+        <div class="slabel" style="margin-bottom:8px">Calendrier · 3 mois</div>
+        <div class="cal-grid-wrap" style="padding:8px;" id="home-heatmap-wrap">
+          <div id="home-heatmap"></div>
+        </div>
+      </div>
+
       <!-- Forme au fil du temps -->
       <div>
         <div class="slabel" style="margin-bottom:8px">Forme au fil du temps</div>
@@ -829,14 +837,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
             </div>
           </div>
           <div class="chart-inner"><canvas id="home-feeling-chart"></canvas></div>
-        </div>
-      </div>
-
-      <!-- Calendrier · 3 mois -->
-      <div>
-        <div class="slabel" style="margin-bottom:8px">Calendrier · 3 mois</div>
-        <div class="cal-grid-wrap" style="padding:8px;" id="home-heatmap-wrap">
-          <div id="home-heatmap"></div>
         </div>
       </div>
 
@@ -2601,9 +2601,7 @@ function renderRecentActivities(activities){
     if(a.calories)  chips.push('🔥 '+a.calories+' kcal');
 
     const sport = a.type;
-    const nav = sport==='muscu'
-      ? "showSection('sports');showSport('muscu',document.getElementById('snav-muscu'))"
-      : "showSection('sports');showSport('"+sport+"',document.getElementById('snav-"+sport+"'))";
+    const nav = "openActivityFromHome('"+a.id+"','"+sport+"')";
 
     return '<div class="feed-card" onclick="'+nav+'" style="border-left:3px solid '+color+'">'+
       '<span class="feed-ico">'+ico+'</span>'+
@@ -2615,6 +2613,49 @@ function renderRecentActivities(activities){
       '</div>';
   }).join('');
 }
+
+// ════ OPEN ACTIVITY FROM HOME ════
+async function openActivityFromHome(id, sport){
+  // 1. Navigate to the right sport page + history tab
+  showSection('sports');
+  const subnavBtn = document.getElementById('snav-'+sport);
+  showSport(sport, subnavBtn);
+
+  if(sport === 'muscu'){
+    // Switch to history tab
+    const histBtn = document.querySelector('#page-muscu .stab[onclick*="hist"]');
+    if(histBtn) showMuscu('hist', histBtn);
+
+    // Wait for renderHist to complete, then open the matching entry
+    await renderHist();
+    const idx = (cachedHist||[]).findIndex(e=>String(e.id)===String(id));
+    if(idx >= 0){
+      // Close any open entry first
+      document.querySelectorAll('.hdt.open').forEach(el=>el.classList.remove('open'));
+      togHistEntry(idx);
+      setTimeout(()=>{
+        const el = document.getElementById('he-'+idx);
+        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      }, 80);
+    }
+  } else {
+    // course / velo / golf — switch to main (list) tab
+    const mainBtn = document.querySelector('#page-'+sport+' .stab[onclick*="main"]') ||
+                    document.querySelector('#page-'+sport+' .stab');
+    if(mainBtn) showSportTab(sport, 'main', mainBtn);
+
+    await renderActivities(sport);
+    // Find the card and open it
+    const card = document.getElementById('act-'+id);
+    if(card){
+      const head = card.querySelector('.act-head');
+      const metrics = card.querySelector('.act-metrics');
+      if(metrics && metrics.style.display === 'none') togAct(head);
+      setTimeout(()=>card.scrollIntoView({behavior:'smooth', block:'start'}), 80);
+    }
+  }
+}
+
 function renderWeeklyChart(activities){
   const el = document.getElementById('home-weekly-chart');
   if(!el) return;
@@ -2853,7 +2894,7 @@ function _renderWeekDetail(idx){
     if(a.hr_avg)       chips.push('♥ '+a.hr_avg+' bpm');
     if(a.calories)     chips.push('🔥 '+a.calories+' kcal');
     const sport = a.type;
-    const nav = "showSection('sports');showSport('"+sport+"',document.getElementById('snav-"+sport+"'))";
+    const nav = "openActivityFromHome('"+a.id+"','"+sport+"')";
     return '<div class="feed-card" onclick="'+nav+'" style="border-left:3px solid '+color+'">'+
       '<span class="feed-ico">'+ico+'</span>'+
       '<div class="feed-left">'+
