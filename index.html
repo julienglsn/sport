@@ -7,30 +7,30 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Junella">
-<meta name="theme-color" content="#060a12">
+<meta name="theme-color" content="#0E1116">
 <meta name="description" content="Junella — ton app sport et nutrition.">
 <meta property="og:title" content="Junella">
 <meta property="og:description" content="Junella — ton app sport et nutrition.">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%23060a12'/%3E%3Ctext x='90' y='56' font-size='18' font-weight='700' fill='%234d9eff' text-anchor='middle' font-family='system-ui' letter-spacing='1'%3EJUNELLA%3C/text%3E%3Ctext x='90' y='130' font-size='22' font-weight='400' fill='%234d9eff' text-anchor='middle' font-family='system-ui'%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230E1116'/%3E%3Ctext x='90' y='56' font-size='18' font-weight='700' fill='%23B8C8D8' text-anchor='middle' font-family='system-ui' letter-spacing='1'%3EJUNELLA%3C/text%3E%3Ctext x='90' y='130' font-size='22' font-weight='400' fill='%23B8C8D8' text-anchor='middle' font-family='system-ui'%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:      #060a12;
-  --bg2:     #0d1420;
-  --bg3:     #131d2e;
-  --bg4:     #1a2540;
+  --bg:      #0E1116;
+  --bg2:     #151A21;
+  --bg3:     #1E2630;
+  --bg4:     #283241;
   --border:  rgba(255,255,255,0.06);
   --border2: rgba(255,255,255,0.13);
-  --text:    #e8f0ff;
-  --text2:   #7a8eb0;
-  --text3:   #3a4a66;
-  --accent:  #4d9eff;
-  --accent2: rgba(77,158,255,0.12);
-  --accent3: rgba(77,158,255,0.06);
-  --red:     #ff5252;
-  --amber:   #ffb347;
-  --green:   #f43f5e;
+  --text:    #F3F1EC;
+  --text2:   #B2B0AA;
+  --text3:   #6B7280;
+  --accent:  #B8C8D8;
+  --accent2: rgba(184,200,216,0.12);
+  --accent3: rgba(184,200,216,0.06);
+  --red:     #E85D5D;
+  --amber:   #C8B8A2;
+  --green:   #A8C4B8;
   --safe-top:    env(safe-area-inset-top,0px);
   --safe-bottom: env(safe-area-inset-bottom,0px);
   --fd: 'Bebas Neue', sans-serif;
@@ -38,20 +38,20 @@
 }
 /* ════ LIGHT MODE ════ */
 html.light {
-  --bg:      #f0f4fc;
-  --bg2:     #ffffff;
-  --bg3:     #e8eef8;
-  --bg4:     #dde5f5;
+  --bg:      #F0F4FC;
+  --bg2:     #FFFFFF;
+  --bg3:     #E8EEF8;
+  --bg4:     #DDE5F5;
   --border:  rgba(0,0,0,0.07);
   --border2: rgba(0,0,0,0.13);
-  --text:    #1a2540;
-  --text2:   #5a6a8a;
-  --text3:   #9aaac8;
-  --accent:  #2b7de9;
-  --accent2: rgba(43,125,233,0.10);
-  --accent3: rgba(43,125,233,0.06);
-  --red:     #e03535;
-  --amber:   #d48a00;
+  --text:    #1A2540;
+  --text2:   #5A6A8A;
+  --text3:   #9AAAC8;
+  --accent:  #B8C8D8;
+  --accent2: rgba(184,200,216,0.10);
+  --accent3: rgba(184,200,216,0.06);
+  --red:     #E03535;
+  --amber:   #D48A00;
   --green:   #059669;
 }
 html.light body { background: var(--bg); color: var(--text); }
@@ -67,7 +67,7 @@ html.light .selbt.active       { color: #fff; }
 html.light .savebtn            { color: #fff; }
 html.light .app-btn-primary    { color: #fff; }
 html.light .modal { background: var(--bg2); }
-html.light .toast { background: #fff2f2; border-color: rgba(200,60,60,.3); }
+html.light .toast { background: #fff2f2; border-color: rgba(232,93,93,.3); }
 html.light .toast-msg { color: #b83030; }
 html.light .manifeste p { color: #8a9ab8; }
 html.light .manifeste .manifeste-sig { color: #6a7a98; }
@@ -91,15 +91,15 @@ html.light .cal-grid-wrap { background: var(--bg2); }
 html.light .imp-btn { background: var(--bg2); color: var(--text); border-color: var(--border2); }
 html.light .sc-btn { background: var(--bg3); color: var(--text); }
 html.light .modal-cancel { color: var(--text2); }
-html.light .hero { background: linear-gradient(160deg,rgba(43,125,233,.05) 0%,transparent 60%); border-bottom-color: var(--border); }
-html.light .ph   { background: linear-gradient(160deg,rgba(43,125,233,.05) 0%,transparent 60%); }
+html.light .hero { background: linear-gradient(160deg,rgba(184,200,216,.05) 0%,transparent 60%); border-bottom-color: var(--border); }
+html.light .ph   { background: linear-gradient(160deg,rgba(184,200,216,.05) 0%,transparent 60%); }
 html.light .ph-divider { background: rgba(0,0,0,0.07); }
 html.light .hero-divider { background: rgba(0,0,0,0.07); }
-html.light .ba { background: rgba(220,60,60,.1); color: #c03030; }
-html.light .bb { background: rgba(43,125,233,.1); color: #1a5db8; }
+html.light .ba { background: rgba(232,93,93,.1); color: #c03030; }
+html.light .bb { background: rgba(184,200,216,.1); color: #8A7A66; }
 html.light .bc { background: rgba(26,158,112,.1); color: #137a56; }
-html.light .exo-pill { background: rgba(43,125,233,.06); border-color: rgba(43,125,233,.15); }
-html.light .sst { background: var(--accent2); border-color: rgba(43,125,233,.2); }
+html.light .exo-pill { background: rgba(184,200,216,.06); border-color: rgba(184,200,216,.15); }
+html.light .sst { background: var(--accent2); border-color: rgba(184,200,216,.2); }
 
 
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -107,7 +107,7 @@ html{scroll-behavior:smooth}
 body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;padding-bottom:calc(112px + var(--safe-bottom))}
 
 /* CALENDAR */
-.cal-grid-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px;overflow:hidden}
+.cal-grid-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:14px;overflow:hidden}
 .cal-dow{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:6px}
 .cal-dow-cell{text-align:center;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);padding:4px 0}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
@@ -117,10 +117,10 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .cal-day.other-week{color:var(--text3)}
 .cal-dots{display:flex;gap:2px;justify-content:center;height:6px;margin-top:1px;align-items:center}
 .cal-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
-.cal-dot-muscu{background:#4d9eff}
-.cal-dot-course{background:#f43f5e}
-.cal-dot-velo{background:#ffb347}
-.cal-dot-golf{background:#10b981}
+.cal-dot-muscu{background:#B8C8D8}
+.cal-dot-course{background:#C9896E}
+.cal-dot-velo{background:#C8B8A2}
+.cal-dot-golf{background:#A8C4B8}
 
 /* HOME FEED */
 .feed-card{background:var(--bg2);border:1px solid var(--border);border-radius:11px;padding:9px 13px;margin-bottom:7px;cursor:pointer;transition:border-color .18s;display:flex;align-items:center;gap:10px}
@@ -138,7 +138,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .subnav{position:fixed;bottom:calc(58px + var(--safe-bottom));left:0;right:0;z-index:99;background:rgba(6,10,18,.94);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border-top:1px solid var(--border);display:flex;padding:8px 16px;gap:8px;overflow-x:auto;scrollbar-width:none}
 .subnav::-webkit-scrollbar{display:none}
 .subnav-item{flex-shrink:0;padding:7px 16px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text2);font-family:var(--fb);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .18s}
-.subnav-item.active{background:var(--accent);color:#060a12;border-color:var(--accent)}
+.subnav-item.active{background:var(--accent);color:#0E1116;border-color:var(--accent)}
 
 /* NAV */
 .nav-bar{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(6,10,18,.94);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border-top:1px solid var(--border);display:flex;padding:6px 0 calc(6px + var(--safe-bottom))}
@@ -152,8 +152,8 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 @keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
 /* HEADER */
-.ph{padding:calc(var(--safe-top) + 20px) 20px 18px;border-bottom:1px solid var(--border);position:relative;overflow:hidden;background:linear-gradient(160deg,rgba(77,158,255,.06) 0%,transparent 60%)}
-.ph::before{content:'';position:absolute;top:-80px;right:-80px;width:240px;height:240px;background:radial-gradient(circle,rgba(77,158,255,.06) 0%,transparent 65%);pointer-events:none}
+.ph{padding:calc(var(--safe-top) + 20px) 20px 18px;border-bottom:1px solid var(--border);position:relative;overflow:hidden;background:linear-gradient(160deg,rgba(184,200,216,.06) 0%,transparent 60%)}
+.ph::before{content:'';position:absolute;top:-80px;right:-80px;width:240px;height:240px;background:radial-gradient(circle,rgba(184,200,216,.06) 0%,transparent 65%);pointer-events:none}
 .ph .ey{font-family:var(--fd);font-size:38px;letter-spacing:.06em;line-height:1;color:var(--text);margin-bottom:0}
 .ph .ey-slogan{font-size:11px;font-style:italic;font-weight:600;letter-spacing:.1em;color:var(--accent);margin-top:4px;margin-bottom:0}
 .ph-divider{height:1px;background:rgba(255,255,255,0.07);margin:14px 0}
@@ -184,7 +184,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 /* SECTIONS */
 .sec{padding:18px 20px}
 .slabel{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:12px}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:12px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:12px}
 .crow{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid var(--border)}
 .crow:last-child{border-bottom:none}
 .cl{font-size:14px;font-weight:500}
@@ -220,14 +220,14 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .stabs{display:flex;gap:7px;padding:14px 20px 0;overflow-x:auto;scrollbar-width:none}
 .stabs::-webkit-scrollbar{display:none}
 .stab{flex-shrink:0;padding:7px 18px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text2);font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .18s}
-.stab.active{background:var(--accent);color:#060a12;border-color:var(--accent)}
+.stab.active{background:var(--accent);color:#0E1116;border-color:var(--accent)}
 .sc{display:none;padding:16px 20px}
 .sc.active{display:block}
 
 /* SUPERSET */
-.ssb{background:var(--bg2);border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.ssb{background:var(--bg2);border:1px solid var(--border);border-radius:18px;margin-bottom:10px;overflow:hidden}
 .ssh{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--bg3);border-bottom:1px solid var(--border)}
-.sst{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--accent2);color:var(--accent);border:1px solid rgba(77,158,255,.2);padding:3px 8px;border-radius:6px}
+.sst{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--accent2);color:var(--accent);border:1px solid rgba(184,200,216,.2);padding:3px 8px;border-radius:6px}
 .sss{font-size:12px;color:var(--text2);font-weight:500}
 .sse{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-bottom:1px solid var(--border)}
 .sse:last-child{border-bottom:none}
@@ -237,14 +237,14 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 /* LOGGER */
 .selbts{display:flex;gap:8px;padding:14px 20px 0}
 .selbt{flex:1;padding:12px 8px;border-radius:12px;border:1px solid var(--border);background:var(--bg2);color:var(--text2);font-family:var(--fb);font-size:15px;font-weight:700;cursor:pointer;transition:all .18s}
-.selbt.active{background:var(--accent);color:#060a12;border-color:var(--accent)}
+.selbt.active{background:var(--accent);color:#0E1116;border-color:var(--accent)}
 .lform{padding:14px 20px}
 .log-step-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);padding:14px 20px 8px}
 .dpr{display:flex;align-items:center;gap:10px;padding-bottom:14px}
 .dpr label{font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
 .di{flex:1;background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:9px 12px;color:var(--text);font-family:var(--fb);font-size:14px;font-weight:500;outline:none;-webkit-appearance:none;color-scheme:dark}
 .di:focus{border-color:var(--accent)}
-.elb{background:var(--bg2);border:1px solid var(--border);border-radius:14px;margin-bottom:11px;overflow:hidden}
+.elb{background:var(--bg2);border:1px solid var(--border);border-radius:18px;margin-bottom:11px;overflow:hidden}
 .elh{padding:11px 14px;background:var(--bg3);border-bottom:1px solid var(--border);font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:space-between}
 .elh span{color:var(--text2);font-size:11px;font-weight:500}
 .stbl{width:100%;border-collapse:collapse}
@@ -262,18 +262,18 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .flbl{font-size:9px;margin-top:3px;font-weight:600;letter-spacing:.04em}
 .ni{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;color:var(--text);font-family:var(--fb);font-size:14px;resize:none;height:76px;outline:none;margin-bottom:12px}
 .ni:focus{border-color:var(--accent)}
-.savebtn{width:100%;padding:16px;border-radius:14px;border:none;background:var(--accent);color:#060a12;font-family:var(--fd);font-size:22px;letter-spacing:.08em;cursor:pointer;transition:opacity .18s}
+.savebtn{width:100%;padding:16px;border-radius:18px;border:none;background:var(--accent);color:#0E1116;font-family:var(--fd);font-size:22px;letter-spacing:.08em;cursor:pointer;transition:opacity .18s}
 .savebtn:active{opacity:.75}
 
 /* HISTORY */
-.he{background:var(--bg2);border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.he{background:var(--bg2);border:1px solid var(--border);border-radius:18px;margin-bottom:10px;overflow:hidden}
 .heh{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;cursor:pointer}
 .het{font-size:14px;font-weight:600}
 .hed{font-size:12px;color:var(--text2);margin-top:2px}
 .hbg{font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px}
-.ba{background:rgba(255,82,82,.14);color:#ff5252}
-.bb{background:rgba(77,158,255,.14);color:#4d9eff}
-.bc{background:rgba(244,63,94,.14);color:#f43f5e}
+.ba{background:rgba(232,93,93,.14);color:#E85D5D}
+.bb{background:rgba(184,200,216,.14);color:#B8C8D8}
+.bc{background:rgba(201,137,110,.14);color:#C9896E}
 .hdt{display:none;border-top:1px solid var(--border);padding:12px 16px}
 .hdt.open{display:block}
 .her{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid var(--border)}
@@ -289,13 +289,13 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .exo-pills-row:last-child{border-bottom:none}
 .exo-pills-name{font-size:13px;color:var(--text2);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .exo-pills-list{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
-.exo-pill{font-size:11px;font-weight:700;padding:3px 7px;border-radius:6px;background:rgba(77,158,255,.06);border:1px solid rgba(77,158,255,.15);color:var(--accent);white-space:nowrap}
+.exo-pill{font-size:11px;font-weight:700;padding:3px 7px;border-radius:6px;background:rgba(184,200,216,.06);border:1px solid rgba(184,200,216,.15);color:var(--accent);white-space:nowrap}
 .empty{text-align:center;padding:48px 20px;color:var(--text3)}
 .empty .ico{font-size:38px;margin-bottom:10px}
 .empty p{font-size:14px;line-height:1.5}
 
 /* HOME */
-.hero{padding:calc(var(--safe-top) + 20px) 20px 18px;background:linear-gradient(160deg,rgba(77,158,255,.06) 0%,transparent 60%);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.hero{padding:calc(var(--safe-top) + 20px) 20px 18px;background:linear-gradient(160deg,rgba(184,200,216,.06) 0%,transparent 60%);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
 .hero::after{content:'';position:absolute;bottom:-60px;right:-60px;width:220px;height:220px;background:radial-gradient(circle,rgba(139,92,246,.06) 0%,transparent 65%);pointer-events:none}
 .hrey{font-family:var(--fd);font-size:38px;letter-spacing:.06em;line-height:1;color:var(--text);margin-bottom:0}
 .hrey-slogan{font-size:11px;font-style:italic;font-weight:600;letter-spacing:.1em;color:var(--accent);margin-top:4px}
@@ -304,13 +304,13 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .hrt span{color:var(--text)}
 .hrs{color:var(--text2);font-size:12px;margin-top:8px}
 .sgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.sc2{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px;cursor:pointer;transition:border-color .18s}
+.sc2{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:16px;cursor:pointer;transition:border-color .18s}
 .sc2:active{border-color:var(--accent)}
 .sico{font-size:26px;margin-bottom:8px}
 .slb{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:4px}
 .svl{font-family:var(--fd);font-size:28px;letter-spacing:.04em;color:var(--text);line-height:1}
 .ssb2{font-size:11px;color:var(--text2);margin-top:3px}
-.lsc{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px}
+.lsc{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:16px;margin-bottom:12px}
 .lsch{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .lsct{font-size:14px;font-weight:600}
 .lscd{font-size:12px;color:var(--text2)}
@@ -321,7 +321,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 /* APP BUTTONS */
 .app-btn{display:inline-flex;align-items:center;gap:4px;padding:6px 10px;border-radius:9px;font-size:12px;font-weight:600;font-family:var(--fb);cursor:pointer;white-space:nowrap;text-decoration:none;transition:opacity .15s;border:1px solid var(--border)}
 .app-btn:active{opacity:.7}
-.app-btn-primary{background:var(--accent);color:#060a12;border-color:var(--accent)}
+.app-btn-primary{background:var(--accent);color:#0E1116;border-color:var(--accent)}
 .app-btn-secondary{background:var(--bg3);color:var(--text2)}
 
 /* PIN MODAL */
@@ -344,11 +344,11 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .phico{font-size:56px;margin-bottom:16px}
 .phtl{font-family:var(--fd);font-size:36px;letter-spacing:.04em;margin-bottom:8px}
 .phsb{color:var(--text2);font-size:14px;line-height:1.6}
-.phbg{margin-top:20px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:8px 18px;border-radius:10px;background:var(--accent2);color:var(--accent);border:1px solid rgba(77,158,255,.2)}
+.phbg{margin-top:20px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:8px 18px;border-radius:10px;background:var(--accent2);color:var(--accent);border:1px solid rgba(184,200,216,.2)}
 
 /* MACRO CARDS */
 .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-.mc{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center}
+.mc{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:16px;text-align:center}
 .mc.full{grid-column:span 2}
 
 /* EDIT MODE */
@@ -370,7 +370,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .sets-ctrl{display:flex;align-items:center;gap:8px}
 .sets-ctrl span{font-size:12px;color:var(--text2);font-weight:600;min-width:52px;text-align:center}
 .sc-btn{width:26px;height:26px;border-radius:7px;border:1px solid var(--border2);background:var(--bg4);color:var(--text);font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;transition:all .15s;flex-shrink:0}
-.sc-btn:active{background:var(--accent);color:#060a12;border-color:var(--accent)}
+.sc-btn:active{background:var(--accent);color:#0E1116;border-color:var(--accent)}
 .mv{font-family:var(--fd);font-size:36px;letter-spacing:.04em;color:var(--accent);line-height:1}
 .mu{font-size:12px;color:var(--text2);margin-top:2px;font-weight:500}
 .ml{font-size:10px;color:var(--text3);margin-top:4px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
@@ -397,7 +397,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .imp-btn:active{background:var(--accent2);border-color:var(--accent)}
 
 /* ACTIVITY CARD */
-.act-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.act-card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;margin-bottom:10px;overflow:hidden}
 .act-head{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;cursor:pointer}
 .act-title{font-size:14px;font-weight:600}
 .act-date{font-size:12px;color:var(--text2);margin-top:2px}
@@ -420,7 +420,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .modal-grid .modal-field{margin-bottom:0}
 .modal-btns{display:flex;gap:10px;margin-top:4px}
 .modal-cancel{flex:1;padding:14px;border-radius:12px;border:1px solid var(--border);background:transparent;color:var(--text2);font-family:var(--fb);font-size:14px;font-weight:600;cursor:pointer}
-.modal-save{flex:2;padding:14px;border-radius:12px;border:none;background:var(--accent);color:#060a12;font-family:var(--fd);font-size:20px;letter-spacing:.06em;cursor:pointer}
+.modal-save{flex:2;padding:14px;border-radius:12px;border:none;background:var(--accent);color:#0E1116;font-family:var(--fd);font-size:20px;letter-spacing:.06em;cursor:pointer}
 
 /* CARDIO BLOC in muscu history */
 .cardio-bloc{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
@@ -435,7 +435,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* SPORT LAST CARD */
-.sport-last-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:border-color .18s}
+.sport-last-card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:border-color .18s}
 .sport-last-card:active{border-color:var(--accent)}
 .slc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .slc-sport{display:flex;align-items:center;gap:8px}
@@ -450,7 +450,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .slc-empty{font-size:12px;color:var(--text3);font-style:italic}
 
 /* TOAST */
-.toast{position:fixed;top:calc(var(--safe-top) + 14px);left:50%;transform:translateX(-50%);z-index:600;background:#1a1a2e;border:1px solid rgba(255,82,82,.35);border-radius:12px;padding:11px 16px;display:flex;align-items:center;gap:10px;max-width:calc(100vw - 40px);box-shadow:0 4px 20px rgba(0,0,0,.5);animation:toastIn .22s ease;pointer-events:auto;cursor:pointer}
+.toast{position:fixed;top:calc(var(--safe-top) + 14px);left:50%;transform:translateX(-50%);z-index:600;background:#1a1a2e;border:1px solid rgba(232,93,93,.35);border-radius:12px;padding:11px 16px;display:flex;align-items:center;gap:10px;max-width:calc(100vw - 40px);box-shadow:0 4px 20px rgba(0,0,0,.5);animation:toastIn .22s ease;pointer-events:auto;cursor:pointer}
 .toast-ico{font-size:16px;flex-shrink:0}
 .toast-msg{font-size:13px;font-weight:500;color:#ffb0b0;line-height:1.4}
 .toast-close{font-size:16px;color:rgba(255,255,255,.3);flex-shrink:0;margin-left:4px}
@@ -466,7 +466,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
   .nav-bar{
     left:50%;transform:translateX(-50%);
     width:100%;max-width:520px;
-    border-radius:14px 14px 0 0;
+    border-radius:18px 14px 0 0;
     border-left:1px solid var(--border);
     border-right:1px solid var(--border);
   }
@@ -594,7 +594,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
   /* ── Page headers ── */
   .ph{
     padding:28px 40px 24px;
-    background:linear-gradient(135deg,rgba(77,158,255,.07) 0%,transparent 55%);
+    background:linear-gradient(135deg,rgba(184,200,216,.07) 0%,transparent 55%);
   }
   .ph .ey{font-size:48px}
   .ph h1{font-size:30px}
@@ -782,9 +782,9 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
             <div class="empty"><div class="ico"><div class="spin"></div></div><p>Chargement...</p></div>
           </div>
           <div style="display:flex;gap:12px;justify-content:center;margin-top:8px;flex-wrap:wrap">
-            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)"><span style="width:10px;height:10px;border-radius:3px;background:#4d9eff;display:inline-block"></span>Muscu</div>
-            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)"><span style="width:10px;height:10px;border-radius:3px;background:#f43f5e;display:inline-block"></span>Course</div>
-            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)"><span style="width:10px;height:10px;border-radius:3px;background:#ffb347;display:inline-block"></span>Vélo</div>
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)"><span style="width:10px;height:10px;border-radius:3px;background:#B8C8D8;display:inline-block"></span>Muscu</div>
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)"><span style="width:10px;height:10px;border-radius:3px;background:#C9896E;display:inline-block"></span>Course</div>
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)"><span style="width:10px;height:10px;border-radius:3px;background:#C8B8A2;display:inline-block"></span>Vélo</div>
           </div>
         </div>
       </div>
@@ -1040,8 +1040,8 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
           <div class="cal-grid-wrap chart-card" style="padding:14px;">
             <div class="chart-inner"><canvas id="muscu-intensity-chart"></canvas></div>
             <div style="display:flex;gap:14px;margin-top:8px;font-size:11px;color:var(--text2);">
-              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#4d9eff;margin-right:4px;vertical-align:middle;"></span>FC moy (bpm)</span>
-              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#ffb34755;margin-right:4px;vertical-align:middle;"></span>Calories (kcal)</span>
+              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#B8C8D8;margin-right:4px;vertical-align:middle;"></span>FC moy (bpm)</span>
+              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#C8B8A255;margin-right:4px;vertical-align:middle;"></span>Calories (kcal)</span>
             </div>
           </div>
         </div>
@@ -1107,8 +1107,8 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
           <div class="cal-grid-wrap chart-card" style="padding:14px;">
             <div class="chart-inner"><canvas id="course-pace-chart"></canvas></div>
             <div style="display:flex;gap:14px;margin-top:8px;font-size:11px;color:var(--text2);">
-              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#f43f5e;margin-right:4px;vertical-align:middle;"></span>Allure (min/km)</span>
-              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#ff5252;margin-right:4px;vertical-align:middle;"></span>FC moy (bpm)</span>
+              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#C9896E;margin-right:4px;vertical-align:middle;"></span>Allure (min/km)</span>
+              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#E85D5D;margin-right:4px;vertical-align:middle;"></span>FC moy (bpm)</span>
             </div>
           </div>
         </div>
@@ -1181,8 +1181,8 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
           <div class="cal-grid-wrap chart-card" style="padding:14px;">
             <div class="chart-inner"><canvas id="velo-speed-chart"></canvas></div>
             <div style="display:flex;gap:14px;margin-top:8px;font-size:11px;color:var(--text2);flex-wrap:wrap;">
-              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#ffb347;margin-right:4px;vertical-align:middle;"></span>Vitesse (km/h)</span>
-              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#ff5252;margin-right:4px;vertical-align:middle;"></span>FC moy (bpm)</span>
+              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#C8B8A2;margin-right:4px;vertical-align:middle;"></span>Vitesse (km/h)</span>
+              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#E85D5D;margin-right:4px;vertical-align:middle;"></span>FC moy (bpm)</span>
               <span style="display:flex;align-items:center;gap:4px;color:var(--text3)">⛰ Taille point = dénivelé</span>
             </div>
           </div>
@@ -1570,10 +1570,10 @@ async function renderActivities(sport){
     // ─── TEE COLOR badge ───
     const TEE_STYLE = {
       noir:  {bg:'#1a1a2e', border:'#555', text:'#e8f0ff', label:'Noir'},
-      bleu:  {bg:'#1a3a6e', border:'#4d9eff', text:'#e8f0ff', label:'Bleu'},
-      blanc: {bg:'#f0f4fc', border:'#aaa', text:'#1a2540', label:'Blanc'},
-      jaune: {bg:'#6e5a00', border:'#ffb347', text:'#ffe0a0', label:'Jaune'},
-      rouge: {bg:'#6e1a1a', border:'#ff5252', text:'#ffd0d0', label:'Rouge'},
+      bleu:  {bg:'#1a3a6e', border:'#B8C8D8', text:'#e8f0ff', label:'Bleu'},
+      blanc: {bg:'#f0f4fc', border:'#aaa', text:'#1A2540', label:'Blanc'},
+      jaune: {bg:'#6e5a00', border:'#C8B8A2', text:'#ffe0a0', label:'Jaune'},
+      rouge: {bg:'#6e1a1a', border:'#E85D5D', text:'#ffd0d0', label:'Rouge'},
     };
     const teeBadge = (tee) => {
       if(!tee) return '';
@@ -2713,10 +2713,10 @@ function renderWeeklyChart(activities){
     let yBot=BAR_BOT;
 
     const segs=[
-      {h:pxGolf,   color:'#10b981'},
-      {h:pxVelo,   color:'#ffb347'},
-      {h:pxCourse, color:'#f43f5e'},
-      {h:pxMuscu,  color:'#4d9eff'},
+      {h:pxGolf,   color:'#A8C4B8'},
+      {h:pxVelo,   color:'#C8B8A2'},
+      {h:pxCourse, color:'#C9896E'},
+      {h:pxMuscu,  color:'#B8C8D8'},
     ];
     segs.forEach((seg,si)=>{
       if(seg.h<=0) return;
@@ -2746,11 +2746,11 @@ function renderWeeklyChart(activities){
     const lbl=isCur
       ? 'Sem.'
       : (mon.getDate())+'/'+(mon.getMonth()+1);
-    bars+=`<text x="${x+barW/2}" y="${H-10}" text-anchor="middle" font-size="${FS_WEEK}" font-family="system-ui" fill="${isCur?(document.documentElement.classList.contains('light')?'#1a2540':'#e8f0ff'):(document.documentElement.classList.contains('light')?'rgba(0,0,0,0.3)':'rgba(255,255,255,0.28)')}" font-weight="${isCur?700:400}">${lbl}</text>`;
+    bars+=`<text x="${x+barW/2}" y="${H-10}" text-anchor="middle" font-size="${FS_WEEK}" font-family="system-ui" fill="${isCur?(document.documentElement.classList.contains('light')?'#1A2540':'#e8f0ff'):(document.documentElement.classList.contains('light')?'rgba(0,0,0,0.3)':'rgba(255,255,255,0.28)')}" font-weight="${isCur?700:400}">${lbl}</text>`;
 
     // ── Indicateur "semaine courante" — petit point sous le label ──
     if(isCur){
-      bars+=`<circle cx="${x+barW/2}" cy="${H-3}" r="${DOT_R}" fill="#4d9eff"/>`;
+      bars+=`<circle cx="${x+barW/2}" cy="${H-3}" r="${DOT_R}" fill="#B8C8D8"/>`;
     }
   });
 
@@ -2768,7 +2768,7 @@ function renderWeeklyChart(activities){
 
 // ════ WEEK DETAIL ════
 const SPORT_ICO2 = {muscu:'💪', course:'🏃', velo:'🚴', golf:'⛳'};
-const SPORT_CLR  = {muscu:'#4d9eff', course:'#f43f5e', velo:'#ffb347', golf:'#10b981'};
+const SPORT_CLR  = {muscu:'#B8C8D8', course:'#C9896E', velo:'#C8B8A2', golf:'#A8C4B8'};
 
 function toggleWeekDetail(idx){
   if(activeWeekIdx === idx){
@@ -3169,9 +3169,9 @@ function renderHomeSuggestions(all){
   // ── Rendu ──
   msgEl.textContent = message;
   sugEl.innerHTML = [
-    { txt: muscuTxt,  color:'#4d9eff' },
-    { txt: courseTxt, color:'#f43f5e' },
-    { txt: veloTxt,   color:'#ffb347' },
+    { txt: muscuTxt,  color:'#B8C8D8' },
+    { txt: courseTxt, color:'#C9896E' },
+    { txt: veloTxt,   color:'#C8B8A2' },
   ].map(s=>'<div class="hsugg"><span class="hsugg-dot" style="background:'+s.color+'"></span><span class="hsugg-txt">'+s.txt+'</span></div>').join('');
 }
 
@@ -3359,7 +3359,7 @@ function _renderFreeExoBlock(exo, ei){
   h += '<span id="sets-count-'+ei+'">'+n+' série'+(n>1?'s':'')+'</span>';
   h += '<button class="sc-btn" onclick="addFreeSet('+ei+')">+</button>';
   h += '</div>';
-  h += '<button onclick="removeFreeExo('+ei+')" style="background:rgba(255,82,82,.12);border:1px solid rgba(255,82,82,.25);color:var(--red);border-radius:6px;padding:3px 8px;font-size:11px;cursor:pointer">✕</button>';
+  h += '<button onclick="removeFreeExo('+ei+')" style="background:rgba(232,93,93,.12);border:1px solid rgba(232,93,93,.25);color:var(--red);border-radius:6px;padding:3px 8px;font-size:11px;cursor:pointer">✕</button>';
   h += '</div></div>';
   h += '<div id="exo-rows-'+ei+'">';
   h += '<table class="stbl"><tr><th>#</th>';
@@ -3580,7 +3580,7 @@ function _refreshExoRows(ei){
   let t = '<table class="stbl"><tr><th>#</th>';
   if(!isTimed){
     t += '<th style="display:flex;align-items:center;gap:6px;padding:8px 14px 6px">Poids';
-    t += '<button id="bw-toggle-'+ei+'" onclick="toggleBodyweight('+ei+')" style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;border:1px solid '+(isBW?'var(--accent)':'var(--border)')+';background:'+(isBW?'var(--accent)':'var(--bg4)')+';color:'+(isBW?'#060a12':'var(--text2)')+';cursor:pointer;white-space:nowrap" title="Poids du corps">BW</button>';
+    t += '<button id="bw-toggle-'+ei+'" onclick="toggleBodyweight('+ei+')" style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;border:1px solid '+(isBW?'var(--accent)':'var(--border)')+';background:'+(isBW?'var(--accent)':'var(--bg4)')+';color:'+(isBW?'#0E1116':'var(--text2)')+';cursor:pointer;white-space:nowrap" title="Poids du corps">BW</button>';
     t += '</th>';
   } else {
     t += '<th>—</th>';
@@ -4149,7 +4149,7 @@ function _fillHistDetail(i){
   body.innerHTML =
     '<div class="edit-bar">'+
     '<button class="edit-btn" onclick="startEdit('+i+',event)">✏️ Modifier</button>'+
-    '<button class="edit-btn" style="color:var(--red);border-color:rgba(255,82,82,.3)" onclick="deleteActivity('+e.id+',\'muscu\',event)">🗑️ Supprimer</button>'+
+    '<button class="edit-btn" style="color:var(--red);border-color:rgba(232,93,93,.3)" onclick="deleteActivity('+e.id+',\'muscu\',event)">🗑️ Supprimer</button>'+
     (isStravaOnly
       ? '<button class="edit-btn" style="color:#fc4c02;border-color:rgba(252,76,2,.3)" onclick="openMergeToManualModal('+e.id+')">⚡ Fusionner avec séance manuelle</button>'
       : e.strava_activity_id
@@ -4449,14 +4449,14 @@ seedRecipesIfEmpty();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 // ════ CHART HELPERS ════
-const CJ_ACCENT = '#4d9eff';
-const CJ_GREEN  = '#f43f5e';
-const CJ_AMBER  = '#ffb347';
-const CJ_RED    = '#ff5252';
+const CJ_ACCENT = '#B8C8D8';
+const CJ_GREEN  = '#C9896E';
+const CJ_AMBER  = '#C8B8A2';
+const CJ_RED    = '#E85D5D';
 const CJ_GRID   = ()=> document.documentElement.classList.contains('light') ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.06)';
 const CJ_TICK   = ()=> document.documentElement.classList.contains('light') ? '#5a6a8a' : 'rgba(255,255,255,0.35)';
-const CJ_TT_BG  = ()=> document.documentElement.classList.contains('light') ? '#ffffff' : '#0d1420';
-const CJ_TT_TIT = ()=> document.documentElement.classList.contains('light') ? '#1a2540' : '#e8f0ff';
+const CJ_TT_BG  = ()=> document.documentElement.classList.contains('light') ? '#ffffff' : '#151A21';
+const CJ_TT_TIT = ()=> document.documentElement.classList.contains('light') ? '#1A2540' : '#e8f0ff';
 const CJ_TT_BOD = ()=> document.documentElement.classList.contains('light') ? '#5a6a8a' : '#7a8eb0';
 const CJ_TT_BOR = ()=> document.documentElement.classList.contains('light') ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
 
@@ -4499,7 +4499,7 @@ function renderHomeDonut(activities){
 
   const labels = ['Muscu','Course','Vélo','Golf'];
   const data   = [totals.muscu, totals.course, totals.velo, totals.golf];
-  const colors = [CJ_ACCENT, CJ_GREEN, CJ_AMBER, '#10b981'];
+  const colors = [CJ_ACCENT, CJ_GREEN, CJ_AMBER, '#A8C4B8'];
 
   _mkChart('home-donut-canvas', {
     type:'doughnut',
@@ -4525,7 +4525,7 @@ function renderHomeDonut(activities){
 function renderHomeHeatmap(activities){
   const el = document.getElementById('home-heatmap');
   if(!el) return;
-  const SPORT_C = {muscu:CJ_ACCENT, course:'#f43f5e', velo:CJ_AMBER, golf:'#10b981', basket:'#a855f7'};
+  const SPORT_C = {muscu:CJ_ACCENT, course:'#C9896E', velo:CJ_AMBER, golf:'#A8C4B8', basket:'#a855f7'};
   const actByDay = {};
   activities.forEach(a=>{ const k=a.date.slice(0,10); if(!actByDay[k]) actByDay[k]=[]; actByDay[k].push(a.type); });
 
@@ -4608,7 +4608,7 @@ function renderHomeHeatmap(activities){
 
   // Legend
   h += '<div style="display:flex;gap:10px;margin-top:6px;flex-wrap:wrap;">';
-  [{label:'Muscu',c:CJ_ACCENT},{label:'Course',c:'#f43f5e'},{label:'Vélo',c:CJ_AMBER},{label:'Golf',c:'#10b981'}].forEach(s=>{
+  [{label:'Muscu',c:CJ_ACCENT},{label:'Course',c:'#C9896E'},{label:'Vélo',c:CJ_AMBER},{label:'Golf',c:'#A8C4B8'}].forEach(s=>{
     h += '<div style="display:flex;align-items:center;gap:4px;font-size:clamp(10px,0.8vw,13px);color:var(--text2)"><span style="width:clamp(8px,0.7vw,11px);height:clamp(8px,0.7vw,11px);border-radius:2px;background:'+s.c+';display:inline-block;opacity:.9"></span>'+s.label+'</div>';
   });
   h += '</div>';
@@ -4985,9 +4985,9 @@ function renderVeloScatterChart(acts){
 // ════ FEELING CHARTS ════
 
 const FL_LABELS = {1:'Épuisé',2:'Difficile',3:'Correct',4:'Solide',5:'En feu'};
-const FL_COLORS = {1:'#ff5252',2:'#ffb347',3:'#7a8eb0',4:'#f43f5e',5:'#4d9eff'};
-const FL_SPORT_COLOR = {muscu:'#4d9eff', course:'#f43f5e', velo:'#ffb347', golf:'#10b981'};
-const FL_SPORT_BORDER = {muscu:'rgba(77,158,255,0.15)', course:'rgba(52,211,153,0.15)', velo:'rgba(255,179,71,0.15)'};
+const FL_COLORS = {1:'#E85D5D',2:'#C8B8A2',3:'#7a8eb0',4:'#C9896E',5:'#B8C8D8'};
+const FL_SPORT_COLOR = {muscu:'#B8C8D8', course:'#C9896E', velo:'#C8B8A2', golf:'#A8C4B8'};
+const FL_SPORT_BORDER = {muscu:'rgba(184,200,216,0.15)', course:'rgba(52,211,153,0.15)', velo:'rgba(200,184,162,0.15)'};
 
 function renderFeelingChart(canvasId, acts, sport){
   const withFeeling = acts
@@ -5002,14 +5002,14 @@ function renderFeelingChart(canvasId, acts, sport){
   });
   const data    = withFeeling.map(a=>parseInt(a.feeling));
   const ptColor = data.map(f=>FL_COLORS[f]||'#7a8eb0');
-  const lineCol = FL_SPORT_COLOR[sport]||'#4d9eff';
+  const lineCol = FL_SPORT_COLOR[sport]||'#B8C8D8';
 
   _mkChart(canvasId,{
     type:'line',
     data:{ labels, datasets:[{
       data,
       borderColor: lineCol,
-      backgroundColor: FL_SPORT_BORDER[sport]||'rgba(77,158,255,0.08)',
+      backgroundColor: FL_SPORT_BORDER[sport]||'rgba(184,200,216,0.08)',
       borderWidth:2, tension:0.35, fill:true,
       pointBackgroundColor: ptColor,
       pointBorderColor: ptColor,
@@ -5144,7 +5144,7 @@ window.addEventListener('resize', ()=>{
 });
 
 // ════ GOLF: ÉVOLUTION DU SCORE ════
-const TEE_COLOR_MAP = {noir:'#888', bleu:'#4d9eff', blanc:'#e8f0ff', jaune:'#ffb347', rouge:'#ff5252'};
+const TEE_COLOR_MAP = {noir:'#888', bleu:'#B8C8D8', blanc:'#e8f0ff', jaune:'#C8B8A2', rouge:'#E85D5D'};
 function renderGolfScoreChart(acts){
   const sorted = [...acts]
     .filter(a=>a.score)
@@ -5155,8 +5155,8 @@ function renderGolfScoreChart(acts){
   const scores = sorted.map(a=>a.score);
   const scores18 = sorted.map(a=>a.holes===9 ? null : a.score);
   const scores9  = sorted.map(a=>a.holes===9 ? a.score : null);
-  const ptColors18 = sorted.map(a=>a.holes===9 ? 'transparent' : (TEE_COLOR_MAP[a.tee_color]||'#10b981'));
-  const ptColors9  = sorted.map(a=>a.holes===9 ? (TEE_COLOR_MAP[a.tee_color]||'#a3e635') : 'transparent');
+  const ptColors18 = sorted.map(a=>a.holes===9 ? 'transparent' : (TEE_COLOR_MAP[a.tee_color]||'#A8C4B8'));
+  const ptColors9  = sorted.map(a=>a.holes===9 ? (TEE_COLOR_MAP[a.tee_color]||'#A8C4B8') : 'transparent');
 
   // Tendance linéaire simple
   const n = scores.length;
@@ -5170,10 +5170,10 @@ function renderGolfScoreChart(acts){
   _mkChart('golf-score-chart', {
     type:'line',
     data:{ labels, datasets:[
-      { label:'18 trous', data:scores18, borderColor:'#10b981', backgroundColor:'#10b98122',
+      { label:'18 trous', data:scores18, borderColor:'#A8C4B8', backgroundColor:'#A8C4B822',
         pointBackgroundColor:ptColors18, pointBorderColor:ptColors18,
         pointRadius:6, pointHoverRadius:8, borderWidth:2, tension:0.2, spanGaps:false },
-      { label:'9 trous', data:scores9, borderColor:'#a3e635', backgroundColor:'#a3e63522',
+      { label:'9 trous', data:scores9, borderColor:'#A8C4B8', backgroundColor:'#A8C4B822',
         pointBackgroundColor:ptColors9, pointBorderColor:ptColors9,
         pointRadius:6, pointHoverRadius:8, borderWidth:2, tension:0.2, spanGaps:false,
         borderDash:[5,4] },
@@ -5223,7 +5223,7 @@ function renderGolfCourseChart(acts){
     return Math.round(scores.reduce((s,v)=>s+v,0)/scores.length);
   });
   const counts = labels.map(k=>byCourse[k].length);
-  const colors = labels.map((_,i)=>{ const op=1-i*0.15; return '#10b981'+Math.round(Math.max(op,0.4)*255).toString(16).padStart(2,'0'); });
+  const colors = labels.map((_,i)=>{ const op=1-i*0.15; return '#A8C4B8'+Math.round(Math.max(op,0.4)*255).toString(16).padStart(2,'0'); });
 
   _mkChart('golf-course-chart', {
     type:'bar',
@@ -5253,7 +5253,7 @@ function renderGolfHolesChart(acts){
     type:'doughnut',
     data:{ labels:['9 trous','18 trous'], datasets:[{
       data:[count9, count18],
-      backgroundColor:['#a3e635cc','#10b981cc'],
+      backgroundColor:['#A8C4B8cc','#A8C4B8cc'],
       borderWidth:0
     }]},
     options:{ responsive:true, maintainAspectRatio:false, cutout:'60%',
@@ -5279,9 +5279,9 @@ function renderGolfHolesChart(acts){
   function applyTheme(theme){
     document.documentElement.classList.toggle('light', theme === 'light');
     const meta = document.querySelector('meta[name="theme-color"]');
-    if(meta) meta.content = theme === 'light' ? '#f0f4fc' : '#060a12';
-    const activeBg   = theme === 'light' ? '#ffffff' : '#1a2540';
-    const activeClr  = theme === 'light' ? '#1a2540' : '#e8f0ff';
+    if(meta) meta.content = theme === 'light' ? '#f0f4fc' : '#0E1116';
+    const activeBg   = theme === 'light' ? '#ffffff' : '#1A2540';
+    const activeClr  = theme === 'light' ? '#1A2540' : '#e8f0ff';
     const idleBg     = 'transparent';
     const idleClr    = theme === 'light' ? '#9aaac8' : '#7a8eb0';
     document.querySelectorAll('[data-theme-light]').forEach(b => {
