@@ -3572,16 +3572,19 @@ function removeFreeSet(ei){
 
 function _refreshFreeExoRows(ei){
   const n = customSets[ei] !== undefined ? customSets[ei] : (freeExos[ei]?.sets||3);
-  const countEl = document.getElementById('sets-count-'+ei);
+  // Scope to the free exo block itself to avoid ID conflicts with programme logger
+  const block = document.getElementById('free-exo-'+ei);
+  const ctx = block || document;
+  const countEl = ctx.querySelector('#sets-count-'+ei);
   if(countEl) countEl.textContent = n+' série'+(n>1?'s':'');
-  const container = document.getElementById('exo-rows-'+ei);
+  const container = ctx.querySelector('#exo-rows-'+ei);
   if(!container) return;
   const isTimed = !!freeExos[ei]?.timed;
   const isBW = !!bodyweightExos[ei];
   const prev = {};
   for(let s=1;s<=20;s++){
-    const w = document.getElementById('w_'+ei+'_'+s); if(w) prev[s]={w:w.value};
-    const r = document.getElementById('r_'+ei+'_'+s); if(r) prev[s]={...prev[s],r:r.value};
+    const w = ctx.querySelector('#w_'+ei+'_'+s); if(w) prev[s]={w:w.value};
+    const r = ctx.querySelector('#r_'+ei+'_'+s); if(r) prev[s]={...prev[s],r:r.value};
   }
   let t = '<table class="stbl"><tr><th>#</th>';
   if(!isTimed){
