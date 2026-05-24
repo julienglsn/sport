@@ -781,11 +781,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
           <div id="home-weekly-chart" class="chart-inner">
             <div class="empty"><div class="ico"><div class="spin"></div></div><p>Chargement...</p></div>
           </div>
-          <div style="display:flex;gap:12px;justify-content:center;margin-top:8px;flex-wrap:wrap">
-            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)"><span style="width:10px;height:10px;border-radius:3px;background:#4D9ABF;display:inline-block"></span>Muscu</div>
-            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)"><span style="width:10px;height:10px;border-radius:3px;background:#BF5E40;display:inline-block"></span>Course</div>
-            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)"><span style="width:10px;height:10px;border-radius:3px;background:#C89A62;display:inline-block"></span>Vélo</div>
-          </div>
+          <div id="home-weekly-legend" style="display:flex;gap:12px;justify-content:center;margin-top:8px;flex-wrap:wrap"></div>
         </div>
       </div>
 
@@ -2809,6 +2805,23 @@ function renderWeeklyChart(activities){
   });
 
   el.innerHTML=`<svg id="weekly-svg" viewBox="0 0 ${VW} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block">${grid}${bars}${overlays}</svg>`;
+
+  // ── Légende dynamique — seulement les sports présents ──
+  const totals = {muscu:0, course:0, velo:0, golf:0};
+  activities.forEach(a=>{ if(totals[a.type]!==undefined) totals[a.type]++; });
+  const legendItems = [
+    {key:'muscu',  label:'Muscu',  color:'#4D9ABF'},
+    {key:'course', label:'Course', color:'#BF5E40'},
+    {key:'velo',   label:'Vélo',   color:'#C89A62'},
+    {key:'golf',   label:'Golf',   color:'#4AAD8A'},
+  ];
+  const lgEl = document.getElementById('home-weekly-legend');
+  if(lgEl){
+    lgEl.innerHTML = legendItems
+      .filter(s=>totals[s.key]>0)
+      .map(s=>'<div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)"><span style="width:10px;height:10px;border-radius:3px;background:'+s.color+';display:inline-block"></span>'+s.label+'</div>')
+      .join('');
+  }
 }
 
 
@@ -4655,11 +4668,14 @@ function renderHomeHeatmap(activities){
   }
   h += '</div>';
 
-  // Legend
+  // Legend — seulement les sports présents dans les données
+  const presentTypes = new Set(Object.values(actByDay).flat());
   h += '<div style="display:flex;gap:10px;margin-top:6px;flex-wrap:wrap;">';
-  [{label:'Muscu',c:CJ_ACCENT},{label:'Course',c:'#BF5E40'},{label:'Vélo',c:CJ_AMBER},{label:'Golf',c:'#4AAD8A'}].forEach(s=>{
-    h += '<div style="display:flex;align-items:center;gap:4px;font-size:clamp(10px,0.8vw,13px);color:var(--text2)"><span style="width:clamp(8px,0.7vw,11px);height:clamp(8px,0.7vw,11px);border-radius:2px;background:'+s.c+';display:inline-block;opacity:.9"></span>'+s.label+'</div>';
-  });
+  [{key:'muscu',label:'Muscu',c:CJ_ACCENT},{key:'course',label:'Course',c:'#BF5E40'},{key:'velo',label:'Vélo',c:CJ_AMBER},{key:'golf',label:'Golf',c:'#4AAD8A'}]
+    .filter(s=>presentTypes.has(s.key))
+    .forEach(s=>{
+      h += '<div style="display:flex;align-items:center;gap:4px;font-size:clamp(10px,0.8vw,13px);color:var(--text2)"><span style="width:clamp(8px,0.7vw,11px);height:clamp(8px,0.7vw,11px);border-radius:2px;background:'+s.c+';display:inline-block;opacity:.9"></span>'+s.label+'</div>';
+    });
   h += '</div>';
 
   el.innerHTML = h;
