@@ -5014,7 +5014,8 @@ function renderMuscuCharts(acts){
 
 // ════ COURSE: ALLURE vs FC ════
 function renderCoursePaceChart(acts){
-  const sorted = [...acts].sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const cutoff = new Date(); cutoff.setMonth(cutoff.getMonth()-3);
+  const sorted = [...acts].filter(a=>new Date(a.date)>=cutoff).sort((a,b)=>new Date(a.date)-new Date(b.date));
   const labels = sorted.map(a=>{ const d=new Date(a.date); return d.getDate()+'/'+(d.getMonth()+1); });
   const paceData = sorted.map(a=>a.pace_sec_km ? +(a.pace_sec_km/60).toFixed(2) : null);
   const hrData   = sorted.map(a=>a.hr_avg||null);
@@ -5096,7 +5097,8 @@ function renderCourseScatterChart(acts){
 
 // ════ VÉLO: VITESSE vs FC ════
 function renderVeloSpeedChart(acts){
-  const sorted = [...acts].sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const cutoff = new Date(); cutoff.setMonth(cutoff.getMonth()-3);
+  const sorted = [...acts].filter(a=>new Date(a.date)>=cutoff).sort((a,b)=>new Date(a.date)-new Date(b.date));
   const labels = sorted.map(a=>{ const d=new Date(a.date); return d.getDate()+'/'+(d.getMonth()+1); });
 
   // Taille des points proportionnelle au dénivelé (min 4px, max 18px)
