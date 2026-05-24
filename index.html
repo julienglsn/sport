@@ -120,6 +120,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .cal-dot-muscu{background:#4d9eff}
 .cal-dot-course{background:#34d399}
 .cal-dot-velo{background:#ffb347}
+.cal-dot-golf{background:#4ade80}
 
 /* HOME FEED */
 .feed-card{background:var(--bg2);border:1px solid var(--border);border-radius:11px;padding:9px 13px;margin-bottom:7px;cursor:pointer;transition:border-color .18s;display:flex;align-items:center;gap:10px}
@@ -824,6 +825,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
               <button class="subnav-item" style="padding:4px 10px;font-size:11px;" onclick="setHomeFeelingFilter('muscu',this)">💪</button>
               <button class="subnav-item" style="padding:4px 10px;font-size:11px;" onclick="setHomeFeelingFilter('course',this)">🏃</button>
               <button class="subnav-item" style="padding:4px 10px;font-size:11px;" onclick="setHomeFeelingFilter('velo',this)">🚴</button>
+              <button class="subnav-item" style="padding:4px 10px;font-size:11px;" onclick="setHomeFeelingFilter('golf',this)">⛳</button>
             </div>
           </div>
           <div class="chart-inner"><canvas id="home-feeling-chart"></canvas></div>
@@ -865,9 +867,13 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
         <div class="sico">🏃</div><div class="slb">Course</div>
         <div class="svl" id="hub-course-count">—</div><div class="ssb2">sorties</div>
       </div>
-      <div class="sc2" style="grid-column:span 2" onclick="showSport('velo',document.getElementById('snav-velo'))">
+      <div class="sc2" onclick="showSport('velo',document.getElementById('snav-velo'))">
         <div class="sico">🚴</div><div class="slb">Vélo de route</div>
         <div class="svl" id="hub-velo-count">—</div><div class="ssb2">sorties</div>
+      </div>
+      <div class="sc2" onclick="showSport('golf',document.getElementById('snav-golf'))">
+        <div class="sico">⛳</div><div class="slb">Golf</div>
+        <div class="svl" id="hub-golf-count">—</div><div class="ssb2">parties</div>
       </div>
     </div>
   </div>
@@ -1211,6 +1217,78 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
   </div>
 </div>
 
+<!-- ════ GOLF ════ -->
+<div class="page" id="page-golf">
+  <div class="ph">
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <div class="ey">JUNELLA</div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <button class="profile-btn subnav-item" data-pid="1" onclick="setProfile(1)" style="padding:5px 14px;font-size:12px;">JU</button>
+        <button class="profile-btn subnav-item" data-pid="2" onclick="setProfile(2)" style="padding:5px 14px;font-size:12px;">NELLA</button>
+        <div id="theme-seg-golf" class="theme-seg-pill"></div>
+      </div>
+    </div>
+    <div class="ph-divider"></div>
+    <h1>GOLF</h1>
+    <p>Parcours · Score · Progression</p>
+  </div>
+  <div class="stabs" id="golf-nav">
+    <button class="stab active" onclick="showSportTab('golf','charts',this)">📊 Graphiques</button>
+    <button class="stab" onclick="showSportTab('golf','main',this)">📈 Historique</button>
+  </div>
+  <div class="sc" id="golf-main">
+  <div class="import-bar" style="padding:14px 20px 0">
+    <button class="imp-btn" onclick="showManualForm('golf',null)">+ Ajouter une partie</button>
+  </div>
+  <div class="sec" style="padding-top:12px">
+    <div style="margin-bottom:10px;color:var(--text2);font-size:13px" id="golf-count">—</div>
+    <div id="act-list-golf">
+      <div class="empty"><div class="ico">⛳</div><p>Aucune partie enregistrée.</p></div>
+    </div>
+  </div>
+  </div><!-- end golf-main -->
+  <div class="sc active" id="golf-charts">
+    <div class="sec" style="padding-top:14px">
+      <div class="charts-grid">
+
+        <div>
+          <div class="slabel" style="margin-bottom:10px">Évolution du score</div>
+          <div class="cal-grid-wrap chart-card" style="padding:14px;">
+            <div class="chart-inner"><canvas id="golf-score-chart"></canvas></div>
+            <div style="font-size:11px;color:var(--text2);margin-top:8px;text-align:center;">Score brut par partie · courbe de tendance</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="slabel" style="margin-bottom:10px">Scores par parcours</div>
+          <div class="cal-grid-wrap chart-card" style="padding:14px;">
+            <div class="chart-inner"><canvas id="golf-course-chart"></canvas></div>
+            <div style="font-size:11px;color:var(--text2);margin-top:8px;text-align:center;">Score moyen par parcours (6 dernières semaines)</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="slabel" style="margin-bottom:10px">Répartition des parties</div>
+          <div class="cal-grid-wrap chart-card" style="padding:14px;">
+            <div class="chart-inner"><canvas id="golf-holes-chart"></canvas></div>
+            <div style="font-size:11px;color:var(--text2);margin-top:8px;text-align:center;">9 trous vs 18 trous</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="slabel" style="margin-bottom:10px">Forme au fil du temps</div>
+          <div class="cal-grid-wrap chart-card" style="padding:14px;">
+            <div class="chart-inner"><canvas id="golf-feeling-chart"></canvas></div>
+            <div style="font-size:11px;color:var(--text2);margin-top:8px;text-align:center;">Chaque point = une partie · 1 épuisé → 5 en feu</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <!-- ════ RECETTES ════ -->
 <div class="page" id="page-recettes">
   <div class="ph">
@@ -1283,6 +1361,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
     <button class="sidebar-sub-item" id="ssnav-muscu" onclick="showSport('muscu',this)">💪 Muscu</button>
     <button class="sidebar-sub-item" id="ssnav-course" onclick="showSport('course',this)">🏃 Course</button>
     <button class="sidebar-sub-item" id="ssnav-velo" onclick="showSport('velo',this)">🚴 Vélo</button>
+    <button class="sidebar-sub-item" id="ssnav-golf" onclick="showSport('golf',this)">⛳ Golf</button>
   </div>
   <button class="nav-item" id="nav-nutrition" onclick="showSection('nutrition')"><span class="nav-icon">🥗</span>Nutrition</button>
   <button class="nav-item" id="nav-apps" onclick="showSection('apps')"><span class="nav-icon">📱</span>Apps</button>
@@ -1293,6 +1372,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
   <button class="subnav-item active" id="snav-muscu" onclick="showSport('muscu',this)">💪 Muscu</button>
   <button class="subnav-item" id="snav-course" onclick="showSport('course',this)">🏃 Course</button>
   <button class="subnav-item" id="snav-velo" onclick="showSport('velo',this)">🚴 Vélo</button>
+  <button class="subnav-item" id="snav-golf" onclick="showSport('golf',this)">⛳ Golf</button>
 </div>
 
 <!-- ════ NUTRITION SUB-NAV ════ -->
@@ -1471,10 +1551,12 @@ async function renderActivities(sport){
 
   const acts = await dbLoad(sport);
   const countEl = document.getElementById(sport+'-count');
-  if(countEl) countEl.textContent = acts.length + ' sortie'+(acts.length!==1?'s':'');
+  const _unitLabel = sport==='golf' ? (acts.length!==1?'parties':'partie') : 'sortie'+(acts.length!==1?'s':'');
+  if(countEl) countEl.textContent = acts.length + ' ' + _unitLabel;
   if(!acts.length){
-    const ico = sport==='course'?'🏃':'🚴';
-    listEl.innerHTML = '<div class="empty"><div class="ico">'+ico+'</div><p>Aucune sortie enregistrée.<br>Importe un fichier .fit ou un screenshot.</p></div>';
+    const ico = sport==='course'?'🏃':sport==='golf'?'⛳':'🚴';
+    const emptyTxt = sport==='golf' ? 'Aucune partie enregistrée.' : 'Aucune sortie enregistrée.<br>Importe un fichier .fit ou un screenshot.';
+    listEl.innerHTML = '<div class="empty"><div class="ico">'+ico+'</div><p>'+emptyTxt+'</p></div>';
     return;
   }
 
@@ -1483,20 +1565,31 @@ async function renderActivities(sport){
     const ds = d.toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'});
     const isCourse = sport==='course';
 
-    const m1 = isCourse
-      ? {val: fmtPace(a.pace_sec_km), lbl: 'Allure /km'}
-      : {val: a.speed_kmh ? a.speed_kmh+' km/h' : '—', lbl: 'Vitesse moy'};
-    const m2 = {val: fmtDist(a.distance_m), lbl: 'Distance'};
+    const isGolf = sport==='golf';
+    const m1 = isGolf
+      ? {val: a.score ? a.score : '—', lbl: 'Score brut'}
+      : isCourse
+        ? {val: fmtPace(a.pace_sec_km), lbl: 'Allure /km'}
+        : {val: a.speed_kmh ? a.speed_kmh+' km/h' : '—', lbl: 'Vitesse moy'};
+    const m2 = isGolf
+      ? {val: a.score_net ? a.score_net : '—', lbl: 'Score net'}
+      : {val: fmtDist(a.distance_m), lbl: 'Distance'};
     const m3 = {val: fmtDuration(a.duration_sec), lbl: 'Durée'};
-    const m4 = {val: a.hr_avg ? a.hr_avg+' bpm' : '—', lbl: 'FC moy'};
-    const m5 = {val: a.hr_max ? a.hr_max+' bpm' : '—', lbl: 'FC max'};
-    const m6 = isCourse
-      ? {val: a.elevation_m ? '+'+a.elevation_m+'m' : '—', lbl: 'Dénivelé'}
-      : {val: a.power_avg ? a.power_avg+' W' : '—', lbl: 'Puissance'};
+    const m4 = isGolf
+      ? {val: a.holes ? a.holes+' trous' : '—', lbl: 'Format'}
+      : {val: a.hr_avg ? a.hr_avg+' bpm' : '—', lbl: 'FC moy'};
+    const m5 = isGolf
+      ? {val: a.putts ? a.putts : '—', lbl: 'Putts'}
+      : {val: a.hr_max ? a.hr_max+' bpm' : '—', lbl: 'FC max'};
+    const m6 = isGolf
+      ? {val: a.course_name ? a.course_name : '—', lbl: 'Parcours'}
+      : isCourse
+        ? {val: a.elevation_m ? '+'+a.elevation_m+'m' : '—', lbl: 'Dénivelé'}
+        : {val: a.power_avg ? a.power_avg+' W' : '—', lbl: 'Puissance'};
 
     return '<div class="act-card" id="act-'+a.id+'">'+
       '<div class="act-head" onclick="togAct(this)">'+
-      '<div><div class="act-title">'+(sport==='course'?'🏃':'🚴')+' Sortie — '+ds+'</div>'+
+      '<div><div class="act-title">'+(sport==='course'?'🏃':sport==='golf'?'⛳':'🚴')+(sport==='golf'?' Partie — ':' Sortie — ')+ds+'</div>'+
       '<div class="act-date">'+fmtDuration(a.duration_sec)+' · '+fmtDist(a.distance_m)+'</div></div>'+
       '<span class="hbg" style="background:var(--accent2);color:var(--accent)">'+_esc(a.source.toUpperCase())+'</span>'+
       '</div>'+
@@ -1528,7 +1621,7 @@ async function editActivity(id, sport){
 async function deleteActivity(id, sport, ev){
   if(ev) ev.stopPropagation();
   if(!isUnlocked()){ requirePin(()=>deleteActivity(id, sport, null)); return; }
-  const sportLabel = {muscu:'séance muscu', course:'sortie course', velo:'sortie vélo'}[sport] || 'activité';
+  const sportLabel = {muscu:'séance muscu', course:'sortie course', velo:'sortie vélo', golf:'partie golf'}[sport] || 'activité';
   _confirmDelete('Supprimer cette '+sportLabel+' ?', async ()=>{
     await dbDelete(id);
     cachedHist = null;
@@ -1607,6 +1700,23 @@ const MANUAL_FIELDS = {
       {key:'feeling',     label:'Ressenti',        type:'feeling',        required:false},
       {key:'note',        label:'Note',            type:'textarea',       required:false},
     ]
+  },
+  golf: {
+    title: 'Nouvelle partie de golf',
+    icon: '⛳',
+    fields: [
+      {key:'date',        label:'Date',              type:'date-only',      required:true},
+      {key:'course_name', label:'Parcours',          type:'text',           required:false},
+      {key:'holes',       label:'Nombre de trous',   type:'select-holes',   required:false},
+      {key:'score',       label:'Score brut',        type:'number',         required:false},
+      {key:'score_net',   label:'Score net',         type:'number',         required:false},
+      {key:'putts',       label:'Putts',             type:'number',         required:false},
+      {key:'fairways',    label:'Fairways touchés %',type:'number',         required:false},
+      {key:'gir',         label:'GIR %',             type:'number',         required:false},
+      {key:'duration_sec',label:'Durée',             type:'time-parts',     required:false},
+      {key:'feeling',     label:'Ressenti',          type:'feeling',        required:false},
+      {key:'note',        label:'Note',              type:'textarea',       required:false},
+    ]
   }
 };
 
@@ -1680,6 +1790,11 @@ async function showManualForm(sport, linkedSessionId, existingActivity){
       fieldsHtml += '<span style="color:var(--text2);font-size:16px;font-weight:700">:</span>';
       fieldsHtml += '<input class="modal-input" id="mf-'+f.key+'-s" type="number" inputmode="numeric" placeholder="ss" min="0" max="59" style="width:60px;text-align:center" value="'+tS+'">';
       fieldsHtml += '</div>';
+    } else if(f.type==='text'){
+      fieldsHtml += '<input class="modal-input" id="mf-'+f.key+'" type="text" placeholder="—" value="'+(ex[f.key]||'')+'">';
+    } else if(f.type==='select-holes'){
+      const curHoles = ex[f.key]||18;
+      fieldsHtml += '<select class="modal-input" id="mf-'+f.key+'"><option value="9"'+(curHoles===9?' selected':'')+'>9 trous</option><option value="18"'+(curHoles===18||!ex[f.key]?' selected':'')+'>18 trous</option></select>';
     } else if(f.type==='textarea'){
       fieldsHtml += '<textarea class="ni" id="mf-'+f.key+'" placeholder="—" style="margin-bottom:0;height:60px"></textarea>';
     } else if(f.type==='feeling'){
@@ -1754,6 +1869,10 @@ async function saveManualForm(sport, existingActivity){
       else activity[f.key] = !isNaN(raw) ? raw : null;
     } else if(f.type==='number'){
       activity[f.key] = el?.value ? parseInt(el.value)||null : null;
+    } else if(f.type==='text'){
+      activity[f.key] = el?.value?.trim() || null;
+    } else if(f.type==='select-holes'){
+      activity[f.key] = el?.value ? parseInt(el.value) : 18;
     } else if(f.type==='textarea'){
       activity.note = el?.value || null;
     }
@@ -2164,7 +2283,7 @@ let currentNutri   = 'recettes';
 
 function showPage(id, btn){
   // Legacy compatibility — called from home cards
-  if(['muscu','course','velo'].includes(id)){
+  if(['muscu','course','velo','golf'].includes(id)){
     showSection('sports');
     showSport(id, document.getElementById('snav-'+id));
     return;
@@ -2241,6 +2360,15 @@ function showSport(sport, btn){
     dbLoad('muscu').then(acts=>{
       renderMuscuCharts(acts);
       if(typeof renderFeelingChart === 'function') renderFeelingChart('muscu-feeling-chart', acts, 'muscu');
+    });
+  }
+  if(sport==='golf'){
+    renderActivities('golf');
+    dbLoad('golf').then(acts=>{
+      renderGolfScoreChart(acts);
+      renderGolfCourseChart(acts);
+      renderGolfHolesChart(acts);
+      renderFeelingChart('golf-feeling-chart', acts, 'golf');
     });
   }
 }
@@ -2411,7 +2539,7 @@ function renderRecentActivities(activities){
     const ico   = SPORT_ICO2[a.type] || '🏅';
     const color = SPORT_CLR[a.type]  || 'var(--text2)';
     const label = a.session_label || a.label || a.strava_name ||
-      (a.type==='muscu' ? 'Musculation' : a.type==='course' ? 'Course à pied' : 'Vélo de route');
+      (a.type==='muscu' ? 'Musculation' : a.type==='course' ? 'Course à pied' : a.type==='golf' ? 'Golf' : 'Vélo de route');
 
     const chips = [];
     if(a.duration_sec) chips.push('⏱ '+fmtDuration(a.duration_sec));
@@ -2452,7 +2580,7 @@ function renderWeeklyChart(activities){
   for(let w=NWEEKS-1;w>=0;w--){
     const mon = new Date(thisMonday); mon.setDate(thisMonday.getDate()-w*7);
     const sun = new Date(mon);       sun.setDate(mon.getDate()+6); sun.setHours(23,59,59,999);
-    weeks.push({mon,sun,muscu:0,course:0,velo:0,acts:[]});
+    weeks.push({mon,sun,muscu:0,course:0,velo:0,golf:0,acts:[]});
   }
   activities.forEach(a=>{
     const d=new Date(a.date), sec=a.duration_sec||0;
@@ -2463,6 +2591,7 @@ function renderWeeklyChart(activities){
           if(a.type==='muscu') w.muscu+=sec;
           else if(a.type==='course') w.course+=sec;
           else if(a.type==='velo')   w.velo+=sec;
+          else if(a.type==='golf')   w.golf+=sec;
         }
         break;
       }
@@ -2488,7 +2617,7 @@ function renderWeeklyChart(activities){
   const FS_WEEK   = isWide ? 10.5 : 8;     // font-size label semaine
   const DOT_R     = isWide ? 3    : 2;      // rayon point semaine courante
 
-  const maxSec=Math.max(...weeks.map(w=>w.muscu+w.course+w.velo),1);
+  const maxSec=Math.max(...weeks.map(w=>w.muscu+w.course+w.velo+w.golf),1);
 
   // ── Grille horizontale ──
   const nLines=4;
@@ -2507,7 +2636,7 @@ function renderWeeklyChart(activities){
   // ── Barres ──
   let bars='';
   weeks.forEach((w,i)=>{
-    const total=w.muscu+w.course+w.velo;
+    const total=w.muscu+w.course+w.velo+w.golf;
     const x=i*step;
     const isCur=w.mon<=now&&now<=w.sun;
     const isSelected = activeWeekIdx===i;
@@ -2517,7 +2646,8 @@ function renderWeeklyChart(activities){
     const pxMuscu =total>0?Math.round((w.muscu /maxSec)*BAR_H):0;
     const pxCourse=total>0?Math.round((w.course/maxSec)*BAR_H):0;
     const pxVelo  =total>0?Math.round((w.velo  /maxSec)*BAR_H):0;
-    const totalPx =pxMuscu+pxCourse+pxVelo;
+    const pxGolf  =total>0?Math.round((w.golf  /maxSec)*BAR_H):0;
+    const totalPx =pxMuscu+pxCourse+pxVelo+pxGolf;
 
     // selection background
     if(isSelected){
@@ -2536,6 +2666,7 @@ function renderWeeklyChart(activities){
     let yBot=BAR_BOT;
 
     const segs=[
+      {h:pxGolf,   color:'#4ade80'},
       {h:pxVelo,   color:'#ffb347'},
       {h:pxCourse, color:'#34d399'},
       {h:pxMuscu,  color:'#4d9eff'},
@@ -2589,8 +2720,8 @@ function renderWeeklyChart(activities){
 
 
 // ════ WEEK DETAIL ════
-const SPORT_ICO2 = {muscu:'💪', course:'🏃', velo:'🚴'};
-const SPORT_CLR  = {muscu:'#4d9eff', course:'#34d399', velo:'#ffb347'};
+const SPORT_ICO2 = {muscu:'💪', course:'🏃', velo:'🚴', golf:'⛳'};
+const SPORT_CLR  = {muscu:'#4d9eff', course:'#34d399', velo:'#ffb347', golf:'#4ade80'};
 
 function toggleWeekDetail(idx){
   if(activeWeekIdx === idx){
@@ -2661,7 +2792,7 @@ function _renderWeekDetail(idx){
     const ds = d.toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'});
     const ico   = SPORT_ICO2[a.type]||'🏅';
     const color = SPORT_CLR[a.type]||'var(--text2)';
-    const label = a.session_label||a.label||a.strava_name||(a.type==='muscu'?'Musculation':a.type==='course'?'Course à pied':'Vélo de route');
+    const label = a.session_label||a.label||a.strava_name||(a.type==='muscu'?'Musculation':a.type==='course'?'Course à pied':a.type==='golf'?'Golf':'Vélo de route');
     const chips=[];
     if(a.duration_sec) chips.push('⏱ '+fmtDuration(a.duration_sec));
     if(a.distance_m)   chips.push('📍 '+fmtDist(a.distance_m));
@@ -4314,14 +4445,14 @@ let _donutChart = null;
 function renderHomeDonut(activities){
   const cutoff = new Date(); cutoff.setDate(cutoff.getDate()-30);
   const recent = activities.filter(a=>new Date(a.date)>=cutoff);
-  const totals = {muscu:0, course:0, velo:0};
+  const totals = {muscu:0, course:0, velo:0, golf:0};
   recent.forEach(a=>{ if(a.duration_sec && totals[a.type]!==undefined) totals[a.type]+=a.duration_sec; });
-  const total = totals.muscu+totals.course+totals.velo;
+  const total = totals.muscu+totals.course+totals.velo+totals.golf;
   if(!total){ document.getElementById('home-donut-legend').innerHTML='<div style="font-size:11px;color:var(--text2)">Aucune donnée</div>'; return; }
 
-  const labels = ['Muscu','Course','Vélo'];
-  const data   = [totals.muscu, totals.course, totals.velo];
-  const colors = [CJ_ACCENT, CJ_GREEN, CJ_AMBER];
+  const labels = ['Muscu','Course','Vélo','Golf'];
+  const data   = [totals.muscu, totals.course, totals.velo, totals.golf];
+  const colors = [CJ_ACCENT, CJ_GREEN, CJ_AMBER, '#4ade80'];
 
   _mkChart('home-donut-canvas', {
     type:'doughnut',
@@ -4430,7 +4561,7 @@ function renderHomeHeatmap(activities){
 
   // Legend
   h += '<div style="display:flex;gap:10px;margin-top:6px;flex-wrap:wrap;">';
-  [{label:'Muscu',c:CJ_ACCENT},{label:'Course',c:CJ_GREEN},{label:'Vélo',c:CJ_AMBER}].forEach(s=>{
+  [{label:'Muscu',c:CJ_ACCENT},{label:'Course',c:CJ_GREEN},{label:'Vélo',c:CJ_AMBER},{label:'Golf',c:'#4ade80'}].forEach(s=>{
     h += '<div style="display:flex;align-items:center;gap:4px;font-size:clamp(10px,0.8vw,13px);color:var(--text2)"><span style="width:clamp(8px,0.7vw,11px);height:clamp(8px,0.7vw,11px);border-radius:2px;background:'+s.c+';display:inline-block;opacity:.9"></span>'+s.label+'</div>';
   });
   h += '</div>';
@@ -4808,7 +4939,7 @@ function renderVeloScatterChart(acts){
 
 const FL_LABELS = {1:'Épuisé',2:'Difficile',3:'Correct',4:'Solide',5:'En feu'};
 const FL_COLORS = {1:'#ff5252',2:'#ffb347',3:'#7a8eb0',4:'#34d399',5:'#4d9eff'};
-const FL_SPORT_COLOR = {muscu:'#4d9eff', course:'#34d399', velo:'#ffb347'};
+const FL_SPORT_COLOR = {muscu:'#4d9eff', course:'#34d399', velo:'#ffb347', golf:'#4ade80'};
 const FL_SPORT_BORDER = {muscu:'rgba(77,158,255,0.15)', course:'rgba(52,211,153,0.15)', velo:'rgba(255,179,71,0.15)'};
 
 function renderFeelingChart(canvasId, acts, sport){
@@ -4925,6 +5056,15 @@ showSportTab = function(sport, tab, btn){
       renderVeloScatterChart(acts);
       renderFeelingChart('velo-feeling-chart', acts, 'velo');
     });
+  } else if(sport==='golf' && tab==='charts'){
+    dbLoad('golf').then(acts=>{
+      renderGolfScoreChart(acts);
+      renderGolfCourseChart(acts);
+      renderGolfHolesChart(acts);
+      renderFeelingChart('golf-feeling-chart', acts, 'golf');
+    });
+  } else if(sport==='golf' && tab==='main'){
+    renderActivities('golf');
   }
 };
 
@@ -4955,6 +5095,123 @@ window.addEventListener('resize', ()=>{
       renderWeeklyChart(_lastChartActivities);
   }, 150);
 });
+
+// ════ GOLF: ÉVOLUTION DU SCORE ════
+function renderGolfScoreChart(acts){
+  const sorted = [...acts]
+    .filter(a=>a.score)
+    .sort((a,b)=>new Date(a.date)-new Date(b.date));
+  if(!sorted.length){ _destroyChart('golf-score-chart'); return; }
+
+  const labels = sorted.map(a=>{ const d=new Date(a.date); return d.getDate()+'/'+(d.getMonth()+1); });
+  const scores = sorted.map(a=>a.score);
+  const scores18 = sorted.map(a=>a.holes===9 ? null : a.score);
+  const scores9  = sorted.map(a=>a.holes===9 ? a.score : null);
+
+  // Tendance linéaire simple
+  const n = scores.length;
+  const xMean = (n-1)/2;
+  const yMean = scores.reduce((s,v)=>s+v,0)/n;
+  const slope = scores.reduce((s,v,i)=>s+(i-xMean)*(v-yMean),0) / scores.reduce((s,_,i)=>s+(i-xMean)**2,0);
+  const intercept = yMean - slope*xMean;
+  const trend = scores.map((_,i)=>Math.round((slope*i+intercept)*10)/10);
+
+  _mkChart('golf-score-chart', {
+    type:'line',
+    data:{ labels, datasets:[
+      { label:'18 trous', data:scores18, borderColor:'#4ade80', backgroundColor:'#4ade8033',
+        pointRadius:5, pointHoverRadius:7, borderWidth:2, tension:0.2, spanGaps:false },
+      { label:'9 trous', data:scores9, borderColor:'#a3e635', backgroundColor:'#a3e63533',
+        pointRadius:5, pointHoverRadius:7, borderWidth:2, tension:0.2, spanGaps:false,
+        borderDash:[5,4] },
+      { label:'Tendance', data:trend, borderColor:CJ_AMBER+'99', backgroundColor:'transparent',
+        pointRadius:0, borderWidth:1.5, tension:0, borderDash:[3,3], spanGaps:true }
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false},
+        tooltip:{ callbacks:{
+          label: ctx=>ctx.dataset.label+' : '+ctx.raw
+        }, backgroundColor:CJ_TT_BG(), titleColor:CJ_TT_TIT(), bodyColor:CJ_TT_BOD(), borderColor:CJ_TT_BOR(), borderWidth:1 }
+      },
+      scales:{
+        x:{ grid:{color:CJ_GRID()}, ticks:{color:CJ_TICK(), font:{size:10}, maxRotation:45} },
+        y:{ grid:{color:CJ_GRID()}, ticks:{color:CJ_TICK(), font:{size:11}},
+            title:{display:true, text:'Score', color:CJ_TICK(), font:{size:10}} }
+      }
+    }
+  });
+
+  // Legend
+  const lg = document.querySelector('#golf-charts .golf-score-legend');
+  if(lg) lg.innerHTML = [
+    {c:'#4ade80', l:'18 trous'},
+    {c:'#a3e635', l:'9 trous'},
+    {c:CJ_AMBER, l:'Tendance'}
+  ].map(e=>'<span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:'+e.c+';display:inline-block"></span>'+e.l+'</span>').join('');
+}
+
+// ════ GOLF: SCORES PAR PARCOURS ════
+function renderGolfCourseChart(acts){
+  const cutoff = new Date(); cutoff.setDate(cutoff.getDate()-42);
+  const recent = acts.filter(a=>a.score && new Date(a.date)>=cutoff);
+  if(!recent.length){ _destroyChart('golf-course-chart'); return; }
+
+  const byCourse = {};
+  recent.forEach(a=>{
+    const k = a.course_name || 'Parcours inconnu';
+    if(!byCourse[k]) byCourse[k] = [];
+    byCourse[k].push(a.score);
+  });
+
+  const labels = Object.keys(byCourse);
+  const data = labels.map(k=>{
+    const scores = byCourse[k];
+    return Math.round(scores.reduce((s,v)=>s+v,0)/scores.length);
+  });
+  const counts = labels.map(k=>byCourse[k].length);
+  const colors = labels.map((_,i)=>{ const op=1-i*0.15; return '#4ade80'+Math.round(Math.max(op,0.4)*255).toString(16).padStart(2,'0'); });
+
+  _mkChart('golf-course-chart', {
+    type:'bar',
+    data:{ labels, datasets:[{ data, backgroundColor:colors, borderRadius:4 }] },
+    options:{ responsive:true, maintainAspectRatio:false, indexAxis:'y',
+      plugins:{ legend:{display:false},
+        tooltip:{ callbacks:{
+          label: (ctx)=>'Score moy : '+ctx.raw+' ('+counts[ctx.dataIndex]+' partie'+(counts[ctx.dataIndex]>1?'s':'')+')'
+        }, backgroundColor:CJ_TT_BG(), titleColor:CJ_TT_TIT(), bodyColor:CJ_TT_BOD(), borderColor:CJ_TT_BOR(), borderWidth:1 }
+      },
+      scales:{
+        x:{ grid:{color:CJ_GRID()}, ticks:{color:CJ_TICK(), font:{size:10}},
+            title:{display:true, text:'Score moyen', color:CJ_TICK(), font:{size:10}} },
+        y:{ grid:{color:'transparent'}, ticks:{color:CJ_TICK(), font:{size:10}} }
+      }
+    }
+  });
+}
+
+// ════ GOLF: RÉPARTITION 9 / 18 TROUS ════
+function renderGolfHolesChart(acts){
+  const count9  = acts.filter(a=>a.holes===9).length;
+  const count18 = acts.filter(a=>a.holes!==9).length;
+  if(!count9 && !count18){ _destroyChart('golf-holes-chart'); return; }
+
+  _mkChart('golf-holes-chart', {
+    type:'doughnut',
+    data:{ labels:['9 trous','18 trous'], datasets:[{
+      data:[count9, count18],
+      backgroundColor:['#a3e635cc','#4ade80cc'],
+      borderWidth:0
+    }]},
+    options:{ responsive:true, maintainAspectRatio:false, cutout:'60%',
+      plugins:{ legend:{display:false},
+        tooltip:{ callbacks:{
+          label: ctx=>ctx.label+' : '+ctx.raw+' partie'+(ctx.raw>1?'s':'')+' ('+Math.round(ctx.raw/(count9+count18)*100)+'%)'
+        }, backgroundColor:CJ_TT_BG(), titleColor:CJ_TT_TIT(), bodyColor:CJ_TT_BOD(), borderColor:CJ_TT_BOR(), borderWidth:1 }
+      }
+    }
+  });
+}
+
 
 // ════ THEME (light / dark) ════
 (function(){
