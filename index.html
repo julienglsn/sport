@@ -3427,54 +3427,89 @@ function _renderFreeExoBlock(exo, ei){
   return h;
 }
 
+let _exoPickerCat = null; // null = groupe view, string = exo list view
+
 function openExoPicker(){
   const picker = document.getElementById('free-exo-picker');
   if(!picker) return;
   const isOpen = picker.style.display !== 'none';
   picker.style.display = isOpen ? 'none' : 'block';
   if(!isOpen){
-    renderExoCatList('');
-    setTimeout(()=>{ const inp=document.getElementById('free-exo-input'); if(inp) inp.focus(); }, 50);
+    _exoPickerCat = null;
+    document.getElementById('free-exo-input').value = '';
+    renderExoPickerView();
   }
   const btn = document.getElementById('free-exo-open-btn');
   if(btn) btn.querySelector('span:last-child').textContent = isOpen ? '▾' : '▴';
 }
 
-function renderExoCatList(q){
+function renderExoPickerView(){
+  const q = (document.getElementById('free-exo-input')?.value||'').toLowerCase().trim();
   const catList = document.getElementById('free-exo-cat-list');
   if(!catList) return;
   const used = new Set(freeExos.filter(Boolean).map(e=>e.name.toLowerCase()));
-  const ql = q.toLowerCase().trim();
-  let html = '';
-  if(ql){
-    // Search mode: flat list of matches
-    const allMatches = EXERCISE_BANK.filter(n=>n.toLowerCase().includes(ql) && !used.has(n.toLowerCase()));
-    const exactMatch = EXERCISE_BANK.some(n=>n.toLowerCase()===ql);
-    if(!exactMatch && ql.length>1) allMatches.push('✚ Ajouter "'+q+'"');
-    if(!allMatches.length){
-      html = '<div style="padding:16px;text-align:center;font-size:13px;color:var(--text3)">Aucun résultat</div>';
-    } else {
-      html = allMatches.map(n=>'<div class="exo-pick-item" onclick="pickExo(this)" data-name="'+_esc(n)+'" style="padding:11px 16px;font-size:13px;border-bottom:1px solid var(--border);cursor:pointer;color:var(--text2)">'+_esc(n)+'</div>').join('');
-    }
-  } else {
-    // Category mode
-    EXERCISE_BANK_CATS.forEach(cat=>{
-      const items = cat.items.filter(n=>!used.has(n.toLowerCase()));
-      if(!items.length) return;
-      html += '<div style="padding:8px 16px 4px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);background:var(--bg3);border-bottom:1px solid var(--border)">'+cat.label+'</div>';
-      html += items.map(n=>'<div class="exo-pick-item" onclick="pickExo(this)" data-name="'+_esc(n)+'" style="padding:11px 16px;font-size:13px;border-bottom:1px solid var(--border);cursor:pointer;color:var(--text2)">'+n+'</div>').join('');
-    });
+
+  // ── SEARCH MODE (query typed) ─────────────────────────────────────────────
+  if(q){
+    const matches = EXERCISE_BANK.filter(n=>n.toLowerCase().includes(q) && !used.has(n.toLowerCase()));
+    const exact = EXERCISE_BANK.some(n=>n.toLowerCase()===q);
+    if(!exact && q.length>1) matches.push('✚ Ajouter "'+q+'"');
+    catList.innerHTML = matches.length
+      ? matches.map(n=>'<div class="exo-pick-item" onclick="pickExo(this)" data-name="'+_esc(n)+'" style="padding:12px 16px;font-size:13px;border-bottom:1px solid var(--border);cursor:pointer;color:var(--text2);display:flex;align-items:center;gap:10px"><span style="flex:1">'+_esc(n)+'</span><span style="color:var(--accent);font-size:16px">+</span></div>').join('')
+      : '<div style="padding:18px;text-align:center;font-size:13px;color:var(--text3)">Aucun résultat</div>';
+    return;
   }
+
+  // ── EXERCISE LIST for a chosen category ──────────────────────────────────
+  if(_exoPickerCat !== null){
+    const cat = EXERCISE_BANK_CATS.find(c=>c.label===_exoPickerCat);
+    const items = (cat ? cat.items : []).filter(n=>!used.has(n.toLowerCase()));
+    let html = '';
+    // Back button
+    html += '<div onclick="exoPickerBack()" style="display:flex;align-items:center;gap:8px;padding:11px 16px;border-bottom:1px solid var(--border);cursor:pointer;background:var(--bg3)">';
+    html += '<span style="font-size:14px;color:var(--accent)">←</span>';
+    html += '<span style="font-size:12px;font-weight:700;color:var(--text2)">'+_esc(_exoPickerCat)+'</span>';
+    html += '</div>';
+    if(items.length){
+      html += items.map(n=>'<div class="exo-pick-item" onclick="pickExo(this)" data-name="'+_esc(n)+'" style="padding:12px 16px;font-size:13px;border-bottom:1px solid var(--border);cursor:pointer;color:var(--text2);display:flex;align-items:center;justify-content:space-between"><span>'+_esc(n)+'</span><span style="color:var(--accent);font-size:16px">+</span></div>').join('');
+    } else {
+      html += '<div style="padding:18px;text-align:center;font-size:13px;color:var(--text3)">Tous déjà ajoutés</div>';
+    }
+    catList.innerHTML = html;
+    return;
+  }
+
+  // ── GROUP LIST (default) ──────────────────────────────────────────────────
+  let html = '';
+  EXERCISE_BANK_CATS.forEach(cat=>{
+    const available = cat.items.filter(n=>!used.has(n.toLowerCase())).length;
+    if(!available) return;
+    html += '<div onclick="exoPickerSelectCat(this)" data-cat="'+_esc(cat.label)+'" style="display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid var(--border);cursor:pointer">';
+    html += '<div style="display:flex;align-items:center;gap:10px"><span style="font-size:18px;line-height:1">'+cat.label.split(' ')[0]+'</span><span style="font-size:13px;font-weight:600;color:var(--text)">'+cat.label.split(' ').slice(1).join(' ')+'</span></div>';
+    html += '<div style="display:flex;align-items:center;gap:6px"><span style="font-size:11px;color:var(--text3)">'+available+' exos</span><span style="color:var(--text3);font-size:14px">›</span></div>';
+    html += '</div>';
+  });
   catList.innerHTML = html;
 }
 
+function exoPickerSelectCat(el){
+  _exoPickerCat = el.dataset.cat;
+  renderExoPickerView();
+}
+
+function exoPickerBack(){
+  _exoPickerCat = null;
+  renderExoPickerView();
+}
+
 function filterExoPicker(){
-  const q = document.getElementById('free-exo-input')?.value || '';
-  renderExoCatList(q);
+  _exoPickerCat = null;
+  renderExoPickerView();
 }
 
 // kept for backward compat
 function filterExoSuggestions(){ filterExoPicker(); }
+function renderExoCatList(q){ renderExoPickerView(); }
 
 function pickExo(el){
   let name = el.dataset.name || el.textContent.trim();
