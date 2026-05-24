@@ -1566,6 +1566,21 @@ async function renderActivities(sport){
     const isCourse = sport==='course';
 
     const isGolf = sport==='golf';
+
+    // ─── TEE COLOR badge ───
+    const TEE_STYLE = {
+      noir:  {bg:'#1a1a2e', border:'#555', text:'#e8f0ff', label:'Noir'},
+      bleu:  {bg:'#1a3a6e', border:'#4d9eff', text:'#e8f0ff', label:'Bleu'},
+      blanc: {bg:'#f0f4fc', border:'#aaa', text:'#1a2540', label:'Blanc'},
+      jaune: {bg:'#6e5a00', border:'#ffb347', text:'#ffe0a0', label:'Jaune'},
+      rouge: {bg:'#6e1a1a', border:'#ff5252', text:'#ffd0d0', label:'Rouge'},
+    };
+    const teeBadge = (tee) => {
+      if(!tee) return '';
+      const s = TEE_STYLE[tee] || {bg:'var(--bg3)', border:'var(--border2)', text:'var(--text)', label:tee};
+      return '<span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:6px;border:1px solid '+s.border+';background:'+s.bg+';color:'+s.text+';font-size:10px;font-weight:700;letter-spacing:.04em;margin-left:6px">'+s.label+'</span>';
+    };
+
     const m1 = isGolf
       ? {val: a.score ? a.score : '—', lbl: 'Score brut'}
       : isCourse
@@ -1587,14 +1602,28 @@ async function renderActivities(sport){
         ? {val: a.elevation_m ? '+'+a.elevation_m+'m' : '—', lbl: 'Dénivelé'}
         : {val: a.power_avg ? a.power_avg+' W' : '—', lbl: 'Puissance'};
 
+    // Golf extra metrics
+    const golfExtra = isGolf ? [
+      {val: (a.score_front||'—')+' / '+(a.score_back||'—'), lbl: 'Front / Back 9'},
+      {val: a.putts_1 != null ? a.putts_1 : '—', lbl: '1-Putts'},
+      {val: a.putts_3 != null ? a.putts_3 : '—', lbl: '3-Putts'},
+      {val: a.fairways != null ? a.fairways+'%' : '—', lbl: 'Fairways'},
+      {val: a.gir != null ? a.gir+'%' : '—', lbl: 'GIR'},
+    ] : [];
+
+    // act-head subtitle
+    const actSubtitle = isGolf
+      ? (a.score ? 'Score '+a.score : '—')+(a.holes ? ' · '+a.holes+' trous' : '')+(a.course_name ? ' · '+a.course_name : '')
+      : fmtDuration(a.duration_sec)+' · '+fmtDist(a.distance_m);
+
     return '<div class="act-card" id="act-'+a.id+'">'+
       '<div class="act-head" onclick="togAct(this)">'+
-      '<div><div class="act-title">'+(sport==='course'?'🏃':sport==='golf'?'⛳':'🚴')+(sport==='golf'?' Partie — ':' Sortie — ')+ds+'</div>'+
-      '<div class="act-date">'+fmtDuration(a.duration_sec)+' · '+fmtDist(a.distance_m)+'</div></div>'+
+      '<div><div class="act-title">'+(sport==='course'?'🏃':sport==='golf'?'⛳':'🚴')+(sport==='golf'?' Partie — ':' Sortie — ')+ds+(isGolf?teeBadge(a.tee_color):'')+'</div>'+
+      '<div class="act-date">'+actSubtitle+'</div></div>'+
       '<span class="hbg" style="background:var(--accent2);color:var(--accent)">'+_esc(a.source.toUpperCase())+'</span>'+
       '</div>'+
       '<div class="act-metrics" style="display:none">'+
-      [m1,m2,m3,m4,m5,m6].map(m=>'<div class="act-metric"><div class="act-metric-val">'+m.val+'</div><div class="act-metric-lbl">'+m.lbl+'</div></div>').join('')+
+      [m1,m2,m3,m4,m5,m6,...golfExtra].map(m=>'<div class="act-metric"><div class="act-metric-val">'+m.val+'</div><div class="act-metric-lbl">'+m.lbl+'</div></div>').join('')+
       '<div class="act-metric" style="cursor:pointer" onclick="editActivity(&quot;'+a.id+'&quot;,&quot;'+sport+'&quot;)"><div class="act-metric-val" style="font-size:18px">✏️</div><div class="act-metric-lbl">Modifier</div></div>'+
       '<div class="act-metric" style="cursor:pointer" onclick="deleteActivity(&quot;'+a.id+'&quot;,&quot;'+sport+'&quot;,event)"><div class="act-metric-val" style="font-size:18px">🗑️</div><div class="act-metric-lbl" style="color:var(--red)">Supprimer</div></div>'+
       '</div>'+
@@ -1705,17 +1734,22 @@ const MANUAL_FIELDS = {
     title: 'Nouvelle partie de golf',
     icon: '⛳',
     fields: [
-      {key:'date',        label:'Date',              type:'date-only',      required:true},
-      {key:'course_name', label:'Parcours',          type:'text',           required:false},
-      {key:'holes',       label:'Nombre de trous',   type:'select-holes',   required:false},
-      {key:'score',       label:'Score brut',        type:'number',         required:false},
-      {key:'score_net',   label:'Score net',         type:'number',         required:false},
-      {key:'putts',       label:'Putts',             type:'number',         required:false},
-      {key:'fairways',    label:'Fairways touchés %',type:'number',         required:false},
-      {key:'gir',         label:'GIR %',             type:'number',         required:false},
-      {key:'duration_sec',label:'Durée',             type:'time-parts',     required:false},
-      {key:'feeling',     label:'Ressenti',          type:'feeling',        required:false},
-      {key:'note',        label:'Note',              type:'textarea',       required:false},
+      {key:'date',        label:'Date',                  type:'date-only',      required:true},
+      {key:'course_name', label:'Parcours',              type:'text',           required:false},
+      {key:'holes',       label:'Nombre de trous',       type:'select-holes',   required:false},
+      {key:'tee_color',   label:'Couleur des tees',      type:'select-tees',    required:false},
+      {key:'score',       label:'Score brut (total)',    type:'number',         required:false},
+      {key:'score_front', label:'Score front 9',         type:'number',         required:false},
+      {key:'score_back',  label:'Score back 9',          type:'number',         required:false},
+      {key:'score_net',   label:'Score net',             type:'number',         required:false},
+      {key:'putts',       label:'Putts (total)',         type:'number',         required:false},
+      {key:'putts_1',     label:'1-Putts',               type:'number',         required:false},
+      {key:'putts_3',     label:'3-Putts',               type:'number',         required:false},
+      {key:'fairways',    label:'Fairways touchés %',    type:'number',         required:false},
+      {key:'gir',         label:'GIR %',                 type:'number',         required:false},
+      {key:'duration_sec',label:'Durée',                 type:'time-parts',     required:false},
+      {key:'feeling',     label:'Ressenti',              type:'feeling',        required:false},
+      {key:'note',        label:'Note',                  type:'textarea',       required:false},
     ]
   }
 };
@@ -1795,6 +1829,17 @@ async function showManualForm(sport, linkedSessionId, existingActivity){
     } else if(f.type==='select-holes'){
       const curHoles = ex[f.key]||18;
       fieldsHtml += '<select class="modal-input" id="mf-'+f.key+'"><option value="9"'+(curHoles===9?' selected':'')+'>9 trous</option><option value="18"'+(curHoles===18||!ex[f.key]?' selected':'')+'>18 trous</option></select>';
+    } else if(f.type==='select-tees'){
+      const curTee = ex[f.key]||'';
+      const teeOpts = [
+        {val:'noir',  label:'⬛ Noir'},
+        {val:'bleu',  label:'🟦 Bleu'},
+        {val:'blanc', label:'⬜ Blanc'},
+        {val:'jaune', label:'🟨 Jaune'},
+        {val:'rouge', label:'🟥 Rouge'},
+      ];
+      fieldsHtml += '<select class="modal-input" id="mf-'+f.key+'"><option value="">— Non renseigné —</option>'+
+        teeOpts.map(t=>'<option value="'+t.val+'"'+(curTee===t.val?' selected':'')+'>'+t.label+'</option>').join('')+'</select>';
     } else if(f.type==='textarea'){
       fieldsHtml += '<textarea class="ni" id="mf-'+f.key+'" placeholder="—" style="margin-bottom:0;height:60px"></textarea>';
     } else if(f.type==='feeling'){
@@ -1873,6 +1918,8 @@ async function saveManualForm(sport, existingActivity){
       activity[f.key] = el?.value?.trim() || null;
     } else if(f.type==='select-holes'){
       activity[f.key] = el?.value ? parseInt(el.value) : 18;
+    } else if(f.type==='select-tees'){
+      activity[f.key] = el?.value || null;
     } else if(f.type==='textarea'){
       activity.note = el?.value || null;
     }
@@ -5097,6 +5144,7 @@ window.addEventListener('resize', ()=>{
 });
 
 // ════ GOLF: ÉVOLUTION DU SCORE ════
+const TEE_COLOR_MAP = {noir:'#888', bleu:'#4d9eff', blanc:'#e8f0ff', jaune:'#ffb347', rouge:'#ff5252'};
 function renderGolfScoreChart(acts){
   const sorted = [...acts]
     .filter(a=>a.score)
@@ -5107,22 +5155,27 @@ function renderGolfScoreChart(acts){
   const scores = sorted.map(a=>a.score);
   const scores18 = sorted.map(a=>a.holes===9 ? null : a.score);
   const scores9  = sorted.map(a=>a.holes===9 ? a.score : null);
+  const ptColors18 = sorted.map(a=>a.holes===9 ? 'transparent' : (TEE_COLOR_MAP[a.tee_color]||'#4ade80'));
+  const ptColors9  = sorted.map(a=>a.holes===9 ? (TEE_COLOR_MAP[a.tee_color]||'#a3e635') : 'transparent');
 
   // Tendance linéaire simple
   const n = scores.length;
   const xMean = (n-1)/2;
   const yMean = scores.reduce((s,v)=>s+v,0)/n;
-  const slope = scores.reduce((s,v,i)=>s+(i-xMean)*(v-yMean),0) / scores.reduce((s,_,i)=>s+(i-xMean)**2,0);
+  const denom = scores.reduce((s,_,i)=>s+(i-xMean)**2,0);
+  const slope = denom ? scores.reduce((s,v,i)=>s+(i-xMean)*(v-yMean),0) / denom : 0;
   const intercept = yMean - slope*xMean;
   const trend = scores.map((_,i)=>Math.round((slope*i+intercept)*10)/10);
 
   _mkChart('golf-score-chart', {
     type:'line',
     data:{ labels, datasets:[
-      { label:'18 trous', data:scores18, borderColor:'#4ade80', backgroundColor:'#4ade8033',
-        pointRadius:5, pointHoverRadius:7, borderWidth:2, tension:0.2, spanGaps:false },
-      { label:'9 trous', data:scores9, borderColor:'#a3e635', backgroundColor:'#a3e63533',
-        pointRadius:5, pointHoverRadius:7, borderWidth:2, tension:0.2, spanGaps:false,
+      { label:'18 trous', data:scores18, borderColor:'#4ade80', backgroundColor:'#4ade8022',
+        pointBackgroundColor:ptColors18, pointBorderColor:ptColors18,
+        pointRadius:6, pointHoverRadius:8, borderWidth:2, tension:0.2, spanGaps:false },
+      { label:'9 trous', data:scores9, borderColor:'#a3e635', backgroundColor:'#a3e63522',
+        pointBackgroundColor:ptColors9, pointBorderColor:ptColors9,
+        pointRadius:6, pointHoverRadius:8, borderWidth:2, tension:0.2, spanGaps:false,
         borderDash:[5,4] },
       { label:'Tendance', data:trend, borderColor:CJ_AMBER+'99', backgroundColor:'transparent',
         pointRadius:0, borderWidth:1.5, tension:0, borderDash:[3,3], spanGaps:true }
@@ -5130,7 +5183,16 @@ function renderGolfScoreChart(acts){
     options:{ responsive:true, maintainAspectRatio:false,
       plugins:{ legend:{display:false},
         tooltip:{ callbacks:{
-          label: ctx=>ctx.dataset.label+' : '+ctx.raw
+          title: ctx=>{ const a=sorted[ctx[0].dataIndex]; const d=new Date(a.date); return (a.course_name||'Partie')+' · '+d.getDate()+'/'+(d.getMonth()+1); },
+          label: ctx=>{
+            if(ctx.datasetIndex===2) return 'Tendance : '+ctx.raw;
+            const a = sorted[ctx.dataIndex];
+            const lines = ['Score : '+ctx.raw+(a.score_net?' (net '+a.score_net+')':'')];
+            if(a.score_front||a.score_back) lines.push('Front '+( a.score_front||'—')+' / Back '+(a.score_back||'—'));
+            if(a.tee_color) lines.push('Tees : '+a.tee_color.charAt(0).toUpperCase()+a.tee_color.slice(1));
+            if(a.putts) lines.push('Putts : '+a.putts+(a.putts_1!=null?' (1-putt : '+a.putts_1+')':(a.putts_3!=null?' (3-putt : '+a.putts_3+')':'')));
+            return lines;
+          }
         }, backgroundColor:CJ_TT_BG(), titleColor:CJ_TT_TIT(), bodyColor:CJ_TT_BOD(), borderColor:CJ_TT_BOR(), borderWidth:1 }
       },
       scales:{
@@ -5140,14 +5202,6 @@ function renderGolfScoreChart(acts){
       }
     }
   });
-
-  // Legend
-  const lg = document.querySelector('#golf-charts .golf-score-legend');
-  if(lg) lg.innerHTML = [
-    {c:'#4ade80', l:'18 trous'},
-    {c:'#a3e635', l:'9 trous'},
-    {c:CJ_AMBER, l:'Tendance'}
-  ].map(e=>'<span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:'+e.c+';display:inline-block"></span>'+e.l+'</span>').join('');
 }
 
 // ════ GOLF: SCORES PAR PARCOURS ════
