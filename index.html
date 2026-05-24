@@ -118,9 +118,9 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .cal-dots{display:flex;gap:2px;justify-content:center;height:6px;margin-top:1px;align-items:center}
 .cal-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
 .cal-dot-muscu{background:#4d9eff}
-.cal-dot-course{background:#34d399}
+.cal-dot-course{background:#ef4444}
 .cal-dot-velo{background:#ffb347}
-.cal-dot-golf{background:#4ade80}
+.cal-dot-golf{background:#059669}
 
 /* HOME FEED */
 .feed-card{background:var(--bg2);border:1px solid var(--border);border-radius:11px;padding:9px 13px;margin-bottom:7px;cursor:pointer;transition:border-color .18s;display:flex;align-items:center;gap:10px}
@@ -4525,7 +4525,7 @@ function renderHomeDonut(activities){
 function renderHomeHeatmap(activities){
   const el = document.getElementById('home-heatmap');
   if(!el) return;
-  const SPORT_C = {muscu:CJ_ACCENT, course:CJ_GREEN, velo:CJ_AMBER, golf:'#4ade80', basket:'#a855f7'};
+  const SPORT_C = {muscu:CJ_ACCENT, course:'#ef4444', velo:CJ_AMBER, golf:'#059669', basket:'#a855f7'};
   const actByDay = {};
   activities.forEach(a=>{ const k=a.date.slice(0,10); if(!actByDay[k]) actByDay[k]=[]; actByDay[k].push(a.type); });
 
@@ -4608,7 +4608,7 @@ function renderHomeHeatmap(activities){
 
   // Legend
   h += '<div style="display:flex;gap:10px;margin-top:6px;flex-wrap:wrap;">';
-  [{label:'Muscu',c:CJ_ACCENT},{label:'Course',c:CJ_GREEN},{label:'Vélo',c:CJ_AMBER},{label:'Golf',c:'#4ade80'}].forEach(s=>{
+  [{label:'Muscu',c:CJ_ACCENT},{label:'Course',c:'#ef4444'},{label:'Vélo',c:CJ_AMBER},{label:'Golf',c:'#059669'}].forEach(s=>{
     h += '<div style="display:flex;align-items:center;gap:4px;font-size:clamp(10px,0.8vw,13px);color:var(--text2)"><span style="width:clamp(8px,0.7vw,11px);height:clamp(8px,0.7vw,11px);border-radius:2px;background:'+s.c+';display:inline-block;opacity:.9"></span>'+s.label+'</div>';
   });
   h += '</div>';
