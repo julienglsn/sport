@@ -30,7 +30,7 @@
   --accent3: rgba(77,158,255,0.06);
   --red:     #ff5252;
   --amber:   #ffb347;
-  --green:   #34d399;
+  --green:   #f43f5e;
   --safe-top:    env(safe-area-inset-top,0px);
   --safe-bottom: env(safe-area-inset-bottom,0px);
   --fd: 'Bebas Neue', sans-serif;
@@ -52,7 +52,7 @@ html.light {
   --accent3: rgba(43,125,233,0.06);
   --red:     #e03535;
   --amber:   #d48a00;
-  --green:   #1a9e70;
+  --green:   #059669;
 }
 html.light body { background: var(--bg); color: var(--text); }
 html.light .nav-bar { background: rgba(240,244,252,.96); }
@@ -118,9 +118,9 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .cal-dots{display:flex;gap:2px;justify-content:center;height:6px;margin-top:1px;align-items:center}
 .cal-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
 .cal-dot-muscu{background:#4d9eff}
-.cal-dot-course{background:#ef4444}
+.cal-dot-course{background:#f43f5e}
 .cal-dot-velo{background:#ffb347}
-.cal-dot-golf{background:#059669}
+.cal-dot-golf{background:#10b981}
 
 /* HOME FEED */
 .feed-card{background:var(--bg2);border:1px solid var(--border);border-radius:11px;padding:9px 13px;margin-bottom:7px;cursor:pointer;transition:border-color .18s;display:flex;align-items:center;gap:10px}
@@ -273,7 +273,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .hbg{font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px}
 .ba{background:rgba(255,82,82,.14);color:#ff5252}
 .bb{background:rgba(77,158,255,.14);color:#4d9eff}
-.bc{background:rgba(52,211,153,.14);color:#34d399}
+.bc{background:rgba(244,63,94,.14);color:#f43f5e}
 .hdt{display:none;border-top:1px solid var(--border);padding:12px 16px}
 .hdt.open{display:block}
 .her{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid var(--border)}
@@ -783,7 +783,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
           </div>
           <div style="display:flex;gap:12px;justify-content:center;margin-top:8px;flex-wrap:wrap">
             <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)"><span style="width:10px;height:10px;border-radius:3px;background:#4d9eff;display:inline-block"></span>Muscu</div>
-            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)"><span style="width:10px;height:10px;border-radius:3px;background:#34d399;display:inline-block"></span>Course</div>
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)"><span style="width:10px;height:10px;border-radius:3px;background:#f43f5e;display:inline-block"></span>Course</div>
             <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)"><span style="width:10px;height:10px;border-radius:3px;background:#ffb347;display:inline-block"></span>Vélo</div>
           </div>
         </div>
@@ -1107,7 +1107,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
           <div class="cal-grid-wrap chart-card" style="padding:14px;">
             <div class="chart-inner"><canvas id="course-pace-chart"></canvas></div>
             <div style="display:flex;gap:14px;margin-top:8px;font-size:11px;color:var(--text2);">
-              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#34d399;margin-right:4px;vertical-align:middle;"></span>Allure (min/km)</span>
+              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#f43f5e;margin-right:4px;vertical-align:middle;"></span>Allure (min/km)</span>
               <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#ff5252;margin-right:4px;vertical-align:middle;"></span>FC moy (bpm)</span>
             </div>
           </div>
@@ -2713,9 +2713,9 @@ function renderWeeklyChart(activities){
     let yBot=BAR_BOT;
 
     const segs=[
-      {h:pxGolf,   color:'#4ade80'},
+      {h:pxGolf,   color:'#10b981'},
       {h:pxVelo,   color:'#ffb347'},
-      {h:pxCourse, color:'#34d399'},
+      {h:pxCourse, color:'#f43f5e'},
       {h:pxMuscu,  color:'#4d9eff'},
     ];
     segs.forEach((seg,si)=>{
@@ -2768,7 +2768,7 @@ function renderWeeklyChart(activities){
 
 // ════ WEEK DETAIL ════
 const SPORT_ICO2 = {muscu:'💪', course:'🏃', velo:'🚴', golf:'⛳'};
-const SPORT_CLR  = {muscu:'#4d9eff', course:'#34d399', velo:'#ffb347', golf:'#4ade80'};
+const SPORT_CLR  = {muscu:'#4d9eff', course:'#f43f5e', velo:'#ffb347', golf:'#10b981'};
 
 function toggleWeekDetail(idx){
   if(activeWeekIdx === idx){
@@ -3170,7 +3170,7 @@ function renderHomeSuggestions(all){
   msgEl.textContent = message;
   sugEl.innerHTML = [
     { txt: muscuTxt,  color:'#4d9eff' },
-    { txt: courseTxt, color:'#34d399' },
+    { txt: courseTxt, color:'#f43f5e' },
     { txt: veloTxt,   color:'#ffb347' },
   ].map(s=>'<div class="hsugg"><span class="hsugg-dot" style="background:'+s.color+'"></span><span class="hsugg-txt">'+s.txt+'</span></div>').join('');
 }
@@ -4450,7 +4450,7 @@ seedRecipesIfEmpty();
 <script>
 // ════ CHART HELPERS ════
 const CJ_ACCENT = '#4d9eff';
-const CJ_GREEN  = '#34d399';
+const CJ_GREEN  = '#f43f5e';
 const CJ_AMBER  = '#ffb347';
 const CJ_RED    = '#ff5252';
 const CJ_GRID   = ()=> document.documentElement.classList.contains('light') ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.06)';
@@ -4499,7 +4499,7 @@ function renderHomeDonut(activities){
 
   const labels = ['Muscu','Course','Vélo','Golf'];
   const data   = [totals.muscu, totals.course, totals.velo, totals.golf];
-  const colors = [CJ_ACCENT, CJ_GREEN, CJ_AMBER, '#4ade80'];
+  const colors = [CJ_ACCENT, CJ_GREEN, CJ_AMBER, '#10b981'];
 
   _mkChart('home-donut-canvas', {
     type:'doughnut',
@@ -4525,7 +4525,7 @@ function renderHomeDonut(activities){
 function renderHomeHeatmap(activities){
   const el = document.getElementById('home-heatmap');
   if(!el) return;
-  const SPORT_C = {muscu:CJ_ACCENT, course:'#ef4444', velo:CJ_AMBER, golf:'#059669', basket:'#a855f7'};
+  const SPORT_C = {muscu:CJ_ACCENT, course:'#f43f5e', velo:CJ_AMBER, golf:'#10b981', basket:'#a855f7'};
   const actByDay = {};
   activities.forEach(a=>{ const k=a.date.slice(0,10); if(!actByDay[k]) actByDay[k]=[]; actByDay[k].push(a.type); });
 
@@ -4608,7 +4608,7 @@ function renderHomeHeatmap(activities){
 
   // Legend
   h += '<div style="display:flex;gap:10px;margin-top:6px;flex-wrap:wrap;">';
-  [{label:'Muscu',c:CJ_ACCENT},{label:'Course',c:'#ef4444'},{label:'Vélo',c:CJ_AMBER},{label:'Golf',c:'#059669'}].forEach(s=>{
+  [{label:'Muscu',c:CJ_ACCENT},{label:'Course',c:'#f43f5e'},{label:'Vélo',c:CJ_AMBER},{label:'Golf',c:'#10b981'}].forEach(s=>{
     h += '<div style="display:flex;align-items:center;gap:4px;font-size:clamp(10px,0.8vw,13px);color:var(--text2)"><span style="width:clamp(8px,0.7vw,11px);height:clamp(8px,0.7vw,11px);border-radius:2px;background:'+s.c+';display:inline-block;opacity:.9"></span>'+s.label+'</div>';
   });
   h += '</div>';
@@ -4985,8 +4985,8 @@ function renderVeloScatterChart(acts){
 // ════ FEELING CHARTS ════
 
 const FL_LABELS = {1:'Épuisé',2:'Difficile',3:'Correct',4:'Solide',5:'En feu'};
-const FL_COLORS = {1:'#ff5252',2:'#ffb347',3:'#7a8eb0',4:'#34d399',5:'#4d9eff'};
-const FL_SPORT_COLOR = {muscu:'#4d9eff', course:'#34d399', velo:'#ffb347', golf:'#4ade80'};
+const FL_COLORS = {1:'#ff5252',2:'#ffb347',3:'#7a8eb0',4:'#f43f5e',5:'#4d9eff'};
+const FL_SPORT_COLOR = {muscu:'#4d9eff', course:'#f43f5e', velo:'#ffb347', golf:'#10b981'};
 const FL_SPORT_BORDER = {muscu:'rgba(77,158,255,0.15)', course:'rgba(52,211,153,0.15)', velo:'rgba(255,179,71,0.15)'};
 
 function renderFeelingChart(canvasId, acts, sport){
@@ -5155,7 +5155,7 @@ function renderGolfScoreChart(acts){
   const scores = sorted.map(a=>a.score);
   const scores18 = sorted.map(a=>a.holes===9 ? null : a.score);
   const scores9  = sorted.map(a=>a.holes===9 ? a.score : null);
-  const ptColors18 = sorted.map(a=>a.holes===9 ? 'transparent' : (TEE_COLOR_MAP[a.tee_color]||'#4ade80'));
+  const ptColors18 = sorted.map(a=>a.holes===9 ? 'transparent' : (TEE_COLOR_MAP[a.tee_color]||'#10b981'));
   const ptColors9  = sorted.map(a=>a.holes===9 ? (TEE_COLOR_MAP[a.tee_color]||'#a3e635') : 'transparent');
 
   // Tendance linéaire simple
@@ -5170,7 +5170,7 @@ function renderGolfScoreChart(acts){
   _mkChart('golf-score-chart', {
     type:'line',
     data:{ labels, datasets:[
-      { label:'18 trous', data:scores18, borderColor:'#4ade80', backgroundColor:'#4ade8022',
+      { label:'18 trous', data:scores18, borderColor:'#10b981', backgroundColor:'#10b98122',
         pointBackgroundColor:ptColors18, pointBorderColor:ptColors18,
         pointRadius:6, pointHoverRadius:8, borderWidth:2, tension:0.2, spanGaps:false },
       { label:'9 trous', data:scores9, borderColor:'#a3e635', backgroundColor:'#a3e63522',
@@ -5223,7 +5223,7 @@ function renderGolfCourseChart(acts){
     return Math.round(scores.reduce((s,v)=>s+v,0)/scores.length);
   });
   const counts = labels.map(k=>byCourse[k].length);
-  const colors = labels.map((_,i)=>{ const op=1-i*0.15; return '#4ade80'+Math.round(Math.max(op,0.4)*255).toString(16).padStart(2,'0'); });
+  const colors = labels.map((_,i)=>{ const op=1-i*0.15; return '#10b981'+Math.round(Math.max(op,0.4)*255).toString(16).padStart(2,'0'); });
 
   _mkChart('golf-course-chart', {
     type:'bar',
@@ -5253,7 +5253,7 @@ function renderGolfHolesChart(acts){
     type:'doughnut',
     data:{ labels:['9 trous','18 trous'], datasets:[{
       data:[count9, count18],
-      backgroundColor:['#a3e635cc','#4ade80cc'],
+      backgroundColor:['#a3e635cc','#10b981cc'],
       borderWidth:0
     }]},
     options:{ responsive:true, maintainAspectRatio:false, cutout:'60%',
