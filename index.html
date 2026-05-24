@@ -337,7 +337,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .pin-key{padding:14px 8px;border-radius:12px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-family:var(--fb);font-size:20px;font-weight:600;cursor:pointer;transition:all .15s;line-height:1}
 .pin-key:active,.pin-key:hover{background:var(--bg4);border-color:var(--border2)}
 .pin-key.pin-del{font-size:16px;color:var(--text2)}
-.pin-key.pin-cancel{font-size:12px;color:var(--text2);grid-column:span 3;padding:10px}
+.pin-key.pin-cancel{font-size:12px;color:var(--text2);padding:10px}
 .pin-shake{animation:pinShake .35s ease}
 @keyframes pinShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
 .phpg{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;padding:40px 24px;text-align:center}
@@ -764,8 +764,8 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
       <div class="hero-stats-grid">
         <div class="hstat-box"><div class="hstat-val" id="hstat-hours">—</div><div class="hstat-lbl">Heures · 7j</div><div class="hstat-delta" id="hstat-hours-d">—</div></div>
         <div class="hstat-box"><div class="hstat-val" id="hstat-days">—</div><div class="hstat-lbl">Jours actifs · 30j</div><div class="hstat-delta" id="hstat-days-d">—</div></div>
-        <div class="hstat-box"><div class="hstat-val" id="hstat-km">—</div><div class="hstat-lbl">Km · mois</div><div class="hstat-delta" id="hstat-km-d">—</div></div>
-        <div class="hstat-box"><div class="hstat-val" id="hstat-vol">—</div><div class="hstat-lbl">Volume muscu · mois</div><div class="hstat-delta" id="hstat-vol-d">—</div></div>
+        <div class="hstat-box"><div class="hstat-val" id="hstat-km">—</div><div class="hstat-lbl">Km · 30j</div><div class="hstat-delta" id="hstat-km-d">—</div></div>
+        <div class="hstat-box"><div class="hstat-val" id="hstat-vol">—</div><div class="hstat-lbl">Volume muscu · 30j</div><div class="hstat-delta" id="hstat-vol-d">—</div></div>
       </div>
     </div>
   </div>
@@ -1404,6 +1404,11 @@ function setProfile(id){
   document.querySelectorAll('.profile-btn').forEach(b=>{
     b.classList.toggle('active', parseInt(b.dataset.pid)===id);
   });
+  // Réinitialiser les données de feeling pour forcer le re-rendu avec le bon profil
+  _homeFeelingActs = [];
+  if(typeof _destroyChart === 'function'){
+    _destroyChart('home-feeling-chart');
+  }
   // Recharger la section courante
   if(currentSection==='home'){
     renderHome();
@@ -2924,19 +2929,18 @@ function renderHomeStats(all){
   ddEl.textContent = dd===0?'— vs 30j préc.':(dd>0?'↑ +':'↓ ')+Math.abs(dd)+'j vs 30j préc.';
   ddEl.style.color = dd===0?'var(--text3)':dd>0?'var(--green)':'var(--red)';
 
-  // ── Km · mois vs mois préc. ──
-  const thisM1 = new Date(now.getFullYear(), now.getMonth(), 1);
-  const prevM1 = new Date(now.getFullYear(), now.getMonth()-1, 1);
+  // ── Km · 30j glissants vs 30j précédents ──
+  const km30s=daysAgo(30), km60s=daysAgo(60);
   const kmInRange = (s,e) => all.filter(a=>{ const d=new Date(a.date); return d>=s&&d<e&&(a.type==='course'||a.type==='velo'); })
     .reduce((acc,a)=>acc+(a.distance_m||0)/1000,0);
-  const km=kmInRange(thisM1,now), kmp=kmInRange(prevM1,thisM1);
+  const km=kmInRange(km30s,now), kmp=kmInRange(km60s,km30s);
   document.getElementById('hstat-km').textContent = Math.round(km)+'km';
   const dkm=km-kmp;
   const dkmEl=document.getElementById('hstat-km-d');
-  dkmEl.textContent = Math.round(Math.abs(dkm))===0?'— vs mois préc.':(dkm>0?'↑ +':'↓ ')+Math.round(Math.abs(dkm))+'km vs mois préc.';
+  dkmEl.textContent = Math.round(Math.abs(dkm))===0?'— vs 30j préc.':(dkm>0?'↑ +':'↓ ')+Math.round(Math.abs(dkm))+'km vs 30j préc.';
   dkmEl.style.color = Math.round(Math.abs(dkm))===0?'var(--text3)':dkm>0?'var(--green)':'var(--red)';
 
-  // ── Volume muscu · mois vs mois préc. ──
+  // ── Volume muscu · 30j glissants vs 30j précédents ──
   const volInRange = (s,e) => {
     let vol=0;
     all.filter(a=>{ const d=new Date(a.date); return d>=s&&d<e&&a.type==='muscu'; }).forEach(a=>{
@@ -2950,7 +2954,7 @@ function renderHomeStats(all){
     });
     return vol;
   };
-  const vkg=volInRange(thisM1,now), vpkg=volInRange(prevM1,thisM1);
+  const vkg=volInRange(km30s,now), vpkg=volInRange(km60s,km30s);
   const vlbs=Math.round(vkg*2.20462), vplbs=Math.round(vpkg*2.20462);
   const vkgR=Math.round(vkg), vpkgR=Math.round(vpkg);
   const fmtNum = n => n.toLocaleString('en-US');
@@ -2958,7 +2962,7 @@ function renderHomeStats(all){
     '<span style="font-size:13px">'+fmtNum(vlbs)+'<span style="font-size:9px;color:var(--text2);font-family:var(--fb);font-weight:600"> lbs</span> · '+fmtNum(vkgR)+'<span style="font-size:9px;color:var(--text2);font-family:var(--fb);font-weight:600"> kg</span></span>';
   const dvol=vlbs-vplbs;
   const dvolEl=document.getElementById('hstat-vol-d');
-  dvolEl.textContent = dvol===0?'— vs mois préc.':(dvol>0?'↑ +':'↓ ')+fmtNum(Math.abs(dvol))+' lbs vs mois préc.';
+  dvolEl.textContent = dvol===0?'— vs 30j préc.':(dvol>0?'↑ +':'↓ ')+fmtNum(Math.abs(dvol))+' lbs vs 30j préc.';
   dvolEl.style.color = dvol===0?'var(--text3)':dvol>0?'var(--green)':'var(--red)';
 }
 
@@ -4296,7 +4300,11 @@ async function saveEdit(i){
 
 // ════ PIN GUARD ════
 const PIN_SESSION_KEY = 'junella_unlocked';
-const PIN_CORRECT = '3507';
+const PIN_CODES = { 1: '3507', 2: '0717' };
+
+function _correctPin(){
+  return PIN_CODES[activeProfile] || '3507';
+}
 
 function isUnlocked(){
   return sessionStorage.getItem(PIN_SESSION_KEY) === 'yes';
@@ -4331,7 +4339,7 @@ function _showPinModal(onSuccess){
       '<button class="pin-key" onclick="pinKey(\'0\')">0</button>'+
       '<button class="pin-key pin-del" onclick="pinKey(\'clr\')">✕</button>'+
     '</div>'+
-    '<button class="pin-key pin-cancel" onclick="pinKey(\'cancel\')">Annuler</button>'+
+    '<button class="pin-key pin-cancel" style="width:100%;margin-top:10px;border-radius:12px;padding:12px;" onclick="pinKey(\'cancel\')">Annuler</button>'+
     '</div>';
   document.body.appendChild(overlay);
 
@@ -4367,7 +4375,7 @@ function _updatePinDots(){
 }
 
 function _checkPin(){
-  if(window._pinEntered === PIN_CORRECT){
+  if(window._pinEntered === _correctPin()){
     sessionStorage.setItem(PIN_SESSION_KEY, 'yes');
     document.getElementById('pin-overlay')?.remove();
     const cb = window._pinCallback;
