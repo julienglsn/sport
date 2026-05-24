@@ -1617,29 +1617,10 @@ async function renderActivities(sport){
       ? (a.score ? 'Score '+a.score : '—')+(a.holes ? ' · '+a.holes+' trous' : '')+(a.course_name ? ' · '+a.course_name : '')
       : fmtDuration(a.duration_sec)+' · '+fmtDist(a.distance_m);
 
-    // Chips de detail pour course / velo (visibles sans tap)
-    let detailChips = '';
-    if(!isGolf){
-      const chips = [];
-      if(isCourse && a.pace_sec_km)  chips.push({ico:'⚡', val:fmtPace(a.pace_sec_km)});
-      if(!isCourse && a.speed_kmh)   chips.push({ico:'⚡', val:a.speed_kmh+' km/h'});
-      if(a.hr_avg)                   chips.push({ico:'♥', val:a.hr_avg+' bpm'});
-      if(a.hr_max)                   chips.push({ico:'↑', val:a.hr_max+' bpm'});
-      if(isCourse && a.elevation_m)  chips.push({ico:'⛰', val:'+'+a.elevation_m+'m D+'});
-      if(!isCourse && a.power_avg)   chips.push({ico:'⚙', val:a.power_avg+' W'});
-      if(a.calories)                 chips.push({ico:'🔥', val:a.calories+' kcal'});
-      if(chips.length){
-        detailChips = '<div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:5px">'+
-          chips.map(c=>'<span style="display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;color:var(--text2);background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:2px 7px">'+
-            c.ico+' '+c.val+'</span>').join('')+
-          '</div>';
-      }
-    }
-
     return '<div class="act-card" id="act-'+a.id+'">'+
       '<div class="act-head" onclick="togAct(this)">'+
-      '<div style="flex:1;min-width:0"><div class="act-title">'+(sport==='course'?'🏃':sport==='golf'?'⛳':'🚴')+(sport==='golf'?' Partie — ':' Sortie — ')+ds+(isGolf?teeBadge(a.tee_color):'')+'</div>'+
-      '<div class="act-date">'+actSubtitle+'</div>'+detailChips+'</div>'+
+      '<div><div class="act-title">'+(sport==='course'?'🏃':sport==='golf'?'⛳':'🚴')+(sport==='golf'?' Partie — ':' Sortie — ')+ds+(isGolf?teeBadge(a.tee_color):'')+'</div>'+
+      '<div class="act-date">'+actSubtitle+'</div></div>'+
       '<span class="hbg" style="background:var(--accent2);color:var(--accent)">'+_esc(a.source.toUpperCase())+'</span>'+
       '</div>'+
       '<div class="act-metrics" style="display:none">'+
@@ -2281,25 +2262,17 @@ const SESSIONS = {
 
 
 // ════ EXERCISE BANK (for free sessions) ════
-const EXERCISE_BANK = [
-  // Jambes
-  'Goblet squat','Static lunges','Romanian deadlift','Leg press',
-  'Standing calf raises','Bulgarian split squat','Leg extension','Leg curl',
-  'Hip thrust','Step-ups','Sumo squat','Box jump',
-  // Push
-  'Bench press','Incline bench press','Dumbbell press','Dumbbell flyes',
-  'Cable flyes','Push-ups','Dips','Overhead press','Arnold press',
-  'Lateral raises','Front raises','Cable lateral raises',
-  // Pull
-  'Lat pulldown','Dumbbell row','Barbell row','Cable row','Pull-ups',
-  'Face pull','Rear delt flyes','Shrugs','Deadlift',
-  // Bras
-  'Cable curl','Hammer curl','Barbell curl','Preacher curl',
-  'Cable triceps pushdown','Skull crushers','Triceps dips','Overhead triceps extension',
-  // Gainage / Core
-  'Plank','Side plank','Ab wheel','Crunches','Leg raises','Russian twists',
-  'Cable crunch','Hyperextensions',
+const EXERCISE_BANK_CATS = [
+  { label: '🦵 Jambes',        items: ['Goblet squat','Static lunges','Romanian deadlift','Leg press','Standing calf raises','Bulgarian split squat','Leg extension','Leg curl','Hip thrust','Hamstring curl','Step-ups','Sumo squat','Box jump'] },
+  { label: '💪 Push',          items: ['Bench press','Incline bench press','Dumbbell press','Dumbbell flyes','Cable flyes','Push-ups','Dips','Overhead press','Arnold press','Lateral raises','Front raises','Cable lateral raises'] },
+  { label: '🔙 Pull / Dos',    items: ['Lat pulldown','Dumbbell row','Barbell row','Cable row','Pull-ups','Face pull','Rear delt flyes','Shrugs','Deadlift'] },
+  { label: '💪 Biceps',        items: ['Cable curl','Hammer curl','Barbell curl','Preacher curl'] },
+  { label: '🔱 Triceps',       items: ['Cable triceps pushdown','Triceps pushdown','Skull crushers','Triceps dips','Overhead triceps extension'] },
+  { label: '🍑 Fessiers',      items: ['Hip thrust','Sumo squat','Cable kickback','Glute bridge'] },
+  { label: '🧱 Core / Gainage',items: ['Plank','Side plank','Ab wheel','Crunches','Leg raises','Russian twists','Cable crunch','Hyperextensions'] },
 ];
+// Flat bank for backward compatibility
+const EXERCISE_BANK = EXERCISE_BANK_CATS.flatMap(c=>c.items).filter((v,i,a)=>a.indexOf(v)===i);
 
 // State for free session
 let freeExos = []; // [{name, sets, timed}]
@@ -3390,13 +3363,15 @@ function renderFreeLog(){
   freeExos.forEach((exo, ei)=>{ h += _renderFreeExoBlock(exo, ei); });
   h += '</div>';
 
-  // Add exercise input
+  // Add exercise — dropdown picker
   h += '<div id="free-add-zone" style="margin-bottom:14px">';
-  h += '<div style="position:relative">';
-  h += '<input class="di" id="free-exo-input" type="text" placeholder="Rechercher un exercice…" oninput="filterExoSuggestions()" autocomplete="off" style="width:100%">';
-  h += '<div id="free-exo-suggestions" style="display:none;position:absolute;top:100%;left:0;right:0;z-index:50;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;margin-top:4px;max-height:200px;overflow-y:auto"></div>';
+  h += '<button onclick="openExoPicker()" id="free-exo-open-btn" style="width:100%;padding:13px 16px;border-radius:12px;border:1px dashed var(--border2);background:var(--bg2);color:var(--text2);font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between"><span>+ Ajouter un exercice</span><span style="font-size:16px;opacity:.5">▾</span></button>';
+  h += '<div id="free-exo-picker" style="display:none;margin-top:6px;background:var(--bg2);border:1px solid var(--border2);border-radius:14px;overflow:hidden">';
+  h += '<div style="padding:10px 12px;border-bottom:1px solid var(--border);background:var(--bg2)">';
+  h += '<input class="di" id="free-exo-input" type="text" placeholder="🔍 Rechercher…" oninput="filterExoPicker()" autocomplete="off" style="width:100%;font-size:13px">';
   h += '</div>';
-  h += '<button onclick="addFreeExoFromInput()" style="width:100%;margin-top:8px;padding:11px;border-radius:10px;border:1px dashed var(--border2);background:transparent;color:var(--text2);font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer">+ Ajouter l\'exercice</button>';
+  h += '<div id="free-exo-cat-list" style="max-height:280px;overflow-y:auto"></div>';
+  h += '</div>';
   h += '</div>';
 
   // Cardio
@@ -3455,38 +3430,87 @@ function _renderFreeExoBlock(exo, ei){
   return h;
 }
 
-function filterExoSuggestions(){
-  const q = (document.getElementById('free-exo-input')?.value||'').toLowerCase().trim();
-  const box = document.getElementById('free-exo-suggestions');
-  if(!box) return;
-  if(!q){ box.style.display='none'; return; }
-  const used = new Set(freeExos.map(e=>e.name.toLowerCase()));
-  const matches = EXERCISE_BANK.filter(n=>n.toLowerCase().includes(q) && !used.has(n.toLowerCase())).slice(0,8);
-  // Also offer custom entry if not in bank
-  const exactMatch = EXERCISE_BANK.some(n=>n.toLowerCase()===q);
-  if(!exactMatch && q.length>1) matches.push('✚ Ajouter "'+q+'"');
-  if(!matches.length){ box.style.display='none'; return; }
-  box.style.display='block';
-  box.innerHTML = matches.map(m=>'<div onclick="pickExoSuggestion(this)" style="padding:10px 14px;cursor:pointer;font-size:13px;border-bottom:1px solid var(--border);color:var(--text2)">'+_esc(m)+'</div>').join('');
+function openExoPicker(){
+  const picker = document.getElementById('free-exo-picker');
+  if(!picker) return;
+  const isOpen = picker.style.display !== 'none';
+  picker.style.display = isOpen ? 'none' : 'block';
+  if(!isOpen){
+    renderExoCatList('');
+    setTimeout(()=>{ const inp=document.getElementById('free-exo-input'); if(inp) inp.focus(); }, 50);
+  }
+  const btn = document.getElementById('free-exo-open-btn');
+  if(btn) btn.querySelector('span:last-child').textContent = isOpen ? '▾' : '▴';
+}
+
+function renderExoCatList(q){
+  const catList = document.getElementById('free-exo-cat-list');
+  if(!catList) return;
+  const used = new Set(freeExos.filter(Boolean).map(e=>e.name.toLowerCase()));
+  const ql = q.toLowerCase().trim();
+  let html = '';
+  if(ql){
+    // Search mode: flat list of matches
+    const allMatches = EXERCISE_BANK.filter(n=>n.toLowerCase().includes(ql) && !used.has(n.toLowerCase()));
+    const exactMatch = EXERCISE_BANK.some(n=>n.toLowerCase()===ql);
+    if(!exactMatch && ql.length>1) allMatches.push('✚ Ajouter "'+q+'"');
+    if(!allMatches.length){
+      html = '<div style="padding:16px;text-align:center;font-size:13px;color:var(--text3)">Aucun résultat</div>';
+    } else {
+      html = allMatches.map(n=>'<div class="exo-pick-item" onclick="pickExo(this)" data-name="'+_esc(n)+'" style="padding:11px 16px;font-size:13px;border-bottom:1px solid var(--border);cursor:pointer;color:var(--text2)">'+_esc(n)+'</div>').join('');
+    }
+  } else {
+    // Category mode
+    EXERCISE_BANK_CATS.forEach(cat=>{
+      const items = cat.items.filter(n=>!used.has(n.toLowerCase()));
+      if(!items.length) return;
+      html += '<div style="padding:8px 16px 4px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);background:var(--bg3);border-bottom:1px solid var(--border)">'+cat.label+'</div>';
+      html += items.map(n=>'<div class="exo-pick-item" onclick="pickExo(this)" data-name="'+_esc(n)+'" style="padding:11px 16px;font-size:13px;border-bottom:1px solid var(--border);cursor:pointer;color:var(--text2)">'+n+'</div>').join('');
+    });
+  }
+  catList.innerHTML = html;
+}
+
+function filterExoPicker(){
+  const q = document.getElementById('free-exo-input')?.value || '';
+  renderExoCatList(q);
+}
+
+// kept for backward compat
+function filterExoSuggestions(){ filterExoPicker(); }
+
+function pickExo(el){
+  let name = el.dataset.name || el.textContent.trim();
+  if(name.startsWith('✚ Ajouter "')) name = name.slice(11, -1);
+  _addFreeExoByName(name);
 }
 
 function pickExoSuggestion(el){
   let name = el.textContent.trim();
   if(name.startsWith('✚ Ajouter "')) name = name.slice(11, -1);
-  document.getElementById('free-exo-input').value = name;
-  document.getElementById('free-exo-suggestions').style.display='none';
-  addFreeExoFromInput();
+  _addFreeExoByName(name);
 }
 
 function addFreeExoFromInput(){
   const inp = document.getElementById('free-exo-input');
   const name = inp?.value?.trim();
   if(!name) return;
-  const isTimed = name.toLowerCase().includes('plank') || name.toLowerCase().includes('gainage');
+  _addFreeExoByName(name);
+}
+
+function _addFreeExoByName(name){
+  if(!name) return;
+  const isTimed = name.toLowerCase().includes('plank') || name.toLowerCase().includes('gainage') || name.toLowerCase().includes('side plank');
   freeExos.push({name, sets:3, timed:isTimed});
   const ei = freeExos.length - 1;
-  inp.value = '';
-  document.getElementById('free-exo-suggestions').style.display='none';
+  // Close picker
+  const picker = document.getElementById('free-exo-picker');
+  if(picker) picker.style.display = 'none';
+  const btn = document.getElementById('free-exo-open-btn');
+  if(btn) btn.querySelector('span:last-child').textContent = '▾';
+  const inp = document.getElementById('free-exo-input');
+  if(inp) inp.value = '';
+  // Append block to list
   const listEl = document.getElementById('free-exo-list');
   if(listEl){
     const div = document.createElement('div');
