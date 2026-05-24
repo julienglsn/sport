@@ -1032,10 +1032,13 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
         </div>
 
         <div>
-          <div class="slabel" style="margin-bottom:10px">Tonnage total soulevé</div>
+          <div class="slabel" style="margin-bottom:10px">Intensité par séance</div>
           <div class="cal-grid-wrap chart-card" style="padding:14px;">
             <div class="chart-inner"><canvas id="muscu-intensity-chart"></canvas></div>
-            <div style="font-size:11px;color:var(--text2);margin-top:8px;text-align:center;" id="muscu-tonnage-subtitle">Σ séries × reps × charge — 15 dernières séances</div>
+            <div style="display:flex;gap:14px;margin-top:8px;font-size:11px;color:var(--text2);">
+              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#4D9ABF;margin-right:4px;vertical-align:middle;"></span>FC moy (bpm)</span>
+              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#C89A6255;margin-right:4px;vertical-align:middle;"></span>Calories (kcal)</span>
+            </div>
           </div>
         </div>
 
@@ -1614,10 +1617,29 @@ async function renderActivities(sport){
       ? (a.score ? 'Score '+a.score : '—')+(a.holes ? ' · '+a.holes+' trous' : '')+(a.course_name ? ' · '+a.course_name : '')
       : fmtDuration(a.duration_sec)+' · '+fmtDist(a.distance_m);
 
+    // Chips de detail pour course / velo (visibles sans tap)
+    let detailChips = '';
+    if(!isGolf){
+      const chips = [];
+      if(isCourse && a.pace_sec_km)  chips.push({ico:'⚡', val:fmtPace(a.pace_sec_km)});
+      if(!isCourse && a.speed_kmh)   chips.push({ico:'⚡', val:a.speed_kmh+' km/h'});
+      if(a.hr_avg)                   chips.push({ico:'♥', val:a.hr_avg+' bpm'});
+      if(a.hr_max)                   chips.push({ico:'↑', val:a.hr_max+' bpm'});
+      if(isCourse && a.elevation_m)  chips.push({ico:'⛰', val:'+'+a.elevation_m+'m D+'});
+      if(!isCourse && a.power_avg)   chips.push({ico:'⚙', val:a.power_avg+' W'});
+      if(a.calories)                 chips.push({ico:'🔥', val:a.calories+' kcal'});
+      if(chips.length){
+        detailChips = '<div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:5px">'+
+          chips.map(c=>'<span style="display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;color:var(--text2);background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:2px 7px">'+
+            c.ico+' '+c.val+'</span>').join('')+
+          '</div>';
+      }
+    }
+
     return '<div class="act-card" id="act-'+a.id+'">'+
       '<div class="act-head" onclick="togAct(this)">'+
-      '<div><div class="act-title">'+(sport==='course'?'🏃':sport==='golf'?'⛳':'🚴')+(sport==='golf'?' Partie — ':' Sortie — ')+ds+(isGolf?teeBadge(a.tee_color):'')+'</div>'+
-      '<div class="act-date">'+actSubtitle+'</div></div>'+
+      '<div style="flex:1;min-width:0"><div class="act-title">'+(sport==='course'?'🏃':sport==='golf'?'⛳':'🚴')+(sport==='golf'?' Partie — ':' Sortie — ')+ds+(isGolf?teeBadge(a.tee_color):'')+'</div>'+
+      '<div class="act-date">'+actSubtitle+'</div>'+detailChips+'</div>'+
       '<span class="hbg" style="background:var(--accent2);color:var(--accent)">'+_esc(a.source.toUpperCase())+'</span>'+
       '</div>'+
       '<div class="act-metrics" style="display:none">'+
@@ -4839,68 +4861,24 @@ function renderMuscuVolChart(acts){
 // ════ MUSCU: INTENSITÉ ════
 function renderMuscuIntensityChart(acts){
   const sorted = [...acts].sort((a,b)=>new Date(a.date)-new Date(b.date)).slice(-15);
-  if(!sorted.length){ _destroyChart('muscu-intensity-chart'); return; }
-
   const labels = sorted.map(a=>{ const d=new Date(a.date); return d.getDate()+'/'+(d.getMonth()+1); });
-
-  // Tonnage = S (reps x weight) pour chaque serie de chaque exercice
-  const tonnageData = sorted.map(a=>{
-    let total = 0;
-    (a.exercises||[]).forEach(e=>{
-      (e.sets||[]).forEach(s=>{
-        const reps   = parseFloat(s.reps)   || 0;
-        const weight = parseFloat(s.weight) || 0;
-        total += reps * weight;
-      });
-    });
-    return total > 0 ? Math.round(total) : null;
-  });
-
-  // Ligne de tendance (moyenne mobile 3 pts)
-  const trend = tonnageData.map((v,i,arr)=>{
-    const win = arr.slice(Math.max(0,i-1), i+2).filter(x=>x!=null);
-    return win.length ? Math.round(win.reduce((s,x)=>s+x,0)/win.length) : null;
-  });
-
-  // Barres : vert si >= moyenne, bleu sinon
-  const validVals = tonnageData.filter(v=>v!=null);
-  const avg = validVals.length ? validVals.reduce((s,v)=>s+v,0)/validVals.length : 0;
-  const barColors = tonnageData.map(v=> v!=null && v>=avg ? CJ_GREEN+'cc' : CJ_ACCENT+'cc');
+  const hrData = sorted.map(a=>a.hr_avg||null);
+  const calData = sorted.map(a=>a.calories||null);
 
   _mkChart('muscu-intensity-chart', {
     type:'bar',
     data:{ labels, datasets:[
-      { label:'Tonnage', data:tonnageData, backgroundColor:barColors, borderRadius:4, order:2 },
-      { label:'Tendance', data:trend, type:'line', borderColor:CJ_AMBER, backgroundColor:'transparent',
-        pointRadius:3, pointBackgroundColor:CJ_AMBER, borderWidth:2, tension:0.4, spanGaps:true, order:1 }
+      { label:'FC moy', data:hrData, backgroundColor:CJ_ACCENT+'cc', borderRadius:3, yAxisID:'y' },
+      { label:'Calories', data:calData, backgroundColor:CJ_AMBER+'55', borderRadius:3, yAxisID:'y2' }
     ]},
     options:{ responsive:true, maintainAspectRatio:false,
-      plugins:{
-        legend:{display:false},
-        tooltip:{ callbacks:{
-          title: ctx=>{ const a=sorted[ctx[0].dataIndex]; const d=new Date(a.date); return (a.program_name||'Seance')+' - '+d.getDate()+'/'+(d.getMonth()+1); },
-          label: ctx=>{
-            if(ctx.datasetIndex===1) return 'Tendance : '+ctx.raw+' lbs';
-            const a = sorted[ctx.dataIndex];
-            const exoCount = (a.exercises||[]).length;
-            const setCount = (a.exercises||[]).reduce((s,e)=>s+(e.sets||[]).length,0);
-            return ['Tonnage : '+ctx.raw+' lbs', exoCount+' exercices - '+setCount+' series'];
-          }
-        }, backgroundColor:CJ_TT_BG(), titleColor:CJ_TT_TIT(), bodyColor:CJ_TT_BOD(), borderColor:CJ_TT_BOR(), borderWidth:1 }
-      },
+      plugins:{ legend:{display:false} },
       scales:{
         x:{ grid:{color:CJ_GRID()}, ticks:{color:CJ_TICK(), font:{size:10}, maxRotation:45} },
-        y:{ grid:{color:CJ_GRID()}, ticks:{color:CJ_TICK(), font:{size:11}, callback:v=>v>=1000?(v/1000).toFixed(1)+'k':v},
-            title:{display:true, text:'lbs', color:CJ_TICK(), font:{size:10}} }
+        y:{ grid:{color:CJ_GRID()}, ticks:{color:CJ_TICK(), font:{size:11}}, title:{display:true, text:'bpm', color:CJ_TICK(), font:{size:10}}, min:80 },
+        y2:{ position:'right', grid:{display:false}, ticks:{color:CJ_TICK(), font:{size:11}}, title:{display:true, text:'kcal', color:CJ_TICK(), font:{size:10}} }
       }}
   });
-
-  const totalTonnage = validVals.reduce((s,v)=>s+v,0);
-  const sub = document.getElementById('muscu-tonnage-subtitle');
-  if(sub && totalTonnage>0){
-    const t = totalTonnage>=1000 ? (totalTonnage/1000).toFixed(1)+'k' : totalTonnage;
-    sub.textContent = 'S series x reps x charge - '+t+' lbs sur '+validVals.length+' seances';
-  }
 }
 
 // ════ MUSCU: ALL CHARTS ════
