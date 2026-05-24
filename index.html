@@ -4525,7 +4525,7 @@ function renderHomeDonut(activities){
 function renderHomeHeatmap(activities){
   const el = document.getElementById('home-heatmap');
   if(!el) return;
-  const SPORT_C = {muscu:CJ_ACCENT, course:CJ_GREEN, velo:CJ_AMBER, basket:'#a855f7'};
+  const SPORT_C = {muscu:CJ_ACCENT, course:CJ_GREEN, velo:CJ_AMBER, golf:'#4ade80', basket:'#a855f7'};
   const actByDay = {};
   activities.forEach(a=>{ const k=a.date.slice(0,10); if(!actByDay[k]) actByDay[k]=[]; actByDay[k].push(a.type); });
 
