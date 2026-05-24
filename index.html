@@ -11,7 +11,7 @@
 <meta name="description" content="Junella — ton app sport et nutrition.">
 <meta property="og:title" content="Junella">
 <meta property="og:description" content="Junella — ton app sport et nutrition.">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230E1116'/%3E%3Ctext x='90' y='56' font-size='18' font-weight='700' fill='%23B8C8D8' text-anchor='middle' font-family='system-ui' letter-spacing='1'%3EJUNELLA%3C/text%3E%3Ctext x='90' y='130' font-size='22' font-weight='400' fill='%23B8C8D8' text-anchor='middle' font-family='system-ui'%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230E1116'/%3E%3Ctext x='90' y='56' font-size='18' font-weight='700' fill='%234D9ABF' text-anchor='middle' font-family='system-ui' letter-spacing='1'%3EJUNELLA%3C/text%3E%3Ctext x='90' y='130' font-size='22' font-weight='400' fill='%234D9ABF' text-anchor='middle' font-family='system-ui'%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -25,12 +25,12 @@
   --text:    #F3F1EC;
   --text2:   #B2B0AA;
   --text3:   #6B7280;
-  --accent:  #B8C8D8;
-  --accent2: rgba(184,200,216,0.12);
-  --accent3: rgba(184,200,216,0.06);
+  --accent:  #4D9ABF;
+  --accent2: rgba(77,154,191,0.12);
+  --accent3: rgba(77,154,191,0.06);
   --red:     #E85D5D;
-  --amber:   #C8B8A2;
-  --green:   #A8C4B8;
+  --amber:   #C89A62;
+  --green:   #4AAD8A;
   --safe-top:    env(safe-area-inset-top,0px);
   --safe-bottom: env(safe-area-inset-bottom,0px);
   --fd: 'Bebas Neue', sans-serif;
@@ -47,9 +47,9 @@ html.light {
   --text:    #1A2540;
   --text2:   #5A6A8A;
   --text3:   #9AAAC8;
-  --accent:  #B8C8D8;
-  --accent2: rgba(184,200,216,0.10);
-  --accent3: rgba(184,200,216,0.06);
+  --accent:  #4D9ABF;
+  --accent2: rgba(77,154,191,0.10);
+  --accent3: rgba(77,154,191,0.06);
   --red:     #E03535;
   --amber:   #D48A00;
   --green:   #059669;
@@ -91,15 +91,15 @@ html.light .cal-grid-wrap { background: var(--bg2); }
 html.light .imp-btn { background: var(--bg2); color: var(--text); border-color: var(--border2); }
 html.light .sc-btn { background: var(--bg3); color: var(--text); }
 html.light .modal-cancel { color: var(--text2); }
-html.light .hero { background: linear-gradient(160deg,rgba(184,200,216,.05) 0%,transparent 60%); border-bottom-color: var(--border); }
-html.light .ph   { background: linear-gradient(160deg,rgba(184,200,216,.05) 0%,transparent 60%); }
+html.light .hero { background: linear-gradient(160deg,rgba(77,154,191,.05) 0%,transparent 60%); border-bottom-color: var(--border); }
+html.light .ph   { background: linear-gradient(160deg,rgba(77,154,191,.05) 0%,transparent 60%); }
 html.light .ph-divider { background: rgba(0,0,0,0.07); }
 html.light .hero-divider { background: rgba(0,0,0,0.07); }
 html.light .ba { background: rgba(232,93,93,.1); color: #c03030; }
-html.light .bb { background: rgba(184,200,216,.1); color: #8A7A66; }
+html.light .bb { background: rgba(77,154,191,.1); color: #8A7A66; }
 html.light .bc { background: rgba(26,158,112,.1); color: #137a56; }
-html.light .exo-pill { background: rgba(184,200,216,.06); border-color: rgba(184,200,216,.15); }
-html.light .sst { background: var(--accent2); border-color: rgba(184,200,216,.2); }
+html.light .exo-pill { background: rgba(77,154,191,.06); border-color: rgba(77,154,191,.15); }
+html.light .sst { background: var(--accent2); border-color: rgba(77,154,191,.2); }
 
 
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -117,10 +117,10 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .cal-day.other-week{color:var(--text3)}
 .cal-dots{display:flex;gap:2px;justify-content:center;height:6px;margin-top:1px;align-items:center}
 .cal-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
-.cal-dot-muscu{background:#B8C8D8}
-.cal-dot-course{background:#C9896E}
-.cal-dot-velo{background:#C8B8A2}
-.cal-dot-golf{background:#A8C4B8}
+.cal-dot-muscu{background:#4D9ABF}
+.cal-dot-course{background:#BF5E40}
+.cal-dot-velo{background:#C89A62}
+.cal-dot-golf{background:#4AAD8A}
 
 /* HOME FEED */
 .feed-card{background:var(--bg2);border:1px solid var(--border);border-radius:11px;padding:9px 13px;margin-bottom:7px;cursor:pointer;transition:border-color .18s;display:flex;align-items:center;gap:10px}
@@ -152,8 +152,8 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 @keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
 /* HEADER */
-.ph{padding:calc(var(--safe-top) + 20px) 20px 18px;border-bottom:1px solid var(--border);position:relative;overflow:hidden;background:linear-gradient(160deg,rgba(184,200,216,.06) 0%,transparent 60%)}
-.ph::before{content:'';position:absolute;top:-80px;right:-80px;width:240px;height:240px;background:radial-gradient(circle,rgba(184,200,216,.06) 0%,transparent 65%);pointer-events:none}
+.ph{padding:calc(var(--safe-top) + 20px) 20px 18px;border-bottom:1px solid var(--border);position:relative;overflow:hidden;background:linear-gradient(160deg,rgba(77,154,191,.06) 0%,transparent 60%)}
+.ph::before{content:'';position:absolute;top:-80px;right:-80px;width:240px;height:240px;background:radial-gradient(circle,rgba(77,154,191,.06) 0%,transparent 65%);pointer-events:none}
 .ph .ey{font-family:var(--fd);font-size:38px;letter-spacing:.06em;line-height:1;color:var(--text);margin-bottom:0}
 .ph .ey-slogan{font-size:11px;font-style:italic;font-weight:600;letter-spacing:.1em;color:var(--accent);margin-top:4px;margin-bottom:0}
 .ph-divider{height:1px;background:rgba(255,255,255,0.07);margin:14px 0}
@@ -227,7 +227,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 /* SUPERSET */
 .ssb{background:var(--bg2);border:1px solid var(--border);border-radius:18px;margin-bottom:10px;overflow:hidden}
 .ssh{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--bg3);border-bottom:1px solid var(--border)}
-.sst{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--accent2);color:var(--accent);border:1px solid rgba(184,200,216,.2);padding:3px 8px;border-radius:6px}
+.sst{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--accent2);color:var(--accent);border:1px solid rgba(77,154,191,.2);padding:3px 8px;border-radius:6px}
 .sss{font-size:12px;color:var(--text2);font-weight:500}
 .sse{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-bottom:1px solid var(--border)}
 .sse:last-child{border-bottom:none}
@@ -272,8 +272,8 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .hed{font-size:12px;color:var(--text2);margin-top:2px}
 .hbg{font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px}
 .ba{background:rgba(232,93,93,.14);color:#E85D5D}
-.bb{background:rgba(184,200,216,.14);color:#B8C8D8}
-.bc{background:rgba(201,137,110,.14);color:#C9896E}
+.bb{background:rgba(77,154,191,.14);color:#4D9ABF}
+.bc{background:rgba(191,94,64,.14);color:#BF5E40}
 .hdt{display:none;border-top:1px solid var(--border);padding:12px 16px}
 .hdt.open{display:block}
 .her{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid var(--border)}
@@ -289,13 +289,13 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .exo-pills-row:last-child{border-bottom:none}
 .exo-pills-name{font-size:13px;color:var(--text2);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .exo-pills-list{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
-.exo-pill{font-size:11px;font-weight:700;padding:3px 7px;border-radius:6px;background:rgba(184,200,216,.06);border:1px solid rgba(184,200,216,.15);color:var(--accent);white-space:nowrap}
+.exo-pill{font-size:11px;font-weight:700;padding:3px 7px;border-radius:6px;background:rgba(77,154,191,.06);border:1px solid rgba(77,154,191,.15);color:var(--accent);white-space:nowrap}
 .empty{text-align:center;padding:48px 20px;color:var(--text3)}
 .empty .ico{font-size:38px;margin-bottom:10px}
 .empty p{font-size:14px;line-height:1.5}
 
 /* HOME */
-.hero{padding:calc(var(--safe-top) + 20px) 20px 18px;background:linear-gradient(160deg,rgba(184,200,216,.06) 0%,transparent 60%);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.hero{padding:calc(var(--safe-top) + 20px) 20px 18px;background:linear-gradient(160deg,rgba(77,154,191,.06) 0%,transparent 60%);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
 .hero::after{content:'';position:absolute;bottom:-60px;right:-60px;width:220px;height:220px;background:radial-gradient(circle,rgba(139,92,246,.06) 0%,transparent 65%);pointer-events:none}
 .hrey{font-family:var(--fd);font-size:38px;letter-spacing:.06em;line-height:1;color:var(--text);margin-bottom:0}
 .hrey-slogan{font-size:11px;font-style:italic;font-weight:600;letter-spacing:.1em;color:var(--accent);margin-top:4px}
@@ -344,7 +344,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .phico{font-size:56px;margin-bottom:16px}
 .phtl{font-family:var(--fd);font-size:36px;letter-spacing:.04em;margin-bottom:8px}
 .phsb{color:var(--text2);font-size:14px;line-height:1.6}
-.phbg{margin-top:20px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:8px 18px;border-radius:10px;background:var(--accent2);color:var(--accent);border:1px solid rgba(184,200,216,.2)}
+.phbg{margin-top:20px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:8px 18px;border-radius:10px;background:var(--accent2);color:var(--accent);border:1px solid rgba(77,154,191,.2)}
 
 /* MACRO CARDS */
 .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
@@ -594,7 +594,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
   /* ── Page headers ── */
   .ph{
     padding:28px 40px 24px;
-    background:linear-gradient(135deg,rgba(184,200,216,.07) 0%,transparent 55%);
+    background:linear-gradient(135deg,rgba(77,154,191,.07) 0%,transparent 55%);
   }
   .ph .ey{font-size:48px}
   .ph h1{font-size:30px}
@@ -782,9 +782,9 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
             <div class="empty"><div class="ico"><div class="spin"></div></div><p>Chargement...</p></div>
           </div>
           <div style="display:flex;gap:12px;justify-content:center;margin-top:8px;flex-wrap:wrap">
-            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)"><span style="width:10px;height:10px;border-radius:3px;background:#B8C8D8;display:inline-block"></span>Muscu</div>
-            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)"><span style="width:10px;height:10px;border-radius:3px;background:#C9896E;display:inline-block"></span>Course</div>
-            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)"><span style="width:10px;height:10px;border-radius:3px;background:#C8B8A2;display:inline-block"></span>Vélo</div>
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)"><span style="width:10px;height:10px;border-radius:3px;background:#4D9ABF;display:inline-block"></span>Muscu</div>
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)"><span style="width:10px;height:10px;border-radius:3px;background:#BF5E40;display:inline-block"></span>Course</div>
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)"><span style="width:10px;height:10px;border-radius:3px;background:#C89A62;display:inline-block"></span>Vélo</div>
           </div>
         </div>
       </div>
@@ -1040,8 +1040,8 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
           <div class="cal-grid-wrap chart-card" style="padding:14px;">
             <div class="chart-inner"><canvas id="muscu-intensity-chart"></canvas></div>
             <div style="display:flex;gap:14px;margin-top:8px;font-size:11px;color:var(--text2);">
-              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#B8C8D8;margin-right:4px;vertical-align:middle;"></span>FC moy (bpm)</span>
-              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#C8B8A255;margin-right:4px;vertical-align:middle;"></span>Calories (kcal)</span>
+              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#4D9ABF;margin-right:4px;vertical-align:middle;"></span>FC moy (bpm)</span>
+              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#C89A6255;margin-right:4px;vertical-align:middle;"></span>Calories (kcal)</span>
             </div>
           </div>
         </div>
@@ -1107,7 +1107,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
           <div class="cal-grid-wrap chart-card" style="padding:14px;">
             <div class="chart-inner"><canvas id="course-pace-chart"></canvas></div>
             <div style="display:flex;gap:14px;margin-top:8px;font-size:11px;color:var(--text2);">
-              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#C9896E;margin-right:4px;vertical-align:middle;"></span>Allure (min/km)</span>
+              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#BF5E40;margin-right:4px;vertical-align:middle;"></span>Allure (min/km)</span>
               <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#E85D5D;margin-right:4px;vertical-align:middle;"></span>FC moy (bpm)</span>
             </div>
           </div>
@@ -1181,7 +1181,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
           <div class="cal-grid-wrap chart-card" style="padding:14px;">
             <div class="chart-inner"><canvas id="velo-speed-chart"></canvas></div>
             <div style="display:flex;gap:14px;margin-top:8px;font-size:11px;color:var(--text2);flex-wrap:wrap;">
-              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#C8B8A2;margin-right:4px;vertical-align:middle;"></span>Vitesse (km/h)</span>
+              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#C89A62;margin-right:4px;vertical-align:middle;"></span>Vitesse (km/h)</span>
               <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#E85D5D;margin-right:4px;vertical-align:middle;"></span>FC moy (bpm)</span>
               <span style="display:flex;align-items:center;gap:4px;color:var(--text3)">⛰ Taille point = dénivelé</span>
             </div>
@@ -1570,9 +1570,9 @@ async function renderActivities(sport){
     // ─── TEE COLOR badge ───
     const TEE_STYLE = {
       noir:  {bg:'#1a1a2e', border:'#555', text:'#e8f0ff', label:'Noir'},
-      bleu:  {bg:'#1a3a6e', border:'#B8C8D8', text:'#e8f0ff', label:'Bleu'},
+      bleu:  {bg:'#1a3a6e', border:'#4D9ABF', text:'#e8f0ff', label:'Bleu'},
       blanc: {bg:'#f0f4fc', border:'#aaa', text:'#1A2540', label:'Blanc'},
-      jaune: {bg:'#6e5a00', border:'#C8B8A2', text:'#ffe0a0', label:'Jaune'},
+      jaune: {bg:'#6e5a00', border:'#C89A62', text:'#ffe0a0', label:'Jaune'},
       rouge: {bg:'#6e1a1a', border:'#E85D5D', text:'#ffd0d0', label:'Rouge'},
     };
     const teeBadge = (tee) => {
@@ -2713,10 +2713,10 @@ function renderWeeklyChart(activities){
     let yBot=BAR_BOT;
 
     const segs=[
-      {h:pxGolf,   color:'#A8C4B8'},
-      {h:pxVelo,   color:'#C8B8A2'},
-      {h:pxCourse, color:'#C9896E'},
-      {h:pxMuscu,  color:'#B8C8D8'},
+      {h:pxGolf,   color:'#4AAD8A'},
+      {h:pxVelo,   color:'#C89A62'},
+      {h:pxCourse, color:'#BF5E40'},
+      {h:pxMuscu,  color:'#4D9ABF'},
     ];
     segs.forEach((seg,si)=>{
       if(seg.h<=0) return;
@@ -2750,7 +2750,7 @@ function renderWeeklyChart(activities){
 
     // ── Indicateur "semaine courante" — petit point sous le label ──
     if(isCur){
-      bars+=`<circle cx="${x+barW/2}" cy="${H-3}" r="${DOT_R}" fill="#B8C8D8"/>`;
+      bars+=`<circle cx="${x+barW/2}" cy="${H-3}" r="${DOT_R}" fill="#4D9ABF"/>`;
     }
   });
 
@@ -2768,7 +2768,7 @@ function renderWeeklyChart(activities){
 
 // ════ WEEK DETAIL ════
 const SPORT_ICO2 = {muscu:'💪', course:'🏃', velo:'🚴', golf:'⛳'};
-const SPORT_CLR  = {muscu:'#B8C8D8', course:'#C9896E', velo:'#C8B8A2', golf:'#A8C4B8'};
+const SPORT_CLR  = {muscu:'#4D9ABF', course:'#BF5E40', velo:'#C89A62', golf:'#4AAD8A'};
 
 function toggleWeekDetail(idx){
   if(activeWeekIdx === idx){
@@ -3169,9 +3169,9 @@ function renderHomeSuggestions(all){
   // ── Rendu ──
   msgEl.textContent = message;
   sugEl.innerHTML = [
-    { txt: muscuTxt,  color:'#B8C8D8' },
-    { txt: courseTxt, color:'#C9896E' },
-    { txt: veloTxt,   color:'#C8B8A2' },
+    { txt: muscuTxt,  color:'#4D9ABF' },
+    { txt: courseTxt, color:'#BF5E40' },
+    { txt: veloTxt,   color:'#C89A62' },
   ].map(s=>'<div class="hsugg"><span class="hsugg-dot" style="background:'+s.color+'"></span><span class="hsugg-txt">'+s.txt+'</span></div>').join('');
 }
 
@@ -4449,9 +4449,9 @@ seedRecipesIfEmpty();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 // ════ CHART HELPERS ════
-const CJ_ACCENT = '#B8C8D8';
-const CJ_GREEN  = '#C9896E';
-const CJ_AMBER  = '#C8B8A2';
+const CJ_ACCENT = '#4D9ABF';
+const CJ_GREEN  = '#BF5E40';
+const CJ_AMBER  = '#C89A62';
 const CJ_RED    = '#E85D5D';
 const CJ_GRID   = ()=> document.documentElement.classList.contains('light') ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.06)';
 const CJ_TICK   = ()=> document.documentElement.classList.contains('light') ? '#5a6a8a' : 'rgba(255,255,255,0.35)';
@@ -4499,7 +4499,7 @@ function renderHomeDonut(activities){
 
   const labels = ['Muscu','Course','Vélo','Golf'];
   const data   = [totals.muscu, totals.course, totals.velo, totals.golf];
-  const colors = [CJ_ACCENT, CJ_GREEN, CJ_AMBER, '#A8C4B8'];
+  const colors = [CJ_ACCENT, CJ_GREEN, CJ_AMBER, '#4AAD8A'];
 
   _mkChart('home-donut-canvas', {
     type:'doughnut',
@@ -4525,7 +4525,7 @@ function renderHomeDonut(activities){
 function renderHomeHeatmap(activities){
   const el = document.getElementById('home-heatmap');
   if(!el) return;
-  const SPORT_C = {muscu:CJ_ACCENT, course:'#C9896E', velo:CJ_AMBER, golf:'#A8C4B8', basket:'#a855f7'};
+  const SPORT_C = {muscu:CJ_ACCENT, course:'#BF5E40', velo:CJ_AMBER, golf:'#4AAD8A', basket:'#a855f7'};
   const actByDay = {};
   activities.forEach(a=>{ const k=a.date.slice(0,10); if(!actByDay[k]) actByDay[k]=[]; actByDay[k].push(a.type); });
 
@@ -4608,7 +4608,7 @@ function renderHomeHeatmap(activities){
 
   // Legend
   h += '<div style="display:flex;gap:10px;margin-top:6px;flex-wrap:wrap;">';
-  [{label:'Muscu',c:CJ_ACCENT},{label:'Course',c:'#C9896E'},{label:'Vélo',c:CJ_AMBER},{label:'Golf',c:'#A8C4B8'}].forEach(s=>{
+  [{label:'Muscu',c:CJ_ACCENT},{label:'Course',c:'#BF5E40'},{label:'Vélo',c:CJ_AMBER},{label:'Golf',c:'#4AAD8A'}].forEach(s=>{
     h += '<div style="display:flex;align-items:center;gap:4px;font-size:clamp(10px,0.8vw,13px);color:var(--text2)"><span style="width:clamp(8px,0.7vw,11px);height:clamp(8px,0.7vw,11px);border-radius:2px;background:'+s.c+';display:inline-block;opacity:.9"></span>'+s.label+'</div>';
   });
   h += '</div>';
@@ -4985,9 +4985,9 @@ function renderVeloScatterChart(acts){
 // ════ FEELING CHARTS ════
 
 const FL_LABELS = {1:'Épuisé',2:'Difficile',3:'Correct',4:'Solide',5:'En feu'};
-const FL_COLORS = {1:'#E85D5D',2:'#C8B8A2',3:'#7a8eb0',4:'#C9896E',5:'#B8C8D8'};
-const FL_SPORT_COLOR = {muscu:'#B8C8D8', course:'#C9896E', velo:'#C8B8A2', golf:'#A8C4B8'};
-const FL_SPORT_BORDER = {muscu:'rgba(184,200,216,0.15)', course:'rgba(52,211,153,0.15)', velo:'rgba(200,184,162,0.15)'};
+const FL_COLORS = {1:'#E85D5D',2:'#C89A62',3:'#7a8eb0',4:'#BF5E40',5:'#4D9ABF'};
+const FL_SPORT_COLOR = {muscu:'#4D9ABF', course:'#BF5E40', velo:'#C89A62', golf:'#4AAD8A'};
+const FL_SPORT_BORDER = {muscu:'rgba(77,154,191,0.15)', course:'rgba(52,211,153,0.15)', velo:'rgba(200,154,98,0.15)'};
 
 function renderFeelingChart(canvasId, acts, sport){
   const withFeeling = acts
@@ -5002,14 +5002,14 @@ function renderFeelingChart(canvasId, acts, sport){
   });
   const data    = withFeeling.map(a=>parseInt(a.feeling));
   const ptColor = data.map(f=>FL_COLORS[f]||'#7a8eb0');
-  const lineCol = FL_SPORT_COLOR[sport]||'#B8C8D8';
+  const lineCol = FL_SPORT_COLOR[sport]||'#4D9ABF';
 
   _mkChart(canvasId,{
     type:'line',
     data:{ labels, datasets:[{
       data,
       borderColor: lineCol,
-      backgroundColor: FL_SPORT_BORDER[sport]||'rgba(184,200,216,0.08)',
+      backgroundColor: FL_SPORT_BORDER[sport]||'rgba(77,154,191,0.08)',
       borderWidth:2, tension:0.35, fill:true,
       pointBackgroundColor: ptColor,
       pointBorderColor: ptColor,
@@ -5144,7 +5144,7 @@ window.addEventListener('resize', ()=>{
 });
 
 // ════ GOLF: ÉVOLUTION DU SCORE ════
-const TEE_COLOR_MAP = {noir:'#888', bleu:'#B8C8D8', blanc:'#e8f0ff', jaune:'#C8B8A2', rouge:'#E85D5D'};
+const TEE_COLOR_MAP = {noir:'#888', bleu:'#4D9ABF', blanc:'#e8f0ff', jaune:'#C89A62', rouge:'#E85D5D'};
 function renderGolfScoreChart(acts){
   const sorted = [...acts]
     .filter(a=>a.score)
@@ -5155,8 +5155,8 @@ function renderGolfScoreChart(acts){
   const scores = sorted.map(a=>a.score);
   const scores18 = sorted.map(a=>a.holes===9 ? null : a.score);
   const scores9  = sorted.map(a=>a.holes===9 ? a.score : null);
-  const ptColors18 = sorted.map(a=>a.holes===9 ? 'transparent' : (TEE_COLOR_MAP[a.tee_color]||'#A8C4B8'));
-  const ptColors9  = sorted.map(a=>a.holes===9 ? (TEE_COLOR_MAP[a.tee_color]||'#A8C4B8') : 'transparent');
+  const ptColors18 = sorted.map(a=>a.holes===9 ? 'transparent' : (TEE_COLOR_MAP[a.tee_color]||'#4AAD8A'));
+  const ptColors9  = sorted.map(a=>a.holes===9 ? (TEE_COLOR_MAP[a.tee_color]||'#4AAD8A') : 'transparent');
 
   // Tendance linéaire simple
   const n = scores.length;
@@ -5170,10 +5170,10 @@ function renderGolfScoreChart(acts){
   _mkChart('golf-score-chart', {
     type:'line',
     data:{ labels, datasets:[
-      { label:'18 trous', data:scores18, borderColor:'#A8C4B8', backgroundColor:'#A8C4B822',
+      { label:'18 trous', data:scores18, borderColor:'#4AAD8A', backgroundColor:'#4AAD8A22',
         pointBackgroundColor:ptColors18, pointBorderColor:ptColors18,
         pointRadius:6, pointHoverRadius:8, borderWidth:2, tension:0.2, spanGaps:false },
-      { label:'9 trous', data:scores9, borderColor:'#A8C4B8', backgroundColor:'#A8C4B822',
+      { label:'9 trous', data:scores9, borderColor:'#4AAD8A', backgroundColor:'#4AAD8A22',
         pointBackgroundColor:ptColors9, pointBorderColor:ptColors9,
         pointRadius:6, pointHoverRadius:8, borderWidth:2, tension:0.2, spanGaps:false,
         borderDash:[5,4] },
@@ -5223,7 +5223,7 @@ function renderGolfCourseChart(acts){
     return Math.round(scores.reduce((s,v)=>s+v,0)/scores.length);
   });
   const counts = labels.map(k=>byCourse[k].length);
-  const colors = labels.map((_,i)=>{ const op=1-i*0.15; return '#A8C4B8'+Math.round(Math.max(op,0.4)*255).toString(16).padStart(2,'0'); });
+  const colors = labels.map((_,i)=>{ const op=1-i*0.15; return '#4AAD8A'+Math.round(Math.max(op,0.4)*255).toString(16).padStart(2,'0'); });
 
   _mkChart('golf-course-chart', {
     type:'bar',
@@ -5253,7 +5253,7 @@ function renderGolfHolesChart(acts){
     type:'doughnut',
     data:{ labels:['9 trous','18 trous'], datasets:[{
       data:[count9, count18],
-      backgroundColor:['#A8C4B8cc','#A8C4B8cc'],
+      backgroundColor:['#4AAD8Acc','#4AAD8Acc'],
       borderWidth:0
     }]},
     options:{ responsive:true, maintainAspectRatio:false, cutout:'60%',
