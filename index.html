@@ -1587,7 +1587,7 @@ async function renderActivities(sport){
         ? {val: fmtPace(a.pace_sec_km), lbl: 'Allure /km'}
         : {val: a.speed_kmh ? a.speed_kmh+' km/h' : '—', lbl: 'Vitesse moy'};
     const m2 = isGolf
-      ? {val: a.score_net ? a.score_net : '—', lbl: 'Score net'}
+      ? {val: a.score_par != null ? (a.score_par > 0 ? '+'+a.score_par : a.score_par === 0 ? 'E' : a.score_par) : '—', lbl: 'vs Par'}
       : {val: fmtDist(a.distance_m), lbl: 'Distance'};
     const m3 = {val: fmtDuration(a.duration_sec), lbl: 'Durée'};
     const m4 = isGolf
@@ -1741,7 +1741,7 @@ const MANUAL_FIELDS = {
       {key:'score',       label:'Score brut (total)',    type:'number',         required:false},
       {key:'score_front', label:'Score front 9',         type:'number',         required:false},
       {key:'score_back',  label:'Score back 9',          type:'number',         required:false},
-      {key:'score_net',   label:'Score net',             type:'number',         required:false},
+      {key:'score_par',   label:'Diff. vs par (ex: +5 → entrer 5, eagle → -2)',  type:'number',         required:false},
       {key:'putts',       label:'Putts (total)',         type:'number',         required:false},
       {key:'putts_1',     label:'1-Putts',               type:'number',         required:false},
       {key:'putts_3',     label:'3-Putts',               type:'number',         required:false},
@@ -5187,7 +5187,7 @@ function renderGolfScoreChart(acts){
           label: ctx=>{
             if(ctx.datasetIndex===2) return 'Tendance : '+ctx.raw;
             const a = sorted[ctx.dataIndex];
-            const lines = ['Score : '+ctx.raw+(a.score_net?' (net '+a.score_net+')':'')];
+            const lines = ['Score : '+ctx.raw+(a.score_par != null ? ' ('+(a.score_par > 0 ? '+'+a.score_par : a.score_par === 0 ? 'E' : a.score_par)+' vs par)':'')];
             if(a.score_front||a.score_back) lines.push('Front '+( a.score_front||'—')+' / Back '+(a.score_back||'—'));
             if(a.tee_color) lines.push('Tees : '+a.tee_color.charAt(0).toUpperCase()+a.tee_color.slice(1));
             if(a.putts) lines.push('Putts : '+a.putts+(a.putts_1!=null?' (1-putt : '+a.putts_1+')':(a.putts_3!=null?' (3-putt : '+a.putts_3+')':'')));
