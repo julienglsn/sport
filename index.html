@@ -1614,10 +1614,29 @@ async function renderActivities(sport){
       ? (a.score ? 'Score '+a.score : '—')+(a.holes ? ' · '+a.holes+' trous' : '')+(a.course_name ? ' · '+a.course_name : '')
       : fmtDuration(a.duration_sec)+' · '+fmtDist(a.distance_m);
 
+    // Chips de détail visibles sans tap (course / vélo uniquement)
+    let detailChips = '';
+    if(!isGolf){
+      const chips = [];
+      if(isCourse && a.pace_sec_km)  chips.push({ico:'⚡', val:fmtPace(a.pace_sec_km)});
+      if(!isCourse && a.speed_kmh)   chips.push({ico:'⚡', val:a.speed_kmh+' km/h'});
+      if(a.hr_avg)                   chips.push({ico:'♥', val:a.hr_avg+' bpm'});
+      if(a.hr_max)                   chips.push({ico:'↑', val:a.hr_max+' bpm'});
+      if(isCourse && a.elevation_m)  chips.push({ico:'⛰', val:'+'+a.elevation_m+'m D+'});
+      if(!isCourse && a.power_avg)   chips.push({ico:'⚙', val:a.power_avg+' W'});
+      if(a.calories)                 chips.push({ico:'🔥', val:a.calories+' kcal'});
+      if(chips.length){
+        detailChips = '<div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:5px">'+
+          chips.map(c=>'<span style="display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;color:var(--text2);background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:2px 7px">'+
+            c.ico+' '+c.val+'</span>').join('')+
+          '</div>';
+      }
+    }
+
     return '<div class="act-card" id="act-'+a.id+'">'+
       '<div class="act-head" onclick="togAct(this)">'+
-      '<div><div class="act-title">'+(sport==='course'?'🏃':sport==='golf'?'⛳':'🚴')+(sport==='golf'?' Partie — ':' Sortie — ')+ds+(isGolf?teeBadge(a.tee_color):'')+'</div>'+
-      '<div class="act-date">'+actSubtitle+'</div></div>'+
+      '<div style="flex:1;min-width:0"><div class="act-title">'+(sport==='course'?'🏃':sport==='golf'?'⛳':'🚴')+(sport==='golf'?' Partie — ':' Sortie — ')+ds+(isGolf?teeBadge(a.tee_color):'')+'</div>'+
+      '<div class="act-date">'+actSubtitle+'</div>'+detailChips+'</div>'+
       '<span class="hbg" style="background:var(--accent2);color:var(--accent)">'+_esc(a.source.toUpperCase())+'</span>'+
       '</div>'+
       '<div class="act-metrics" style="display:none">'+
