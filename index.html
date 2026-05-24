@@ -738,6 +738,51 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 }
 
 /* Subnav sports/nutrition fully hidden on desktop — handled by sidebar sub-menu */
+
+/* ════ CYCLES ════ */
+.cy-phase-bar{display:flex;height:6px;border-radius:3px;overflow:hidden;margin:10px 0 14px;}
+.cy-phase-seg{height:100%;transition:flex .3s}
+.cy-cal-header{display:flex;align-items:center;justify-content:space-between;padding:0 0 10px;}
+.cy-cal-nav{display:flex;gap:4px;}
+.cy-cal-nav button{background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text2);font-size:14px;width:30px;height:30px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.cy-cal-title{font-family:var(--fd);font-size:20px;letter-spacing:.06em;color:var(--text);}
+.cy-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-top:4px;}
+.cy-dow{text-align:center;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text3);padding:4px 0;}
+.cy-day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:8px;font-size:12px;font-weight:500;color:var(--text3);position:relative;cursor:pointer;transition:background .15s;}
+.cy-day.cy-this-month{color:var(--text2);}
+.cy-day.cy-today{outline:2px solid var(--accent);outline-offset:-2px;color:var(--text);font-weight:700;}
+.cy-day.cy-period{background:#e8547a;color:#fff;font-weight:700;border-radius:50%;}
+.cy-day.cy-fertile{background:rgba(77,154,191,.18);}
+.cy-day.cy-ovulation{background:var(--accent);color:#0E1116;font-weight:700;border-radius:50%;}
+.cy-day.cy-luteal{background:rgba(200,154,98,.12);}
+.cy-day.cy-follicular{background:rgba(74,173,138,.08);}
+.cy-day-icons{position:absolute;bottom:2px;display:flex;gap:1px;align-items:center;}
+.cy-icon-drop{font-size:7px;line-height:1;}
+.cy-icon-heart{font-size:7px;line-height:1;}
+.cy-icon-opk{font-size:7px;line-height:1;}
+.cy-legend{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;}
+.cy-legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2);}
+.cy-legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.cy-stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:14px 0;}
+.cy-stat{background:var(--bg3);border-radius:10px;padding:10px 12px;text-align:center;}
+.cy-stat-val{font-family:var(--fd);font-size:22px;letter-spacing:.04em;color:var(--text);line-height:1;}
+.cy-stat-lbl{font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-top:3px;}
+.cy-phase-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:10px;}
+.cy-phase-title{font-size:13px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:7px;}
+.cy-phase-desc{font-size:12px;color:var(--text2);line-height:1.5;}
+.cy-hormone-wrap{position:relative;height:140px;margin:8px 0;}
+.cy-alert{background:var(--accent2);border:1px solid rgba(77,154,191,.25);border-radius:10px;padding:10px 14px;font-size:13px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.cy-alert-period{background:rgba(232,84,122,.1);border-color:rgba(232,84,122,.3);color:#e8547a;}
+.cy-alert-ovulation{background:rgba(77,154,191,.12);border-color:rgba(77,154,191,.3);color:var(--accent);}
+.cy-entry-btn{width:100%;padding:14px;border-radius:14px;border:1px solid var(--border);background:var(--bg2);color:var(--text2);font-family:var(--fb);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .18s;margin-bottom:8px;}
+.cy-entry-btn:active{border-color:var(--accent);background:var(--accent2);}
+.cy-entry-btn .cy-entry-ico{font-size:20px;flex-shrink:0;}
+.cy-entry-btn .cy-entry-info{text-align:left;flex:1;}
+.cy-entry-btn .cy-entry-title{font-size:13px;font-weight:600;color:var(--text);}
+.cy-entry-btn .cy-entry-sub{font-size:11px;color:var(--text3);margin-top:2px;}
+.cy-forecast-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.cy-forecast-row:last-child{border-bottom:none;}
+.cy-forecast-badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;}
 </style>
 </head>
 <body>
@@ -1344,6 +1389,125 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
   </div>
 </div>
 
+<!-- ════ CYCLES ════ -->
+<div class="page" id="page-cycles">
+  <div class="ph">
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <div class="ey">JUNELLA</div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <div id="theme-seg-cycles" class="theme-seg-pill"></div>
+      </div>
+    </div>
+    <div class="ph-divider"></div>
+    <h1>CYCLES</h1>
+    <p>Suivi hormonal · Fenêtres fertiles · Prédictions</p>
+  </div>
+  <div class="stabs" id="cycles-nav">
+    <button class="stab active" onclick="showCyclesTab('calendar',this)">📅 Calendrier</button>
+    <button class="stab" onclick="showCyclesTab('hormones',this)">📈 Hormones</button>
+    <button class="stab" onclick="showCyclesTab('log',this)">✏️ Saisir</button>
+    <button class="stab" onclick="showCyclesTab('forecast',this)">🔮 Prévisions</button>
+  </div>
+
+  <!-- CALENDRIER -->
+  <div class="sc active" id="cycles-calendar">
+    <div id="cy-alerts-wrap"></div>
+    <div class="cy-stat-row" id="cy-stats-row">
+      <div class="cy-stat"><div class="cy-stat-val" id="cy-stat-len">28</div><div class="cy-stat-lbl">Durée moy.</div></div>
+      <div class="cy-stat"><div class="cy-stat-val" id="cy-stat-next">—</div><div class="cy-stat-lbl">Prochaines règles</div></div>
+      <div class="cy-stat"><div class="cy-stat-val" id="cy-stat-ov">—</div><div class="cy-stat-lbl">Ovulation</div></div>
+    </div>
+    <div style="padding:0 20px 4px">
+      <div class="cy-phase-bar" id="cy-phase-bar"></div>
+    </div>
+    <div style="padding:0 20px 16px">
+      <div class="cal-grid-wrap" style="padding:12px;">
+        <div class="cy-cal-header">
+          <button class="cy-cal-nav" style="background:none;border:none;" onclick="cyNavMonth(-1)"><span style="font-size:18px;color:var(--text2)">‹</span></button>
+          <div class="cy-cal-title" id="cy-cal-title">—</div>
+          <button class="cy-cal-nav" style="background:none;border:none;" onclick="cyNavMonth(1)"><span style="font-size:18px;color:var(--text2)">›</span></button>
+        </div>
+        <div class="cy-grid" id="cy-dow-row">
+          <div class="cy-dow">L</div><div class="cy-dow">M</div><div class="cy-dow">M</div>
+          <div class="cy-dow">J</div><div class="cy-dow">V</div><div class="cy-dow">S</div><div class="cy-dow">D</div>
+        </div>
+        <div class="cy-grid" id="cy-cal-grid"></div>
+        <div class="cy-legend" id="cy-legend">
+          <div class="cy-legend-item"><div class="cy-legend-dot" style="background:#e8547a"></div>Règles</div>
+          <div class="cy-legend-item"><div class="cy-legend-dot" style="background:rgba(77,154,191,.5)"></div>Fenêtre fertile</div>
+          <div class="cy-legend-item"><div class="cy-legend-dot" style="background:var(--accent)"></div>Ovulation</div>
+          <div class="cy-legend-item"><div class="cy-legend-dot" style="background:rgba(200,154,98,.4)"></div>Phase lutéale</div>
+          <div class="cy-legend-item" style="gap:3px"><span style="font-size:12px">🩸</span>Flux entré</div>
+          <div class="cy-legend-item" style="gap:3px"><span style="font-size:12px">❤️</span>Sexualité</div>
+          <div class="cy-legend-item" style="gap:3px"><span style="font-size:12px">🔵</span>OPK+</div>
+        </div>
+      </div>
+    </div>
+    <!-- Phase du jour -->
+    <div class="sec" style="padding-top:4px">
+      <div class="slabel">Phase actuelle</div>
+      <div id="cy-current-phase-card"></div>
+    </div>
+  </div>
+
+  <!-- HORMONES -->
+  <div class="sc" id="cycles-hormones">
+    <div class="sec">
+      <div class="slabel" style="margin-bottom:10px">Courbe hormonale — cycle actuel</div>
+      <div class="cal-grid-wrap" style="padding:14px;">
+        <canvas id="cy-hormone-chart" height="200"></canvas>
+      </div>
+      <div style="margin-top:16px">
+        <div class="slabel" style="margin-bottom:10px">Hormones par phase</div>
+        <div id="cy-hormone-cards"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOG -->
+  <div class="sc" id="cycles-log">
+    <div class="sec">
+      <div class="slabel" style="margin-bottom:12px">Que veux-tu saisir ?</div>
+      <button class="cy-entry-btn" onclick="openCyModal('period')">
+        <span class="cy-entry-ico">🩸</span>
+        <div class="cy-entry-info">
+          <div class="cy-entry-title">Menstruations</div>
+          <div class="cy-entry-sub">Date de début · Flux · Durée</div>
+        </div>
+        <span style="color:var(--text3);font-size:18px">›</span>
+      </button>
+      <button class="cy-entry-btn" onclick="openCyModal('sex')">
+        <span class="cy-entry-ico">❤️</span>
+        <div class="cy-entry-info">
+          <div class="cy-entry-title">Activité sexuelle</div>
+          <div class="cy-entry-sub">Date · Protégé / Non protégé</div>
+        </div>
+        <span style="color:var(--text3);font-size:18px">›</span>
+      </button>
+      <button class="cy-entry-btn" onclick="openCyModal('opk')">
+        <span class="cy-entry-ico">🔵</span>
+        <div class="cy-entry-info">
+          <div class="cy-entry-title">Test OPK</div>
+          <div class="cy-entry-sub">Date · Résultat positif / négatif</div>
+        </div>
+        <span style="color:var(--text3);font-size:18px">›</span>
+      </button>
+      <div class="slabel" style="margin-top:18px;margin-bottom:10px">Historique des cycles saisis</div>
+      <div id="cy-log-history"></div>
+    </div>
+  </div>
+
+  <!-- FORECAST -->
+  <div class="sc" id="cycles-forecast">
+    <div class="sec">
+      <div class="slabel" style="margin-bottom:10px">12 prochains cycles</div>
+      <div class="cal-grid-wrap" style="padding:14px;" id="cy-forecast-cycles"></div>
+      <div class="slabel" style="margin-top:18px;margin-bottom:10px">12 prochaines fenêtres fertiles</div>
+      <div class="cal-grid-wrap" style="padding:14px;" id="cy-forecast-fertile"></div>
+    </div>
+  </div>
+</div>
+
 <!-- ════ NAV ════ -->
 
 
@@ -1358,6 +1522,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
   </div>
   <button class="nav-item" id="nav-nutrition" onclick="showSection('nutrition')"><span class="nav-icon">🥗</span>Nutrition</button>
   <button class="nav-item" id="nav-apps" onclick="showSection('apps')"><span class="nav-icon">📱</span>Apps</button>
+  <button class="nav-item" id="nav-cycles" onclick="showCycles()"><span class="nav-icon">🌸</span>Cycles</button>
 </nav>
 
 <!-- ════ SPORTS SUB-NAV ════ -->
@@ -5558,6 +5723,601 @@ function renderGolfHolesChart(acts){
     if(!localStorage.getItem(KEY)) applyTheme(e.matches ? 'light' : 'dark');
   });
 })();
+
+// ════════════════════════════════════════════════
+// CYCLES MODULE
+// ════════════════════════════════════════════════
+
+const CY_TABLE = '/rest/v1/cycles_log';
+
+// ── Seed data (historical cycles) ──
+const CY_SEED_PERIODS = [
+  {start:'2026-01-05', end:'2026-01-07'},
+  {start:'2026-02-04', end:'2026-02-06'},
+  {start:'2026-02-28', end:'2026-03-02'},
+  {start:'2026-03-27', end:'2026-03-29'},
+  {start:'2026-04-23', end:'2026-04-25'},
+  {start:'2026-05-20', end:'2026-05-22'},
+];
+
+// ── Supabase CRUD for cycles_log ──
+async function cyDbLoad(){
+  try {
+    const r = await fetch(SB_URL+CY_TABLE+'?order=date.desc', {headers:SB_GET});
+    if(!r.ok) throw new Error();
+    return await r.json();
+  } catch(e){ return JSON.parse(localStorage.getItem('cy_log')||'[]'); }
+}
+async function cyDbSave(data){
+  try {
+    const r = await fetch(SB_URL+CY_TABLE, {
+      method:'POST', headers:{...SB_HDR,'Prefer':'return=representation'},
+      body:JSON.stringify(data)
+    });
+    if(!r.ok) throw new Error(await r.text());
+    const saved = (await r.json())[0];
+    _cyLocalAdd(saved||data); return saved||data;
+  } catch(e){ _cyLocalAdd(data); return data; }
+}
+async function cyDbDelete(id){
+  try {
+    await fetch(SB_URL+CY_TABLE+'?id=eq.'+id, {method:'DELETE',headers:{...SB_HDR,'Prefer':'return=representation'}});
+    _cyLocalDel(id);
+  } catch(e){ _cyLocalDel(id); }
+}
+function _cyLocalAdd(d){
+  const a=JSON.parse(localStorage.getItem('cy_log')||'[]');
+  a.unshift(d); localStorage.setItem('cy_log',JSON.stringify(a));
+}
+function _cyLocalDel(id){
+  const a=JSON.parse(localStorage.getItem('cy_log')||'[]');
+  localStorage.setItem('cy_log',JSON.stringify(a.filter(e=>e.id!=id)));
+}
+
+// ── Cycle computation ──
+function cyAvgLength(periods){
+  if(periods.length<2) return 28;
+  const gaps=[];
+  for(let i=1;i<periods.length;i++){
+    const d1=new Date(periods[i-1].start);
+    const d2=new Date(periods[i].start);
+    gaps.push(Math.round((d1-d2)/86400000));
+  }
+  return Math.round(gaps.reduce((s,v)=>s+v,0)/gaps.length);
+}
+
+function cyPhaseOf(dateStr, anchorStr, cycleLen){
+  const d   = new Date(dateStr+'T00:00:00');
+  const anc = new Date(anchorStr+'T00:00:00');
+  const diff = Math.round((d-anc)/86400000);
+  const pos  = ((diff % cycleLen) + cycleLen) % cycleLen; // 0 = J1
+  const ovDay = Math.round(cycleLen * 0.5);
+  if(pos < 3) return 'period';
+  if(pos < ovDay-7) return 'follicular';
+  if(pos < ovDay) return 'fertile';
+  if(pos === ovDay) return 'ovulation';
+  return 'luteal';
+}
+
+function cyGetMeta(logs){
+  // Periods from seed + manually logged
+  const periodLogs = logs.filter(l=>l.type==='period').map(l=>({start:l.date,end:l.end_date||l.date}));
+  const allPeriods = [...CY_SEED_PERIODS, ...periodLogs].sort((a,b)=>new Date(b.start)-new Date(a.start));
+  const unique = [];
+  allPeriods.forEach(p=>{ if(!unique.find(u=>u.start===p.start)) unique.push(p); });
+  const sorted = unique.sort((a,b)=>new Date(b.start)-new Date(a.start));
+
+  const cycleLen = cyAvgLength(sorted.map(p=>({start:p.start})));
+  const lastPeriodStart = sorted[0]?.start || '2026-05-20';
+
+  // Build phase map for ±6 months
+  const phaseMap = {}; // dateStr -> phase
+  const fertileMap = {};
+  const today = new Date(); today.setHours(0,0,0,0);
+  const start = new Date(today); start.setDate(start.getDate()-90);
+  const end   = new Date(today); end.setDate(end.getDate()+200);
+  for(let d=new Date(start);d<=end;d.setDate(d.getDate()+1)){
+    const k = d.toISOString().slice(0,10);
+    phaseMap[k] = cyPhaseOf(k, lastPeriodStart, cycleLen);
+  }
+
+  // Mark known period days from seed + logs
+  sorted.forEach(p=>{
+    const s=new Date(p.start+'T00:00:00');
+    const e=new Date((p.end||p.start)+'T00:00:00');
+    for(let d=new Date(s);d<=e;d.setDate(d.getDate()+1)){
+      phaseMap[d.toISOString().slice(0,10)]='period';
+    }
+  });
+
+  // Next period prediction
+  const lastDate = new Date(lastPeriodStart+'T00:00:00');
+  const nextPeriodDate = new Date(lastDate);
+  nextPeriodDate.setDate(nextPeriodDate.getDate()+cycleLen);
+
+  // Next ovulation
+  const nextOvDate = new Date(lastDate);
+  nextOvDate.setDate(nextOvDate.getDate()+Math.round(cycleLen*0.5));
+
+  // Days until
+  const daysUntilPeriod = Math.round((nextPeriodDate-today)/86400000);
+  const daysUntilOv     = Math.round((nextOvDate-today)/86400000);
+
+  return { cycleLen, lastPeriodStart, phaseMap, nextPeriodDate, nextOvDate, daysUntilPeriod, daysUntilOv, sortedPeriods: sorted };
+}
+
+// ── Navigation state ──
+let _cyViewYear  = new Date().getFullYear();
+let _cyViewMonth = new Date().getMonth(); // 0-based
+let _cyLogs      = [];
+let _cyMeta      = null;
+let _cyHormoneChart = null;
+
+function showCycles(){
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('nav-cycles').classList.add('active');
+  // Hide subnavs
+  ['subnav-sports','subnav-nutrition'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){el.style.display='none';el.classList.remove('subnav-active');}
+  });
+  const ss=document.getElementById('sidebar-sports-sub'); if(ss) ss.style.display='none';
+  _activatePage('page-cycles');
+  currentSection='cycles';
+  window.scrollTo({top:0,behavior:'smooth'});
+  renderCycles();
+}
+
+async function renderCycles(){
+  _cyLogs = await cyDbLoad();
+  _cyMeta = cyGetMeta(_cyLogs);
+  renderCyCalendar();
+  renderCyStats();
+  renderCyAlerts();
+  renderCyPhaseCard();
+  renderCyHormones();
+  renderCyLogHistory();
+  renderCyForecast();
+  injectPills();
+}
+
+function showCyclesTab(tab, btn){
+  document.querySelectorAll('#page-cycles .sc').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('#cycles-nav .stab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('cycles-'+tab).classList.add('active');
+  btn.classList.add('active');
+  if(tab==='calendar'){ renderCyCalendar(); renderCyStats(); renderCyAlerts(); renderCyPhaseCard(); }
+  if(tab==='hormones') renderCyHormones();
+  if(tab==='log') renderCyLogHistory();
+  if(tab==='forecast') renderCyForecast();
+}
+
+// ── Calendar render ──
+function cyNavMonth(delta){
+  _cyViewMonth += delta;
+  if(_cyViewMonth>11){_cyViewMonth=0;_cyViewYear++;}
+  if(_cyViewMonth<0){_cyViewMonth=11;_cyViewYear--;}
+  renderCyCalendar();
+}
+
+function renderCyCalendar(){
+  if(!_cyMeta) return;
+  const {phaseMap} = _cyMeta;
+  const logs = _cyLogs;
+
+  // Build day sets from logs
+  const sexDays={}, opkDays={}, periodLogDays={};
+  logs.forEach(l=>{
+    if(l.type==='sex') sexDays[l.date]=l;
+    if(l.type==='opk' && l.opk_positive) opkDays[l.date]=l;
+    if(l.type==='period'){
+      const s=new Date(l.date+'T00:00:00');
+      const e=new Date((l.end_date||l.date)+'T00:00:00');
+      for(let d=new Date(s);d<=e;d.setDate(d.getDate()+1)){
+        periodLogDays[d.toISOString().slice(0,10)]=l;
+      }
+    }
+  });
+  // Also mark seed period days
+  CY_SEED_PERIODS.forEach(p=>{
+    const s=new Date(p.start+'T00:00:00');
+    const e=new Date(p.end+'T00:00:00');
+    for(let d=new Date(s);d<=e;d.setDate(d.getDate()+1)){
+      periodLogDays[d.toISOString().slice(0,10)]={type:'period'};
+    }
+  });
+
+  const yr=_cyViewYear, mo=_cyViewMonth;
+  const MONTHS_FR=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  document.getElementById('cy-cal-title').textContent = MONTHS_FR[mo]+' '+yr;
+
+  const firstDay = new Date(yr,mo,1);
+  const lastDay  = new Date(yr,mo+1,0);
+  const startDow = (firstDay.getDay()+6)%7; // Mon=0
+  const today    = new Date(); today.setHours(0,0,0,0);
+
+  let html='';
+  // Leading blanks
+  for(let i=0;i<startDow;i++) html+='<div class="cy-day"></div>';
+
+  for(let d=1;d<=lastDay.getDate();d++){
+    const dateStr=`${yr}-${String(mo+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const dateObj=new Date(yr,mo,d);
+    const phase=phaseMap[dateStr]||'';
+    const isPeriod=periodLogDays[dateStr];
+    const isSex=sexDays[dateStr];
+    const isOpk=opkDays[dateStr];
+    const isToday=dateObj.getTime()===today.getTime();
+
+    let cls='cy-day cy-this-month';
+    if(isPeriod) cls+=' cy-period';
+    else if(phase==='ovulation') cls+=' cy-ovulation';
+    else if(phase==='fertile') cls+=' cy-fertile';
+    else if(phase==='luteal') cls+=' cy-luteal';
+    else if(phase==='follicular') cls+=' cy-follicular';
+    if(isToday) cls+=' cy-today';
+
+    let icons='';
+    if(isSex) icons+='<span class="cy-icon-heart">❤️</span>';
+    if(isOpk) icons+='<span class="cy-icon-opk">🔵</span>';
+
+    html+=`<div class="${cls}" onclick="openCyDayModal('${dateStr}')">${d}${icons?'<div class="cy-day-icons">'+icons+'</div>':''}</div>`;
+  }
+  document.getElementById('cy-cal-grid').innerHTML=html;
+}
+
+// ── Stats strip ──
+function renderCyStats(){
+  if(!_cyMeta) return;
+  const {cycleLen, daysUntilPeriod, daysUntilOv} = _cyMeta;
+  document.getElementById('cy-stat-len').textContent = cycleLen+'j';
+  document.getElementById('cy-stat-next').textContent = daysUntilPeriod>0 ? 'J−'+daysUntilPeriod : daysUntilPeriod===0 ? 'Aujourd\'hui' : 'J+'+Math.abs(daysUntilPeriod);
+  document.getElementById('cy-stat-ov').textContent   = daysUntilOv>0   ? 'J−'+daysUntilOv   : daysUntilOv===0   ? 'Aujourd\'hui' : 'Passée';
+}
+
+// ── Phase progress bar ──
+function renderCyPhaseBar(){
+  // drawn inside phase card for now — phase bar shows current cycle position
+}
+
+// ── Alerts ──
+function renderCyAlerts(){
+  if(!_cyMeta) return;
+  const {daysUntilPeriod, daysUntilOv} = _cyMeta;
+  let html='';
+  if(daysUntilOv>=0 && daysUntilOv<=3){
+    html+=`<div class="cy-alert cy-alert-ovulation">🔵 Ovulation dans ${daysUntilOv===0?'<b>aujourd\'hui</b>':'<b>'+daysUntilOv+' jour'+(daysUntilOv>1?'s':'')+'</b>'} — fenêtre fertile active</div>`;
+  }
+  if(daysUntilPeriod>=0 && daysUntilPeriod<=5){
+    html+=`<div class="cy-alert cy-alert-period">🩸 Règles prévues dans <b>${daysUntilPeriod===0?'aujourd\'hui':daysUntilPeriod+' jour'+(daysUntilPeriod>1?'s':'')}</b></div>`;
+  }
+  const wrap=document.getElementById('cy-alerts-wrap');
+  if(wrap){ wrap.innerHTML=html?'<div style="padding:14px 20px 0">'+html+'</div>':''; }
+}
+
+// ── Current phase card ──
+const CY_PHASE_INFO = {
+  period:      {label:'🩸 Phase menstruelle',   color:'#e8547a', desc:'Ton corps renouvelle son endomètre. Privilégie le repos, la chaleur et l\'écoute de tes besoins énergétiques.'},
+  follicular:  {label:'🌱 Phase folliculaire',  color:'#4AAD8A', desc:'Les œstrogènes montent progressivement. Énergie en hausse, idéal pour monter l\'intensité à l\'entraînement.'},
+  fertile:     {label:'🔥 Fenêtre fertile',     color:'var(--accent)', desc:'Les 7 jours précédant l\'ovulation sont ta fenêtre fertile. Libido au pic, performance physique optimale.'},
+  ovulation:   {label:'⭕ Pic ovulatoire',      color:'var(--accent)', desc:'Le pic de LH déclenche l\'ovulation. C\'est le moment le plus fertile du cycle.'},
+  luteal:      {label:'🌙 Phase lutéale',       color:'#C89A62', desc:'La progestérone domine. Énergie plus calme, bons moments pour le travail de fond et la récupération.'},
+};
+
+function renderCyPhaseCard(){
+  if(!_cyMeta) return;
+  const today=new Date().toISOString().slice(0,10);
+  const phase=_cyMeta.phaseMap[today]||'follicular';
+  const info=CY_PHASE_INFO[phase]||CY_PHASE_INFO.follicular;
+  const el=document.getElementById('cy-current-phase-card');
+  if(!el) return;
+
+  // Phase bar — how far in the current cycle
+  const anc=new Date(_cyMeta.lastPeriodStart+'T00:00:00');
+  const now=new Date(today+'T00:00:00');
+  const dayInCycle=((Math.round((now-anc)/86400000))%_cyMeta.cycleLen+_cyMeta.cycleLen)%_cyMeta.cycleLen;
+  const pct=Math.round(dayInCycle/_cyMeta.cycleLen*100);
+
+  el.innerHTML=`<div class="cy-phase-card">
+    <div class="cy-phase-title"><span style="color:${info.color}">${info.label}</span><span style="font-size:11px;color:var(--text3);font-weight:500">J${dayInCycle+1} / ${_cyMeta.cycleLen}</span></div>
+    <div style="background:var(--bg3);border-radius:4px;height:6px;margin:8px 0 10px;overflow:hidden">
+      <div style="height:100%;width:${pct}%;background:${info.color};border-radius:4px;transition:width .4s"></div>
+    </div>
+    <div class="cy-phase-desc">${info.desc}</div>
+  </div>`;
+}
+
+// ── Hormones chart (animated SVG curves) ──
+function renderCyHormones(){
+  const canvas=document.getElementById('cy-hormone-chart');
+  if(!canvas) return;
+
+  // Destroy old chart if any
+  if(_cyHormoneChart){ _cyHormoneChart.destroy(); _cyHormoneChart=null; }
+
+  const isDark=!document.documentElement.classList.contains('light');
+  const gridClr=isDark?'rgba(255,255,255,.07)':'rgba(0,0,0,.07)';
+  const tickClr=isDark?'#6B7280':'#9AAAC8';
+  const ttBg=isDark?'#1E2630':'#ffffff';
+  const ttBorder=isDark?'rgba(255,255,255,.1)':'rgba(0,0,0,.1)';
+
+  const days=Array.from({length:28},(_,i)=>i+1);
+
+  // Normalised hormone curves over 28-day cycle
+  function gauss(x,mu,sig,amp){ return amp*Math.exp(-0.5*((x-mu)/sig)**2); }
+  const estrogen  = days.map(d=>gauss(d,12,3,90)+gauss(d,21,4,40)+5);
+  const lh        = days.map(d=>gauss(d,14,1.2,100));
+  const prog      = days.map(d=>d<14?2:gauss(d,21,4,80)+2);
+  const fsh       = days.map(d=>gauss(d,13,2,60)+gauss(d,1,2,30)+3);
+  const testo     = days.map(d=>gauss(d,14,3,25)+10);
+
+  const ctx=canvas.getContext('2d');
+  _cyHormoneChart = new Chart(ctx,{
+    type:'line',
+    data:{ labels:days, datasets:[
+      {label:'Œstrogènes', data:estrogen, borderColor:'#e8547a', backgroundColor:'rgba(232,84,122,.08)', borderWidth:2.5, pointRadius:0, tension:0.5, fill:true},
+      {label:'LH',         data:lh,       borderColor:'var(--accent)', backgroundColor:'rgba(77,154,191,.08)', borderWidth:2, pointRadius:0, tension:0.4, fill:true},
+      {label:'Progestérone',data:prog,     borderColor:'#C89A62', backgroundColor:'rgba(200,154,98,.08)', borderWidth:2, pointRadius:0, tension:0.5, fill:true},
+      {label:'FSH',        data:fsh,       borderColor:'#4AAD8A', backgroundColor:'transparent', borderWidth:1.5, pointRadius:0, tension:0.4, borderDash:[5,4]},
+      {label:'Testostérone',data:testo,    borderColor:'#9b6dcc', backgroundColor:'transparent', borderWidth:1.5, pointRadius:0, tension:0.4, borderDash:[3,3]},
+    ]},
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{display:true,position:'top',labels:{color:tickClr,font:{size:10},boxWidth:12,padding:10}},
+        tooltip:{backgroundColor:ttBg,titleColor:tickClr,bodyColor:tickClr,borderColor:ttBorder,borderWidth:1,
+          callbacks:{
+            title:ctx=>'Jour '+ctx[0].label,
+            label:ctx=>ctx.dataset.label+' : '+Math.round(ctx.raw)+' (unités norm.)'
+          }
+        },
+        // Vertical phase zones
+        annotation:undefined
+      },
+      scales:{
+        x:{grid:{color:gridClr},ticks:{color:tickClr,font:{size:10}},title:{display:true,text:'Jour du cycle',color:tickClr,font:{size:10}}},
+        y:{grid:{color:gridClr},ticks:{color:tickClr,font:{size:9}},title:{display:false},min:0,max:115}
+      }
+    }
+  });
+
+  // Hormone info cards
+  const cards=document.getElementById('cy-hormone-cards');
+  if(cards){
+    const info=[
+      {name:'Œstrogènes',  color:'#e8547a', icon:'🌸', text:'Montent en phase folliculaire, pic juste avant l\'ovulation. Favorisent l\'énergie, la cognition, la libido et la minéralisation osseuse.'},
+      {name:'LH',          color:'var(--accent)', icon:'⭕', text:'Pic spectaculaire 24–36h avant l\'ovulation. C\'est la LH que détecte ton test OPK. Déclenche la libération de l\'ovule.'},
+      {name:'Progestérone',color:'#C89A62', icon:'🌙', text:'Domine la phase lutéale (J+3 post-ovulation). Prépare l\'endomètre, calme le système nerveux, peut causer de la rétention d\'eau.'},
+      {name:'FSH',         color:'#4AAD8A', icon:'🧬', text:'Stimule le développement des follicules en début de cycle. Légère hausse également juste avant l\'ovulation en tandem avec la LH.'},
+      {name:'Testostérone',color:'#9b6dcc', icon:'💪', text:'Légère hausse au milieu du cycle (autour de l\'ovulation). Contribue à la libido et à la performance physique en phase fertile.'},
+    ];
+    cards.innerHTML=info.map(h=>`<div class="cy-phase-card" style="border-left:3px solid ${h.color}">
+      <div class="cy-phase-title"><span style="color:${h.color}">${h.icon} ${h.name}</span></div>
+      <div class="cy-phase-desc">${h.text}</div>
+    </div>`).join('');
+  }
+}
+
+// ── Log history ──
+function renderCyLogHistory(){
+  const el=document.getElementById('cy-log-history');
+  if(!el) return;
+  const logs=[..._cyLogs,...CY_SEED_PERIODS.map(p=>({type:'period',date:p.start,end_date:p.end,flux:'—',_seed:true}))];
+  logs.sort((a,b)=>new Date(b.date)-new Date(a.date));
+
+  if(!logs.length){el.innerHTML='<div style="font-size:13px;color:var(--text3);">Aucune entrée.</div>';return;}
+
+  const FLUX_LABELS={light:'Léger',medium:'Moyen',heavy:'Abondant',spotting:'Spotting'};
+  el.innerHTML=logs.map(l=>{
+    const d=new Date(l.date+'T00:00:00');
+    const ds=d.toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+    let icon='',detail='',badge='';
+    if(l.type==='period'){
+      icon='🩸'; detail=(l.flux&&FLUX_LABELS[l.flux]?FLUX_LABELS[l.flux]:'')+(l.end_date&&l.end_date!==l.date?' · fin '+new Date(l.end_date+'T00:00:00').toLocaleDateString('fr-FR',{day:'numeric',month:'short'}):'');
+      badge='<span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:rgba(232,84,122,.12);color:#e8547a">Règles</span>';
+    } else if(l.type==='sex'){
+      icon='❤️'; detail=l.protected?'Protégé':'Non protégé';
+      badge='<span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:rgba(155,109,204,.12);color:#9b6dcc">Sexualité</span>';
+    } else if(l.type==='opk'){
+      icon=l.opk_positive?'🔵':'⚪'; detail=l.opk_positive?'OPK positif':'OPK négatif';
+      badge='<span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:rgba(77,154,191,.12);color:var(--accent)">OPK</span>';
+    }
+    const delBtn=l._seed?'':'<button onclick="deleteCyLog(\''+l.id+'\')" style="font-size:16px;background:none;border:none;cursor:pointer;color:var(--text3);padding:0 4px;" title="Supprimer">🗑️</button>';
+    return `<div class="feed-card">
+      <div class="feed-ico">${icon}</div>
+      <div class="feed-left">
+        <div class="feed-row1"><div class="feed-title">${ds}</div>${badge}</div>
+        <div class="feed-metrics">${detail||'—'}</div>
+      </div>
+      ${delBtn}
+    </div>`;
+  }).join('');
+}
+
+async function deleteCyLog(id){
+  await cyDbDelete(id);
+  _cyLogs=await cyDbLoad();
+  _cyMeta=cyGetMeta(_cyLogs);
+  renderCyLogHistory();
+  renderCyCalendar();
+  renderCyStats();
+}
+
+// ── Forecast ──
+function renderCyForecast(){
+  if(!_cyMeta) return;
+  const {cycleLen, sortedPeriods} = _cyMeta;
+  const lastDate=new Date(sortedPeriods[0].start+'T00:00:00');
+
+  const fmtDate=d=>d.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});
+
+  // Next 12 cycles
+  let cycHtml='';
+  for(let i=1;i<=12;i++){
+    const start=new Date(lastDate); start.setDate(start.getDate()+cycleLen*i);
+    const end=new Date(start); end.setDate(end.getDate()+2);
+    const today=new Date(); today.setHours(0,0,0,0);
+    const diff=Math.round((start-today)/86400000);
+    const badge=diff<=0?'<span class="cy-forecast-badge" style="background:rgba(232,84,122,.12);color:#e8547a">En cours</span>':
+      diff<=7?'<span class="cy-forecast-badge" style="background:rgba(232,84,122,.12);color:#e8547a">Dans '+diff+'j</span>':
+      '<span class="cy-forecast-badge" style="background:var(--bg3);color:var(--text2)">J−'+diff+'</span>';
+    cycHtml+=`<div class="cy-forecast-row"><div><div style="font-size:13px;font-weight:600">${fmtDate(start)} → ${fmtDate(end)}</div><div style="font-size:11px;color:var(--text3)">Cycle ${i}</div></div>${badge}</div>`;
+  }
+  const cycEl=document.getElementById('cy-forecast-cycles');
+  if(cycEl) cycEl.innerHTML=cycHtml;
+
+  // Next 12 fertile windows
+  const ovOffset=Math.round(cycleLen*0.5);
+  let fertHtml='';
+  for(let i=1;i<=12;i++){
+    const ov=new Date(lastDate); ov.setDate(ov.getDate()+cycleLen*i+ovOffset);
+    const fertStart=new Date(ov); fertStart.setDate(fertStart.getDate()-7);
+    const fertEnd=new Date(ov); fertEnd.setDate(fertEnd.getDate()+1);
+    const today=new Date(); today.setHours(0,0,0,0);
+    const diff=Math.round((fertStart-today)/86400000);
+    const badge=diff<=0&&Math.round((fertEnd-today)/86400000)>=0?
+      '<span class="cy-forecast-badge" style="background:rgba(77,154,191,.15);color:var(--accent)">Active</span>':
+      diff>0?'<span class="cy-forecast-badge" style="background:var(--bg3);color:var(--text2)">Dans '+diff+'j</span>':
+      '<span class="cy-forecast-badge" style="background:var(--bg3);color:var(--text3)">Passée</span>';
+    fertHtml+=`<div class="cy-forecast-row"><div><div style="font-size:13px;font-weight:600">${fmtDate(fertStart)} → ${fmtDate(fertEnd)}</div><div style="font-size:11px;color:var(--text3)">Ovulation le ${fmtDate(ov)}</div></div>${badge}</div>`;
+  }
+  const fertEl=document.getElementById('cy-forecast-fertile');
+  if(fertEl) fertEl.innerHTML=fertHtml;
+}
+
+// ── Entry modals ──
+function openCyModal(type, prefillDate){
+  const date = prefillDate || new Date().toISOString().slice(0,10);
+  const overlay=document.createElement('div');
+  overlay.className='modal-overlay';
+  overlay.id='cy-modal';
+
+  let body='';
+  if(type==='period'){
+    body=`<div class="modal-title">🩸 RÈGLES</div>
+    <div class="modal-sub">Saisie manuelle de tes menstruations</div>
+    <div class="modal-field"><label>Date de début *</label><input class="modal-input" id="cym-date" type="date" value="${date}" max="${new Date().toISOString().slice(0,10)}"></div>
+    <div class="modal-field"><label>Date de fin</label><input class="modal-input" id="cym-end" type="date" value="${date}" max="${new Date().toISOString().slice(0,10)}"></div>
+    <div class="modal-field"><label>Flux</label>
+      <select class="modal-input" id="cym-flux">
+        <option value="">— Non précisé —</option>
+        <option value="spotting">🩸 Spotting</option>
+        <option value="light">🩸 Léger</option>
+        <option value="medium">🩸🩸 Moyen</option>
+        <option value="heavy">🩸🩸🩸 Abondant</option>
+      </select>
+    </div>`;
+  } else if(type==='sex'){
+    body=`<div class="modal-title">❤️ SEXUALITÉ</div>
+    <div class="modal-sub">Activité sexuelle</div>
+    <div class="modal-field"><label>Date *</label><input class="modal-input" id="cym-date" type="date" value="${date}" max="${new Date().toISOString().slice(0,10)}"></div>
+    <div class="modal-field"><label>Protection</label>
+      <select class="modal-input" id="cym-protected">
+        <option value="1">✅ Protégé</option>
+        <option value="0">⚠️ Non protégé</option>
+      </select>
+    </div>`;
+  } else if(type==='opk'){
+    body=`<div class="modal-title">🔵 TEST OPK</div>
+    <div class="modal-sub">Résultat du test d'ovulation</div>
+    <div class="modal-field"><label>Date *</label><input class="modal-input" id="cym-date" type="date" value="${date}" max="${new Date().toISOString().slice(0,10)}"></div>
+    <div class="modal-field"><label>Résultat</label>
+      <select class="modal-input" id="cym-opk">
+        <option value="1">🔵 Positif (pic LH détecté)</option>
+        <option value="0">⚪ Négatif</option>
+      </select>
+    </div>`;
+  }
+
+  overlay.innerHTML=`<div class="modal">
+    ${body}
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="document.getElementById('cy-modal').remove()">Annuler</button>
+      <button class="modal-save" onclick="saveCyModal('${type}')">SAUVEGARDER</button>
+    </div>
+  </div>`;
+
+  overlay.addEventListener('click',e=>{ if(e.target===overlay) overlay.remove(); });
+  document.body.appendChild(overlay);
+}
+
+function openCyDayModal(dateStr){
+  // Show what's logged for this day + quick entry buttons
+  const overlay=document.createElement('div');
+  overlay.className='modal-overlay';
+  overlay.id='cy-day-modal';
+
+  const d=new Date(dateStr+'T00:00:00');
+  const ds=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+  const phase=_cyMeta?(_cyMeta.phaseMap[dateStr]||''):'' ;
+  const phaseInfo=CY_PHASE_INFO[phase];
+
+  overlay.innerHTML=`<div class="modal">
+    <div class="modal-title">📅 ${ds}</div>
+    ${phaseInfo?'<div style="font-size:13px;font-weight:600;color:'+phaseInfo.color+';margin-bottom:12px">'+phaseInfo.label+'</div>':''}
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
+      <button class="cy-entry-btn" onclick="document.getElementById('cy-day-modal').remove();openCyModal('period','${dateStr}')"><span class="cy-entry-ico">🩸</span><div class="cy-entry-info"><div class="cy-entry-title">Saisir des règles</div></div></button>
+      <button class="cy-entry-btn" onclick="document.getElementById('cy-day-modal').remove();openCyModal('sex','${dateStr}')"><span class="cy-entry-ico">❤️</span><div class="cy-entry-info"><div class="cy-entry-title">Activité sexuelle</div></div></button>
+      <button class="cy-entry-btn" onclick="document.getElementById('cy-day-modal').remove();openCyModal('opk','${dateStr}')"><span class="cy-entry-ico">🔵</span><div class="cy-entry-info"><div class="cy-entry-title">Test OPK</div></div></button>
+    </div>
+    <button class="modal-cancel" style="width:100%;padding:12px;border-radius:12px;border:1px solid var(--border);background:transparent;font-family:var(--fb);font-size:14px;font-weight:600;cursor:pointer;color:var(--text2)" onclick="document.getElementById('cy-day-modal').remove()">Fermer</button>
+  </div>`;
+
+  overlay.addEventListener('click',e=>{ if(e.target===overlay) overlay.remove(); });
+  document.body.appendChild(overlay);
+}
+
+async function saveCyModal(type){
+  const dateEl=document.getElementById('cym-date');
+  if(!dateEl||!dateEl.value){ alert('Date requise'); return; }
+
+  const id=(typeof crypto!=='undefined'&&crypto.randomUUID)?crypto.randomUUID():(Date.now().toString(36)+Math.random().toString(36).slice(2));
+  let data={id, type, date:dateEl.value};
+
+  if(type==='period'){
+    const endEl=document.getElementById('cym-end');
+    const fluxEl=document.getElementById('cym-flux');
+    if(endEl) data.end_date=endEl.value||dateEl.value;
+    if(fluxEl) data.flux=fluxEl.value||null;
+  } else if(type==='sex'){
+    const pEl=document.getElementById('cym-protected');
+    data.protected=pEl?pEl.value==='1':true;
+  } else if(type==='opk'){
+    const oEl=document.getElementById('cym-opk');
+    data.opk_positive=oEl?oEl.value==='1':false;
+  }
+
+  const modal=document.getElementById('cy-modal');
+  if(modal) modal.remove();
+
+  await cyDbSave(data);
+  _cyLogs=await cyDbLoad();
+  _cyMeta=cyGetMeta(_cyLogs);
+  renderCyCalendar();
+  renderCyStats();
+  renderCyAlerts();
+  renderCyPhaseCard();
+  renderCyLogHistory();
+  renderCyForecast();
+  _showToast('✅ Saisie enregistrée !');
+}
+
+// Desktop sidebar: hide cycles subnav (none needed)
+// Light mode support for cy-day
+document.addEventListener('DOMContentLoaded',()=>{
+  // Seed Supabase if table empty — try once silently
+  (async()=>{
+    try {
+      const r=await fetch(SB_URL+CY_TABLE+'?limit=1',{headers:SB_GET});
+      if(r.ok){
+        const rows=await r.json();
+        // Table exists, data will load on demand
+      }
+    } catch(e){ /* silent */ }
+  })();
+});
 
 </script>
 </body>
