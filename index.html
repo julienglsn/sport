@@ -2473,6 +2473,18 @@ function _renderAppsPage(){
   apps.forEach(a=>{ if(!sections[a.sec]){sections[a.sec]=[];order.push(a.sec);} sections[a.sec].push(a); });
 
   let h = '';
+  h += '<div class="ph">';
+  h += '<div style="display:flex;align-items:center;justify-content:space-between;">';
+  h += '<div class="ey">JUNELLA</div>';
+  h += '<div style="display:flex;gap:6px;align-items:center;">';
+  h += '<button class="profile-btn subnav-item" data-pid="1" onclick="setProfile(1)" style="padding:5px 14px;font-size:12px;">JU</button>';
+  h += '<button class="profile-btn subnav-item" data-pid="2" onclick="setProfile(2)" style="padding:5px 14px;font-size:12px;">NELLA</button>';
+  h += '<div id="theme-seg-apps" class="theme-seg-pill"></div>';
+  h += '</div></div>';
+  h += '<div class="ph-divider"></div>';
+  h += '<h1>APPS</h1>';
+  h += '<p>Tes applications et outils connectés</p>';
+  h += '</div>';
   h += '<div class="sec">';
   order.forEach((sec,si)=>{
     h += '<div class="slabel"'+(si>0?' style="margin-top:18px"':'')+'>'+sec+'</div>';
@@ -2492,6 +2504,13 @@ function _renderAppsPage(){
   });
   h += '</div>';
   pg.innerHTML = h;
+
+  // Inject theme toggle into the newly created header
+  if(typeof injectPills === 'function') injectPills();
+  // Sync profile buttons active state
+  document.querySelectorAll('.profile-btn').forEach(b=>{
+    b.classList.toggle('active', parseInt(b.dataset.pid)===activeProfile);
+  });
 
   _activatePage('page-apps');
   window.scrollTo({top:0,behavior:'smooth'});
@@ -5510,7 +5529,7 @@ function renderGolfHolesChart(acts){
     });
   }
 
-  function injectPills(){
+  window.injectPills = function injectPills(){
     document.querySelectorAll('.theme-seg-pill').forEach(el => {
       el.innerHTML = PILL_HTML;
     });
