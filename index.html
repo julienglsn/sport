@@ -783,6 +783,25 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .cy-forecast-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;}
 .cy-forecast-row:last-child{border-bottom:none;}
 .cy-forecast-badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;}
+
+/* Cycles responsive layout */
+.cy-layout{display:flex;flex-direction:column;gap:0;}
+.cy-col-main{padding:14px 20px 0;}
+.cy-col-side{padding:0 20px 16px;}
+.cy-stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:0 0 14px;}
+
+@media(min-width:1000px){
+  #page-cycles .sc{padding:28px 40px;}
+  .cy-layout{display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:start;}
+  .cy-col-main{padding:0;}
+  .cy-col-side{padding:0;}
+  .cy-stat-row{grid-template-columns:1fr 1fr 1fr;margin-bottom:16px;}
+  .cy-day{font-size:13px;}
+  #page-cycles .cy-cal-title{font-size:22px;}
+  #page-cycles #cycles-hormones .sec,
+  #page-cycles #cycles-log .sec,
+  #page-cycles #cycles-forecast .sec{max-width:820px;}
+}
 </style>
 </head>
 <body>
@@ -1411,42 +1430,43 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 
   <!-- CALENDRIER -->
   <div class="sc active" id="cycles-calendar">
-    <div id="cy-alerts-wrap"></div>
-    <div class="cy-stat-row" id="cy-stats-row">
-      <div class="cy-stat"><div class="cy-stat-val" id="cy-stat-len">28</div><div class="cy-stat-lbl">Durée moy.</div></div>
-      <div class="cy-stat"><div class="cy-stat-val" id="cy-stat-next">—</div><div class="cy-stat-lbl">Prochaines règles</div></div>
-      <div class="cy-stat"><div class="cy-stat-val" id="cy-stat-ov">—</div><div class="cy-stat-lbl">Ovulation</div></div>
-    </div>
-    <div style="padding:0 20px 4px">
-      <div class="cy-phase-bar" id="cy-phase-bar"></div>
-    </div>
-    <div style="padding:0 20px 16px">
-      <div class="cal-grid-wrap" style="padding:12px;">
-        <div class="cy-cal-header">
-          <button class="cy-cal-nav" style="background:none;border:none;" onclick="cyNavMonth(-1)"><span style="font-size:18px;color:var(--text2)">‹</span></button>
-          <div class="cy-cal-title" id="cy-cal-title">—</div>
-          <button class="cy-cal-nav" style="background:none;border:none;" onclick="cyNavMonth(1)"><span style="font-size:18px;color:var(--text2)">›</span></button>
-        </div>
-        <div class="cy-grid" id="cy-dow-row">
-          <div class="cy-dow">L</div><div class="cy-dow">M</div><div class="cy-dow">M</div>
-          <div class="cy-dow">J</div><div class="cy-dow">V</div><div class="cy-dow">S</div><div class="cy-dow">D</div>
-        </div>
-        <div class="cy-grid" id="cy-cal-grid"></div>
-        <div class="cy-legend" id="cy-legend">
-          <div class="cy-legend-item"><div class="cy-legend-dot" style="background:#e8547a"></div>Règles</div>
-          <div class="cy-legend-item"><div class="cy-legend-dot" style="background:rgba(77,154,191,.5)"></div>Fenêtre fertile</div>
-          <div class="cy-legend-item"><div class="cy-legend-dot" style="background:var(--accent)"></div>Ovulation</div>
-          <div class="cy-legend-item"><div class="cy-legend-dot" style="background:rgba(200,154,98,.4)"></div>Phase lutéale</div>
-          <div class="cy-legend-item" style="gap:3px"><span style="font-size:12px">🩸</span>Flux entré</div>
-          <div class="cy-legend-item" style="gap:3px"><span style="font-size:12px">❤️</span>Sexualité</div>
-          <div class="cy-legend-item" style="gap:3px"><span style="font-size:12px">🔵</span>OPK+</div>
+    <div class="cy-layout">
+      <!-- Colonne gauche : calendrier -->
+      <div class="cy-col-main">
+        <div class="cal-grid-wrap" style="padding:14px;">
+          <div class="cy-cal-header">
+            <button class="cy-cal-nav" style="background:none;border:none;" onclick="cyNavMonth(-1)"><span style="font-size:20px;color:var(--text2)">‹</span></button>
+            <div class="cy-cal-title" id="cy-cal-title">—</div>
+            <button class="cy-cal-nav" style="background:none;border:none;" onclick="cyNavMonth(1)"><span style="font-size:20px;color:var(--text2)">›</span></button>
+          </div>
+          <div class="cy-grid" id="cy-dow-row">
+            <div class="cy-dow">L</div><div class="cy-dow">M</div><div class="cy-dow">M</div>
+            <div class="cy-dow">J</div><div class="cy-dow">V</div><div class="cy-dow">S</div><div class="cy-dow">D</div>
+          </div>
+          <div class="cy-grid" id="cy-cal-grid"></div>
+          <div class="cy-legend" id="cy-legend" style="margin-top:14px;">
+            <div class="cy-legend-item"><div class="cy-legend-dot" style="background:#e8547a"></div>Règles</div>
+            <div class="cy-legend-item"><div class="cy-legend-dot" style="background:rgba(77,154,191,.5)"></div>Fenêtre fertile</div>
+            <div class="cy-legend-item"><div class="cy-legend-dot" style="background:var(--accent)"></div>Ovulation</div>
+            <div class="cy-legend-item"><div class="cy-legend-dot" style="background:rgba(200,154,98,.4)"></div>Phase lutéale</div>
+            <div class="cy-legend-item" style="gap:3px"><span style="font-size:12px">🩸</span>Flux entré</div>
+            <div class="cy-legend-item" style="gap:3px"><span style="font-size:12px">❤️</span>Sexualité</div>
+            <div class="cy-legend-item" style="gap:3px"><span style="font-size:12px">🔵</span>OPK+</div>
+          </div>
         </div>
       </div>
-    </div>
-    <!-- Phase du jour -->
-    <div class="sec" style="padding-top:4px">
-      <div class="slabel">Phase actuelle</div>
-      <div id="cy-current-phase-card"></div>
+
+      <!-- Colonne droite : stats + alertes + phase -->
+      <div class="cy-col-side">
+        <div id="cy-alerts-wrap"></div>
+        <div class="cy-stat-row" id="cy-stats-row">
+          <div class="cy-stat"><div class="cy-stat-val" id="cy-stat-len">28</div><div class="cy-stat-lbl">Durée moy.</div></div>
+          <div class="cy-stat"><div class="cy-stat-val" id="cy-stat-next">—</div><div class="cy-stat-lbl">Prochaines règles</div></div>
+          <div class="cy-stat"><div class="cy-stat-val" id="cy-stat-ov">—</div><div class="cy-stat-lbl">Ovulation</div></div>
+        </div>
+        <div class="slabel" style="margin-bottom:8px">Phase actuelle</div>
+        <div id="cy-current-phase-card"></div>
+      </div>
     </div>
   </div>
 
