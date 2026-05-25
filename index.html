@@ -799,8 +799,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
   .cy-day{font-size:13px;}
   #page-cycles .cy-cal-title{font-size:22px;}
   #page-cycles #cycles-hormones .sec,
-  #page-cycles #cycles-log .sec,
-  #page-cycles #cycles-forecast .sec{max-width:820px;}
+  #page-cycles #cycles-log .sec{max-width:820px;}
 }
 </style>
 </head>
@@ -1424,8 +1423,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
   <div class="stabs" id="cycles-nav">
     <button class="stab active" onclick="showCyclesTab('calendar',this)">📅 Calendrier</button>
     <button class="stab" onclick="showCyclesTab('hormones',this)">📈 Hormones</button>
-    <button class="stab" onclick="showCyclesTab('log',this)">✏️ Saisir</button>
-    <button class="stab" onclick="showCyclesTab('forecast',this)">🔮 Prévisions</button>
+    <button class="stab" onclick="showCyclesTab('log',this)">📋 Historique</button>
   </div>
 
   <!-- CALENDRIER -->
@@ -1445,9 +1443,9 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
           </div>
           <div class="cy-grid" id="cy-cal-grid"></div>
           <div class="cy-legend" id="cy-legend" style="margin-top:14px;">
-            <div class="cy-legend-item"><div class="cy-legend-dot" style="background:#e8547a"></div>Règles</div>
-            <div class="cy-legend-item"><div class="cy-legend-dot" style="background:rgba(77,154,191,.5)"></div>Fenêtre fertile</div>
-            <div class="cy-legend-item"><div class="cy-legend-dot" style="background:var(--accent)"></div>Ovulation</div>
+            <div class="cy-legend-item"><div class="cy-legend-dot" style="background:#e8547a"></div>Phase menstruelle</div>
+            <div class="cy-legend-item"><div class="cy-legend-dot" style="background:rgba(74,173,138,.5)"></div>Phase folliculaire</div>
+            <div class="cy-legend-item"><div class="cy-legend-dot" style="background:var(--accent)"></div>Phase ovulatoire</div>
             <div class="cy-legend-item"><div class="cy-legend-dot" style="background:rgba(200,154,98,.4)"></div>Phase lutéale</div>
             <div class="cy-legend-item" style="gap:3px"><span style="font-size:12px">🩸</span>Flux entré</div>
             <div class="cy-legend-item" style="gap:3px"><span style="font-size:12px">❤️</span>Sexualité</div>
@@ -1456,7 +1454,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
         </div>
       </div>
 
-      <!-- Colonne droite : stats + alertes + phase -->
+      <!-- Colonne droite : stats + alertes + phase + saisie rapide -->
       <div class="cy-col-side">
         <div id="cy-alerts-wrap"></div>
         <div class="cy-stat-row" id="cy-stats-row">
@@ -1466,6 +1464,31 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
         </div>
         <div class="slabel" style="margin-bottom:8px">Phase actuelle</div>
         <div id="cy-current-phase-card"></div>
+        <div class="slabel" style="margin-top:16px;margin-bottom:10px">Saisir</div>
+        <button class="cy-entry-btn" onclick="openCyModal('period')">
+          <span class="cy-entry-ico">🩸</span>
+          <div class="cy-entry-info">
+            <div class="cy-entry-title">Menstruations</div>
+            <div class="cy-entry-sub">Date de début · Flux · Durée</div>
+          </div>
+          <span style="color:var(--text3);font-size:18px">›</span>
+        </button>
+        <button class="cy-entry-btn" onclick="openCyModal('sex')">
+          <span class="cy-entry-ico">❤️</span>
+          <div class="cy-entry-info">
+            <div class="cy-entry-title">Activité sexuelle</div>
+            <div class="cy-entry-sub">Date · Protégé / Non protégé</div>
+          </div>
+          <span style="color:var(--text3);font-size:18px">›</span>
+        </button>
+        <button class="cy-entry-btn" onclick="openCyModal('opk')">
+          <span class="cy-entry-ico">🔵</span>
+          <div class="cy-entry-info">
+            <div class="cy-entry-title">Test OPK</div>
+            <div class="cy-entry-sub">Date · Résultat positif / négatif</div>
+          </div>
+          <span style="color:var(--text3);font-size:18px">›</span>
+        </button>
       </div>
     </div>
   </div>
@@ -1484,46 +1507,11 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
     </div>
   </div>
 
-  <!-- LOG -->
+  <!-- HISTORIQUE -->
   <div class="sc" id="cycles-log">
     <div class="sec">
-      <div class="slabel" style="margin-bottom:12px">Que veux-tu saisir ?</div>
-      <button class="cy-entry-btn" onclick="openCyModal('period')">
-        <span class="cy-entry-ico">🩸</span>
-        <div class="cy-entry-info">
-          <div class="cy-entry-title">Menstruations</div>
-          <div class="cy-entry-sub">Date de début · Flux · Durée</div>
-        </div>
-        <span style="color:var(--text3);font-size:18px">›</span>
-      </button>
-      <button class="cy-entry-btn" onclick="openCyModal('sex')">
-        <span class="cy-entry-ico">❤️</span>
-        <div class="cy-entry-info">
-          <div class="cy-entry-title">Activité sexuelle</div>
-          <div class="cy-entry-sub">Date · Protégé / Non protégé</div>
-        </div>
-        <span style="color:var(--text3);font-size:18px">›</span>
-      </button>
-      <button class="cy-entry-btn" onclick="openCyModal('opk')">
-        <span class="cy-entry-ico">🔵</span>
-        <div class="cy-entry-info">
-          <div class="cy-entry-title">Test OPK</div>
-          <div class="cy-entry-sub">Date · Résultat positif / négatif</div>
-        </div>
-        <span style="color:var(--text3);font-size:18px">›</span>
-      </button>
-      <div class="slabel" style="margin-top:18px;margin-bottom:10px">Historique des cycles saisis</div>
+      <div class="slabel" style="margin-bottom:10px">Historique des cycles</div>
       <div id="cy-log-history"></div>
-    </div>
-  </div>
-
-  <!-- FORECAST -->
-  <div class="sc" id="cycles-forecast">
-    <div class="sec">
-      <div class="slabel" style="margin-bottom:10px">12 prochains cycles</div>
-      <div class="cal-grid-wrap" style="padding:14px;" id="cy-forecast-cycles"></div>
-      <div class="slabel" style="margin-top:18px;margin-bottom:10px">12 prochaines fenêtres fertiles</div>
-      <div class="cal-grid-wrap" style="padding:14px;" id="cy-forecast-fertile"></div>
     </div>
   </div>
 </div>
@@ -5897,7 +5885,6 @@ async function renderCycles(){
   renderCyPhaseCard();
   renderCyHormones();
   renderCyLogHistory();
-  renderCyForecast();
   injectPills();
 }
 
@@ -5909,7 +5896,6 @@ function showCyclesTab(tab, btn){
   if(tab==='calendar'){ renderCyCalendar(); renderCyStats(); renderCyAlerts(); renderCyPhaseCard(); }
   if(tab==='hormones') renderCyHormones();
   if(tab==='log') renderCyLogHistory();
-  if(tab==='forecast') renderCyForecast();
 }
 
 // ── Calendar render ──
@@ -6006,10 +5992,10 @@ function renderCyAlerts(){
   const {daysUntilPeriod, daysUntilOv} = _cyMeta;
   let html='';
   if(daysUntilOv>=0 && daysUntilOv<=3){
-    html+=`<div class="cy-alert cy-alert-ovulation">🔵 Ovulation dans ${daysUntilOv===0?'<b>aujourd\'hui</b>':'<b>'+daysUntilOv+' jour'+(daysUntilOv>1?'s':'')+'</b>'} — fenêtre fertile active</div>`;
+    html+=`<div class="cy-alert cy-alert-ovulation">⭕ Phase ovulatoire dans ${daysUntilOv===0?'<b>aujourd\'hui</b>':'<b>'+daysUntilOv+' jour'+(daysUntilOv>1?'s':'')+'</b>'} — fenêtre fertile active</div>`;
   }
   if(daysUntilPeriod>=0 && daysUntilPeriod<=5){
-    html+=`<div class="cy-alert cy-alert-period">🩸 Règles prévues dans <b>${daysUntilPeriod===0?'aujourd\'hui':daysUntilPeriod+' jour'+(daysUntilPeriod>1?'s':'')}</b></div>`;
+    html+=`<div class="cy-alert cy-alert-period">🩸 Phase menstruelle prévue dans <b>${daysUntilPeriod===0?'aujourd\'hui':daysUntilPeriod+' jour'+(daysUntilPeriod>1?'s':'')}</b></div>`;
   }
   const wrap=document.getElementById('cy-alerts-wrap');
   if(wrap){ wrap.innerHTML=html?'<div style="padding:14px 20px 0">'+html+'</div>':''; }
@@ -6019,8 +6005,8 @@ function renderCyAlerts(){
 const CY_PHASE_INFO = {
   period:      {label:'🩸 Phase menstruelle',   color:'#e8547a', desc:'Ton corps renouvelle son endomètre. Privilégie le repos, la chaleur et l\'écoute de tes besoins énergétiques.'},
   follicular:  {label:'🌱 Phase folliculaire',  color:'#4AAD8A', desc:'Les œstrogènes montent progressivement. Énergie en hausse, idéal pour monter l\'intensité à l\'entraînement.'},
-  fertile:     {label:'🔥 Fenêtre fertile',     color:'var(--accent)', desc:'Les 7 jours précédant l\'ovulation sont ta fenêtre fertile. Libido au pic, performance physique optimale.'},
-  ovulation:   {label:'⭕ Pic ovulatoire',      color:'var(--accent)', desc:'Le pic de LH déclenche l\'ovulation. C\'est le moment le plus fertile du cycle.'},
+  fertile:     {label:'🌱 Phase folliculaire',  color:'#4AAD8A', desc:'Les œstrogènes montent progressivement. Énergie en hausse, idéal pour monter l\'intensité à l\'entraînement.'},
+  ovulation:   {label:'⭕ Phase ovulatoire',    color:'var(--accent)', desc:'Le pic de LH déclenche l\'ovulation. C\'est le moment le plus fertile du cycle.'},
   luteal:      {label:'🌙 Phase lutéale',       color:'#C89A62', desc:'La progestérone domine. Énergie plus calme, bons moments pour le travail de fond et la récupération.'},
 };
 
@@ -6320,7 +6306,6 @@ async function saveCyModal(type){
   renderCyAlerts();
   renderCyPhaseCard();
   renderCyLogHistory();
-  renderCyForecast();
   _showToast('✅ Saisie enregistrée !');
 }
 
