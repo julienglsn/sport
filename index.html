@@ -6105,36 +6105,187 @@ function renderCyHormones(){
 function renderCyLogHistory(){
   const el=document.getElementById('cy-log-history');
   if(!el) return;
-  const logs=[..._cyLogs,...CY_SEED_PERIODS.map(p=>({type:'period',date:p.start,end_date:p.end,flux:'—',_seed:true}))];
-  logs.sort((a,b)=>new Date(b.date)-new Date(a.date));
-
-  if(!logs.length){el.innerHTML='<div style="font-size:13px;color:var(--text3);">Aucune entrée.</div>';return;}
 
   const FLUX_LABELS={light:'Léger',medium:'Moyen',heavy:'Abondant',spotting:'Spotting'};
-  el.innerHTML=logs.map(l=>{
-    const d=new Date(l.date+'T00:00:00');
-    const ds=d.toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
-    let icon='',detail='',badge='';
-    if(l.type==='period'){
-      icon='🩸'; detail=(l.flux&&FLUX_LABELS[l.flux]?FLUX_LABELS[l.flux]:'')+(l.end_date&&l.end_date!==l.date?' · fin '+new Date(l.end_date+'T00:00:00').toLocaleDateString('fr-FR',{day:'numeric',month:'short'}):'');
-      badge='<span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:rgba(232,84,122,.12);color:#e8547a">Règles</span>';
-    } else if(l.type==='sex'){
-      icon='❤️'; detail=l.protected?'Protégé':'Non protégé';
-      badge='<span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:rgba(155,109,204,.12);color:#9b6dcc">Sexualité</span>';
-    } else if(l.type==='opk'){
-      icon=l.opk_positive?'🔵':'⚪'; detail=l.opk_positive?'OPK positif':'OPK négatif';
-      badge='<span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:rgba(77,154,191,.12);color:var(--accent)">OPK</span>';
-    }
-    const delBtn=l._seed?'':'<button onclick="deleteCyLog(\''+l.id+'\')" style="font-size:16px;background:none;border:none;cursor:pointer;color:var(--text3);padding:0 4px;" title="Supprimer">🗑️</button>';
-    return `<div class="feed-card">
-      <div class="feed-ico">${icon}</div>
-      <div class="feed-left">
-        <div class="feed-row1"><div class="feed-title">${ds}</div>${badge}</div>
-        <div class="feed-metrics">${detail||'—'}</div>
-      </div>
-      ${delBtn}
+  const fmtShort=d=>new Date(d+'T00:00:00').toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
+  const fmtFull=d=>new Date(d+'T00:00:00').toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+
+  // ── 1. Merge seed periods with user-logged periods, deduplicate by start date ──
+  const seedMap={};
+  CY_SEED_PERIODS.forEach(p=>{ seedMap[p.start]={type:'period',date:p.start,end_date:p.end,_seed:true}; });
+  // User logs override seeds if same start date
+  _cyLogs.filter(l=>l.type==='period').forEach(l=>{ seedMap[l.date]=l; });
+  const periodEntries=Object.values(seedMap);
+
+  // ── 2. Non-period logs (sex, opk) ──
+  const otherLogs=_cyLogs.filter(l=>l.type!=='period');
+
+  // ── 3. Build sections ──
+  let html='';
+
+  // PERIODS section
+  const sortedPeriods=[...periodEntries].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  if(sortedPeriods.length){
+    html+='<div class="slabel" style="margin-bottom:10px">🩸 Règles</div>';
+    html+=sortedPeriods.map(l=>{
+      const durDays=l.end_date&&l.end_date!==l.date?Math.round((new Date(l.end_date+'T00:00:00')-new Date(l.date+'T00:00:00'))/86400000)+1:1;
+      const fluxLabel=l.flux&&FLUX_LABELS[l.flux]?FLUX_LABELS[l.flux]:(l.flux==='—'?null:null);
+      const endLabel=l.end_date&&l.end_date!==l.date?fmtShort(l.end_date):null;
+
+      const actions=l._seed
+        ? '' // seed entries: no actions
+        : `<div style="display:flex;gap:6px;flex-shrink:0">
+            <button onclick="openCyEditModal('period','${l.id}')" style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);cursor:pointer;">✏️ Modifier</button>
+            <button onclick="deleteCyLog('${l.id}')" style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px;border:1px solid rgba(232,84,122,.25);background:rgba(232,84,122,.08);color:#e8547a;cursor:pointer;">🗑️</button>
+          </div>`;
+
+      return `<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;">
+        <div style="font-size:22px;flex-shrink:0">🩸</div>
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;">
+            <span style="font-size:14px;font-weight:700;color:var(--text)">${fmtFull(l.date)}</span>
+            ${endLabel?`<span style="font-size:12px;color:var(--text3)">→ ${endLabel}</span>`:''}
+            ${durDays>1?`<span style="font-size:11px;font-weight:600;padding:1px 7px;border-radius:5px;background:rgba(232,84,122,.1);color:#e8547a;">${durDays}j</span>`:''}
+          </div>
+          <div style="font-size:12px;color:var(--text2);margin-top:4px;display:flex;gap:10px;flex-wrap:wrap;">
+            ${fluxLabel?`<span>💧 Flux : <strong>${fluxLabel}</strong></span>`:'<span style="color:var(--text3);font-style:italic">Flux non renseigné</span>'}
+            ${l._seed?'<span style="font-size:10px;padding:1px 6px;border-radius:4px;background:var(--bg3);color:var(--text3);">historique</span>':''}
+          </div>
+        </div>
+        ${actions}
+      </div>`;
+    }).join('');
+  }
+
+  // OTHER LOGS section (sex, opk) grouped by type, sorted desc
+  const sortedOther=[...otherLogs].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  if(sortedOther.length){
+    html+='<div class="slabel" style="margin-top:20px;margin-bottom:10px">📋 Autres entrées</div>';
+    html+=sortedOther.map(l=>{
+      let icon='',detail='',typeLabel='',typeColor='';
+      if(l.type==='sex'){
+        icon='❤️'; detail=l.protected?'Protégé':'Non protégé';
+        typeLabel='Sexualité'; typeColor='rgba(155,109,204,.12);color:#9b6dcc';
+      } else if(l.type==='opk'){
+        icon=l.opk_positive?'🔵':'⚪'; detail=l.opk_positive?'Résultat positif — pic LH détecté':'Résultat négatif';
+        typeLabel='OPK'; typeColor='rgba(77,154,191,.12);color:var(--accent)';
+      }
+      return `<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;">
+        <div style="font-size:20px;flex-shrink:0">${icon}</div>
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <span style="font-size:14px;font-weight:700;color:var(--text)">${fmtFull(l.date)}</span>
+            <span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:${typeColor}">${typeLabel}</span>
+          </div>
+          <div style="font-size:12px;color:var(--text2);margin-top:4px;">${detail}</div>
+        </div>
+        <div style="display:flex;gap:6px;flex-shrink:0">
+          <button onclick="openCyEditModal('${l.type}','${l.id}')" style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);cursor:pointer;">✏️</button>
+          <button onclick="deleteCyLog('${l.id}')" style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px;border:1px solid rgba(232,84,122,.25);background:rgba(232,84,122,.08);color:#e8547a;cursor:pointer;">🗑️</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  if(!html) html='<div style="font-size:13px;color:var(--text3);padding:20px 0;">Aucune entrée.</div>';
+  el.innerHTML=html;
+}
+
+// ── Edit modal (pre-fill existing entry) ──
+function openCyEditModal(type, id){
+  const log=_cyLogs.find(l=>l.id===id);
+  if(!log){ _showToast('Entrée introuvable'); return; }
+
+  const overlay=document.createElement('div');
+  overlay.className='modal-overlay';
+  overlay.id='cy-modal';
+
+  let body='';
+  if(type==='period'){
+    body=`<div class="modal-title">🩸 MODIFIER LES RÈGLES</div>
+    <div class="modal-sub">Modifie les informations de cette période</div>
+    <div class="modal-field"><label>Date de début *</label><input class="modal-input" id="cym-date" type="date" value="${log.date}" max="${new Date().toISOString().slice(0,10)}"></div>
+    <div class="modal-field"><label>Date de fin</label><input class="modal-input" id="cym-end" type="date" value="${log.end_date||log.date}" max="${new Date().toISOString().slice(0,10)}"></div>
+    <div class="modal-field"><label>Flux</label>
+      <select class="modal-input" id="cym-flux">
+        <option value="">— Non précisé —</option>
+        <option value="spotting"${log.flux==='spotting'?' selected':''}>🩸 Spotting</option>
+        <option value="light"${log.flux==='light'?' selected':''}>🩸 Léger</option>
+        <option value="medium"${log.flux==='medium'?' selected':''}>🩸🩸 Moyen</option>
+        <option value="heavy"${log.flux==='heavy'?' selected':''}>🩸🩸🩸 Abondant</option>
+      </select>
     </div>`;
-  }).join('');
+  } else if(type==='sex'){
+    body=`<div class="modal-title">❤️ MODIFIER</div>
+    <div class="modal-sub">Activité sexuelle</div>
+    <div class="modal-field"><label>Date *</label><input class="modal-input" id="cym-date" type="date" value="${log.date}" max="${new Date().toISOString().slice(0,10)}"></div>
+    <div class="modal-field"><label>Protection</label>
+      <select class="modal-input" id="cym-protected">
+        <option value="1"${log.protected?' selected':''}>✅ Protégé</option>
+        <option value="0"${!log.protected?' selected':''}>⚠️ Non protégé</option>
+      </select>
+    </div>`;
+  } else if(type==='opk'){
+    body=`<div class="modal-title">🔵 MODIFIER TEST OPK</div>
+    <div class="modal-sub">Résultat du test d'ovulation</div>
+    <div class="modal-field"><label>Date *</label><input class="modal-input" id="cym-date" type="date" value="${log.date}" max="${new Date().toISOString().slice(0,10)}"></div>
+    <div class="modal-field"><label>Résultat</label>
+      <select class="modal-input" id="cym-opk">
+        <option value="1"${log.opk_positive?' selected':''}>🔵 Positif (pic LH détecté)</option>
+        <option value="0"${!log.opk_positive?' selected':''}>⚪ Négatif</option>
+      </select>
+    </div>`;
+  }
+
+  overlay.innerHTML=`<div class="modal">
+    ${body}
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="document.getElementById('cy-modal').remove()">Annuler</button>
+      <button class="modal-save" onclick="saveCyEditModal('${type}','${id}')">SAUVEGARDER</button>
+    </div>
+  </div>`;
+  overlay.addEventListener('click',e=>{ if(e.target===overlay) overlay.remove(); });
+  document.body.appendChild(overlay);
+}
+
+async function saveCyEditModal(type, id){
+  const dateEl=document.getElementById('cym-date');
+  if(!dateEl||!dateEl.value){ alert('Date requise'); return; }
+
+  const patch={date:dateEl.value};
+  if(type==='period'){
+    const endEl=document.getElementById('cym-end');
+    const fluxEl=document.getElementById('cym-flux');
+    if(endEl) patch.end_date=endEl.value||dateEl.value;
+    if(fluxEl) patch.flux=fluxEl.value||null;
+  } else if(type==='sex'){
+    const pEl=document.getElementById('cym-protected');
+    patch.protected=pEl?pEl.value==='1':true;
+  } else if(type==='opk'){
+    const oEl=document.getElementById('cym-opk');
+    patch.opk_positive=oEl?oEl.value==='1':false;
+  }
+
+  const modal=document.getElementById('cy-modal');
+  if(modal) modal.remove();
+
+  // Update in DB
+  try {
+    await fetch(SB_URL+CY_TABLE+'?id=eq.'+id,{method:'PATCH',headers:{...SB_HDR,'Prefer':'return=minimal'},body:JSON.stringify(patch)});
+  } catch(e){ /* silent fallback */ }
+  // Update local cache
+  const local=JSON.parse(localStorage.getItem('cy_log')||'[]');
+  const idx=local.findIndex(e=>e.id===id);
+  if(idx>-1){ Object.assign(local[idx],patch); localStorage.setItem('cy_log',JSON.stringify(local)); }
+
+  _cyLogs=await cyDbLoad();
+  _cyMeta=cyGetMeta(_cyLogs);
+  renderCyCalendar();
+  renderCyStats();
+  renderCyAlerts();
+  renderCyPhaseCard();
+  renderCyLogHistory();
+  _showToast('✅ Entrée modifiée !');
 }
 
 async function deleteCyLog(id){
