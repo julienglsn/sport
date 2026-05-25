@@ -749,7 +749,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .cy-cal-title{font-family:var(--fd);font-size:22px;letter-spacing:.06em;color:var(--text);}
 .cy-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:0;margin-top:2px;}
 .cy-dow{text-align:center;font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--text3);padding:6px 0 8px;}
-.cy-day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:14px;font-weight:400;color:var(--text3);position:relative;cursor:pointer;transition:opacity .15s;}
+.cy-day{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:4px 0;font-size:14px;font-weight:400;color:var(--text3);position:relative;cursor:pointer;transition:opacity .15s;}
 .cy-day:hover{opacity:.75;}
 .cy-day.cy-this-month{color:var(--text2);}
 .cy-day.cy-today .cy-num{width:32px;height:32px;border-radius:50%;border:2px dashed var(--accent);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700;}
@@ -758,7 +758,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .cy-day.cy-follicular.cy-this-month{color:var(--accent);}
 .cy-day.cy-fertile.cy-this-month{color:var(--accent);}
 .cy-day.cy-luteal.cy-this-month{color:var(--amber);}
-.cy-dots-corner{position:absolute;bottom:4px;right:5px;display:flex;gap:2px;align-items:center;}
+.cy-dots-corner{display:flex;gap:3px;align-items:center;height:6px;}
 .cy-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;display:inline-block;}
 .cy-dot-sex{background:#9b6dcc;}
 .cy-dot-opk-pos{background:var(--accent);}
@@ -5963,7 +5963,7 @@ function renderCyCalendar(){
     if(isSex) dots+='<span class="cy-dot cy-dot-sex"></span>';
     if(isOpk) dots+=isOpk.opk_positive?'<span class="cy-dot cy-dot-opk-pos"></span>':'<span class="cy-dot cy-dot-opk-neg"></span>';
 
-    html+=`<div class="${cls}" onclick="openCyDayModal('${dateStr}')" style="position:relative;"><span class="cy-num">${d}</span>${dots?'<div class="cy-dots-corner">'+dots+'</div>':''}</div>`;
+    html+=`<div class="${cls}" onclick="openCyDayModal('${dateStr}')"><span class="cy-num">${d}</span><div class="cy-dots-corner">${dots}</div></div>`;
   }
   document.getElementById('cy-cal-grid').innerHTML=html;
 }
