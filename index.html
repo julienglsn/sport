@@ -749,7 +749,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .cy-cal-title{font-family:var(--fd);font-size:22px;letter-spacing:.06em;color:var(--text);}
 .cy-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:0;margin-top:2px;}
 .cy-dow{text-align:center;font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--text3);padding:6px 0 8px;}
-.cy-day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:14px;font-weight:400;color:var(--text3);position:relative;cursor:pointer;transition:opacity .15s;padding-bottom:10px;}
+.cy-day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:14px;font-weight:400;color:var(--text3);position:relative;cursor:pointer;transition:opacity .15s;}
 .cy-day:hover{opacity:.75;}
 .cy-day.cy-this-month{color:var(--text2);}
 .cy-day.cy-today .cy-num{width:32px;height:32px;border-radius:50%;border:2px dashed var(--accent);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700;}
@@ -758,10 +758,11 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .cy-day.cy-follicular.cy-this-month{color:var(--accent);}
 .cy-day.cy-fertile.cy-this-month{color:var(--accent);}
 .cy-day.cy-luteal.cy-this-month{color:var(--amber);}
-.cy-day-icons{display:flex;gap:1px;align-items:center;line-height:1;font-size:8px;}
-.cy-icon-drop{font-size:7px;line-height:1;}
-.cy-icon-heart{font-size:7px;line-height:1;}
-.cy-icon-opk{font-size:7px;line-height:1;}
+.cy-dots-corner{position:absolute;bottom:4px;right:5px;display:flex;gap:2px;align-items:center;}
+.cy-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;display:inline-block;}
+.cy-dot-sex{background:#9b6dcc;}
+.cy-dot-opk-pos{background:var(--accent);}
+.cy-dot-opk-neg{background:var(--text3);opacity:.6;}
 .cy-cal-nav-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);font-size:16px;width:34px;height:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:10px;transition:all .18s;flex-shrink:0;}
 .cy-cal-nav-btn:hover{background:var(--bg4);color:var(--text);border-color:var(--border2);}
 .cy-cal-nav-btn:active{background:var(--accent);color:#fff;border-color:var(--accent);}
@@ -1448,9 +1449,9 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
             <div class="cy-legend-item"><div class="cy-legend-dot" style="background:#e8547a"></div>Phase menstruelle</div>
             <div class="cy-legend-item"><div class="cy-legend-dot" style="background:var(--accent)"></div>Phase folliculaire / ovulatoire</div>
             <div class="cy-legend-item"><div class="cy-legend-dot" style="background:var(--amber)"></div>Phase lutéale</div>
-            <div class="cy-legend-item" style="gap:3px"><span style="font-size:12px">❤️</span>Sexualité</div>
-            <div class="cy-legend-item" style="gap:3px"><span style="font-size:12px">🔵</span>OPK+</div>
-            <div class="cy-legend-item" style="gap:3px"><span style="font-size:12px">⚪</span>OPK−</div>
+            <div class="cy-legend-item"><div class="cy-legend-dot" style="background:#9b6dcc;width:7px;height:7px;border-radius:50%;"></div>Sexualité</div>
+            <div class="cy-legend-item"><div class="cy-legend-dot" style="background:var(--accent);width:7px;height:7px;border-radius:50%;"></div>OPK positif</div>
+            <div class="cy-legend-item"><div class="cy-legend-dot" style="background:var(--text3);opacity:.6;width:7px;height:7px;border-radius:50%;"></div>OPK négatif</div>
           </div>
         </div>
       </div>
@@ -5958,11 +5959,11 @@ function renderCyCalendar(){
     else if(phase==='follicular') cls+=' cy-follicular';
     if(isToday) cls+=' cy-today';
 
-    let icons='';
-    if(isSex) icons+='<span class="cy-icon-heart">❤️</span>';
-    if(isOpk) icons+=(isOpk.opk_positive?'<span class="cy-icon-opk">🔵</span>':'<span class="cy-icon-opk">⚪</span>');
+    let dots='';
+    if(isSex) dots+='<span class="cy-dot cy-dot-sex"></span>';
+    if(isOpk) dots+=isOpk.opk_positive?'<span class="cy-dot cy-dot-opk-pos"></span>':'<span class="cy-dot cy-dot-opk-neg"></span>';
 
-    html+=`<div class="${cls}" onclick="openCyDayModal('${dateStr}')" style="position:relative;"><span class="cy-num">${d}</span>${icons?'<div class="cy-day-icons" style="position:absolute;bottom:3px;left:0;right:0;justify-content:center;">'+icons+'</div>':''}</div>`;
+    html+=`<div class="${cls}" onclick="openCyDayModal('${dateStr}')" style="position:relative;"><span class="cy-num">${d}</span>${dots?'<div class="cy-dots-corner">'+dots+'</div>':''}</div>`;
   }
   document.getElementById('cy-cal-grid').innerHTML=html;
 }
