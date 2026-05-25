@@ -749,7 +749,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .cy-cal-title{font-family:var(--fd);font-size:22px;letter-spacing:.06em;color:var(--text);}
 .cy-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:0;margin-top:2px;}
 .cy-dow{text-align:center;font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--text3);padding:6px 0 8px;}
-.cy-day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:14px;font-weight:400;color:var(--text3);position:relative;cursor:pointer;transition:opacity .15s;}
+.cy-day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:14px;font-weight:400;color:var(--text3);position:relative;cursor:pointer;transition:opacity .15s;padding-bottom:10px;}
 .cy-day:hover{opacity:.75;}
 .cy-day.cy-this-month{color:var(--text2);}
 .cy-day.cy-today .cy-num{width:32px;height:32px;border-radius:50%;border:2px dashed var(--accent);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700;}
@@ -758,10 +758,13 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .cy-day.cy-follicular.cy-this-month{color:var(--accent);}
 .cy-day.cy-fertile.cy-this-month{color:var(--accent);}
 .cy-day.cy-luteal.cy-this-month{color:var(--amber);}
-.cy-day-icons{display:flex;gap:1px;align-items:center;margin-top:1px;line-height:1;font-size:8px;}
+.cy-day-icons{display:flex;gap:1px;align-items:center;line-height:1;font-size:8px;}
 .cy-icon-drop{font-size:7px;line-height:1;}
 .cy-icon-heart{font-size:7px;line-height:1;}
 .cy-icon-opk{font-size:7px;line-height:1;}
+.cy-cal-nav-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);font-size:16px;width:34px;height:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:10px;transition:all .18s;flex-shrink:0;}
+.cy-cal-nav-btn:hover{background:var(--bg4);color:var(--text);border-color:var(--border2);}
+.cy-cal-nav-btn:active{background:var(--accent);color:#fff;border-color:var(--accent);}
 .cy-legend{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;}
 .cy-legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2);}
 .cy-legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
@@ -787,7 +790,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .cy-forecast-badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;}
 
 /* Cycles responsive layout */
-.cy-layout{display:flex;flex-direction:column;gap:0;}
+.cy-layout{display:flex;flex-direction:column;gap:16px;}
 .cy-col-main{padding:14px 20px 0;}
 .cy-col-side{padding:0 20px 16px;}
 .cy-stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:0 0 14px;}
@@ -814,10 +817,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
       <div style="display:flex;gap:6px;align-items:center;">
         <button class="profile-btn subnav-item active" data-pid="1" onclick="setProfile(1)" style="padding:5px 14px;font-size:12px;">JU</button>
         <button class="profile-btn subnav-item" data-pid="2" onclick="setProfile(2)" style="padding:5px 14px;font-size:12px;">NELLA</button>
-        <div id="theme-seg" style="display:flex;background:rgba(128,128,128,0.12);border-radius:9px;padding:2px;gap:1px;">
-          <button data-theme-light onclick="setTheme('light')" style="padding:4px 9px;border-radius:7px;border:none;font-size:13px;cursor:pointer;transition:all .18s;" title="Mode clair">☀️</button>
-          <button data-theme-dark  onclick="setTheme('dark')"  style="padding:4px 9px;border-radius:7px;border:none;font-size:13px;cursor:pointer;transition:all .18s;" title="Mode sombre">🌙</button>
-        </div>
+        <div id="theme-seg" class="theme-seg-pill"></div>
       </div>
     </div>
     <div class="hero-divider"></div>
@@ -1435,9 +1435,9 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
       <div class="cy-col-main">
         <div class="cal-grid-wrap" style="padding:14px;">
           <div class="cy-cal-header">
-            <button class="cy-cal-nav" style="background:none;border:none;" onclick="cyNavMonth(-1)"><span style="font-size:20px;color:var(--text2)">‹</span></button>
+            <button class="cy-cal-nav-btn" onclick="cyNavMonth(-1)" title="Mois précédent">‹</button>
             <div class="cy-cal-title" id="cy-cal-title">—</div>
-            <button class="cy-cal-nav" style="background:none;border:none;" onclick="cyNavMonth(1)"><span style="font-size:20px;color:var(--text2)">›</span></button>
+            <button class="cy-cal-nav-btn" onclick="cyNavMonth(1)" title="Mois suivant">›</button>
           </div>
           <div class="cy-grid" id="cy-dow-row">
             <div class="cy-dow">L</div><div class="cy-dow">M</div><div class="cy-dow">M</div>
@@ -1450,6 +1450,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
             <div class="cy-legend-item"><div class="cy-legend-dot" style="background:var(--amber)"></div>Phase lutéale</div>
             <div class="cy-legend-item" style="gap:3px"><span style="font-size:12px">❤️</span>Sexualité</div>
             <div class="cy-legend-item" style="gap:3px"><span style="font-size:12px">🔵</span>OPK+</div>
+            <div class="cy-legend-item" style="gap:3px"><span style="font-size:12px">⚪</span>OPK−</div>
           </div>
         </div>
       </div>
@@ -1528,9 +1529,9 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
     <button class="sidebar-sub-item" id="ssnav-velo" onclick="showSport('velo',this)">🚴 Vélo</button>
     <button class="sidebar-sub-item" id="ssnav-golf" onclick="showSport('golf',this)">⛳ Golf</button>
   </div>
+  <button class="nav-item" id="nav-cycles" onclick="showCycles()"><span class="nav-icon">🌸</span>Cycles</button>
   <button class="nav-item" id="nav-nutrition" onclick="showSection('nutrition')"><span class="nav-icon">🥗</span>Nutrition</button>
   <button class="nav-item" id="nav-apps" onclick="showSection('apps')"><span class="nav-icon">📱</span>Apps</button>
-  <button class="nav-item" id="nav-cycles" onclick="showCycles()"><span class="nav-icon">🌸</span>Cycles</button>
 </nav>
 
 <!-- ════ SPORTS SUB-NAV ════ -->
@@ -2650,8 +2651,6 @@ function _renderAppsPage(){
   h += '<div style="display:flex;align-items:center;justify-content:space-between;">';
   h += '<div class="ey">JUNELLA</div>';
   h += '<div style="display:flex;gap:6px;align-items:center;">';
-  h += '<button class="profile-btn subnav-item" data-pid="1" onclick="setProfile(1)" style="padding:5px 14px;font-size:12px;">JU</button>';
-  h += '<button class="profile-btn subnav-item" data-pid="2" onclick="setProfile(2)" style="padding:5px 14px;font-size:12px;">NELLA</button>';
   h += '<div id="theme-seg-apps" class="theme-seg-pill"></div>';
   h += '</div></div>';
   h += '<div class="ph-divider"></div>';
@@ -2680,10 +2679,6 @@ function _renderAppsPage(){
 
   // Inject theme toggle into the newly created header
   if(typeof injectPills === 'function') injectPills();
-  // Sync profile buttons active state
-  document.querySelectorAll('.profile-btn').forEach(b=>{
-    b.classList.toggle('active', parseInt(b.dataset.pid)===activeProfile);
-  });
 
   _activatePage('page-apps');
   window.scrollTo({top:0,behavior:'smooth'});
@@ -5679,26 +5674,29 @@ function renderGolfHolesChart(acts){
 (function(){
   const KEY = 'junella-theme';
 
-  const PILL_HTML = `<div style="display:flex;background:rgba(128,128,128,0.12);border-radius:9px;padding:2px;gap:1px;">
-    <button data-theme-light onclick="setTheme('light')" style="padding:4px 9px;border-radius:7px;border:none;font-size:13px;cursor:pointer;transition:all .18s;" title="Mode clair">☀️</button>
-    <button data-theme-dark  onclick="setTheme('dark')"  style="padding:4px 9px;border-radius:7px;border:none;font-size:13px;cursor:pointer;transition:all .18s;" title="Mode sombre">🌙</button>
+  const PILL_HTML = `<div style="display:flex;background:var(--theme-pill-bg,rgba(120,120,128,0.18));border-radius:9px;padding:2px;gap:1px;box-shadow:inset 0 1px 2px rgba(0,0,0,.12);">
+    <button data-theme-light onclick="setTheme('light')" style="padding:5px 10px;border-radius:7px;border:none;background:transparent;color:#9aaac8;font-size:14px;cursor:pointer;transition:all .2s;line-height:1;" title="Mode clair">☀️</button>
+    <button data-theme-dark  onclick="setTheme('dark')"  style="padding:5px 10px;border-radius:7px;border:none;background:transparent;color:#9aaac8;font-size:14px;cursor:pointer;transition:all .2s;line-height:1;" title="Mode sombre">🌙</button>
   </div>`;
 
   function applyTheme(theme){
     document.documentElement.classList.toggle('light', theme === 'light');
     const meta = document.querySelector('meta[name="theme-color"]');
     if(meta) meta.content = theme === 'light' ? '#f0f4fc' : '#0E1116';
-    const activeBg   = theme === 'light' ? '#ffffff' : '#1A2540';
+    const activeBg   = theme === 'light' ? '#ffffff' : '#3A4560';
     const activeClr  = theme === 'light' ? '#1A2540' : '#e8f0ff';
+    const activeShadow = 'rgba(0,0,0,.15) 0 1px 4px';
     const idleBg     = 'transparent';
     const idleClr    = theme === 'light' ? '#9aaac8' : '#7a8eb0';
     document.querySelectorAll('[data-theme-light]').forEach(b => {
-      b.style.background = theme === 'light' ? activeBg : idleBg;
-      b.style.color      = theme === 'light' ? activeClr : idleClr;
+      b.style.background  = theme === 'light' ? activeBg : idleBg;
+      b.style.color       = theme === 'light' ? activeClr : idleClr;
+      b.style.boxShadow   = theme === 'light' ? activeShadow : 'none';
     });
     document.querySelectorAll('[data-theme-dark]').forEach(b => {
-      b.style.background = theme === 'dark' ? activeBg : idleBg;
-      b.style.color      = theme === 'dark' ? activeClr : idleClr;
+      b.style.background  = theme === 'dark' ? activeBg : idleBg;
+      b.style.color       = theme === 'dark' ? activeClr : idleClr;
+      b.style.boxShadow   = theme === 'dark' ? activeShadow : 'none';
     });
   }
 
@@ -5706,11 +5704,8 @@ function renderGolfHolesChart(acts){
     document.querySelectorAll('.theme-seg-pill').forEach(el => {
       el.innerHTML = PILL_HTML;
     });
-    // also replace the home pill (already in DOM via static HTML — rebuild it the same way)
-    const homeSeg = document.getElementById('theme-seg');
-    if(homeSeg){
-      homeSeg.innerHTML = PILL_HTML;
-    }
+    // Re-apply theme so newly injected buttons get the right active state
+    applyTheme(getPreferred());
   }
 
   window.setTheme = function(theme){
@@ -5915,7 +5910,7 @@ function renderCyCalendar(){
   const sexDays={}, opkDays={}, periodLogDays={};
   logs.forEach(l=>{
     if(l.type==='sex') sexDays[l.date]=l;
-    if(l.type==='opk' && l.opk_positive) opkDays[l.date]=l;
+    if(l.type==='opk') opkDays[l.date]=l;
     if(l.type==='period'){
       const s=new Date(l.date+'T00:00:00');
       const e=new Date((l.end_date||l.date)+'T00:00:00');
@@ -5965,9 +5960,9 @@ function renderCyCalendar(){
 
     let icons='';
     if(isSex) icons+='<span class="cy-icon-heart">❤️</span>';
-    if(isOpk) icons+='<span class="cy-icon-opk">🔵</span>';
+    if(isOpk) icons+=(isOpk.opk_positive?'<span class="cy-icon-opk">🔵</span>':'<span class="cy-icon-opk">⚪</span>');
 
-    html+=`<div class="${cls}" onclick="openCyDayModal('${dateStr}')"><span class="cy-num">${d}</span>${icons?'<div class="cy-day-icons">'+icons+'</div>':''}</div>`;
+    html+=`<div class="${cls}" onclick="openCyDayModal('${dateStr}')" style="position:relative;"><span class="cy-num">${d}</span>${icons?'<div class="cy-day-icons" style="position:absolute;bottom:3px;left:0;right:0;justify-content:center;">'+icons+'</div>':''}</div>`;
   }
   document.getElementById('cy-cal-grid').innerHTML=html;
 }
