@@ -5817,11 +5817,12 @@ function cyGetMeta(logs){
   // Build phase map for ±6 months
   const phaseMap = {}; // dateStr -> phase
   const fertileMap = {};
+  const _localKey = d => d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
   const today = new Date(); today.setHours(0,0,0,0);
   const start = new Date(today); start.setDate(start.getDate()-90);
   const end   = new Date(today); end.setDate(end.getDate()+200);
   for(let d=new Date(start);d<=end;d.setDate(d.getDate()+1)){
-    const k = d.toISOString().slice(0,10);
+    const k = _localKey(d);
     phaseMap[k] = cyPhaseOf(k, lastPeriodStart, cycleLen);
   }
 
@@ -5830,7 +5831,7 @@ function cyGetMeta(logs){
     const s=new Date(p.start+'T00:00:00');
     const e=new Date((p.end||p.start)+'T00:00:00');
     for(let d=new Date(s);d<=e;d.setDate(d.getDate()+1)){
-      phaseMap[d.toISOString().slice(0,10)]='period';
+      phaseMap[_localKey(d)]='period';
     }
   });
 
@@ -5916,7 +5917,8 @@ function renderCyCalendar(){
       const s=new Date(l.date+'T00:00:00');
       const e=new Date((l.end_date||l.date)+'T00:00:00');
       for(let d=new Date(s);d<=e;d.setDate(d.getDate()+1)){
-        periodLogDays[d.toISOString().slice(0,10)]=l;
+        const k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+        periodLogDays[k]=l;
       }
     }
   });
@@ -5925,7 +5927,8 @@ function renderCyCalendar(){
     const s=new Date(p.start+'T00:00:00');
     const e=new Date(p.end+'T00:00:00');
     for(let d=new Date(s);d<=e;d.setDate(d.getDate()+1)){
-      periodLogDays[d.toISOString().slice(0,10)]={type:'period'};
+      const k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+      periodLogDays[k]={type:'period'};
     }
   });
 
@@ -6008,7 +6011,8 @@ const CY_PHASE_INFO = {
 
 function renderCyPhaseCard(){
   if(!_cyMeta) return;
-  const today=new Date().toISOString().slice(0,10);
+  const _now=new Date();
+  const today=_now.getFullYear()+'-'+String(_now.getMonth()+1).padStart(2,'0')+'-'+String(_now.getDate()).padStart(2,'0');
   const phase=_cyMeta.phaseMap[today]||'follicular';
   const info=CY_PHASE_INFO[phase]||CY_PHASE_INFO.follicular;
   const el=document.getElementById('cy-current-phase-card');
