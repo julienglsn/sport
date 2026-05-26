@@ -4018,12 +4018,20 @@ function getExoAvgHistory(exoName){
 }
 
 function buildExoHistAvgRow(exoName, isTimed, isBW){
-  if(isTimed) return '';
   const h = getExoAvgHistory(exoName);
-  if(!h || (h.avgW===null && h.avgR===null)) return '';
+  if(!h) return '';
+  const src = 'sur '+h.n+' séance'+(h.n>1?'s':'');
+  if(isTimed){
+    if(h.avgR===null) return '';
+    return '<tr class="exo-hist-avg-row">' +
+      '<td></td>' +
+      '<td></td>' +
+      '<td><span class="avg-val">'+h.avgR+' sec</span><span class="avg-src">'+src+'</span></td>' +
+      '</tr>';
+  }
+  if(h.avgW===null && h.avgR===null) return '';
   const wTxt = isBW ? '' : (h.avgW!==null ? h.avgW+' lbs' : '—');
   const rTxt = h.avgR!==null ? h.avgR+' reps' : '—';
-  const src = 'sur '+h.n+' séance'+(h.n>1?'s':'');
   return '<tr class="exo-hist-avg-row">' +
     '<td></td>' +
     (isBW ? '' : '<td><span class="avg-val">'+wTxt+'</span><span class="avg-src">'+src+'</span></td>') +
