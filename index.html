@@ -372,6 +372,9 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .sc-btn{width:26px;height:26px;border-radius:7px;border:1px solid var(--border2);background:var(--bg4);color:var(--text);font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;transition:all .15s;flex-shrink:0}
 .sc-btn:active{background:var(--accent);color:#0E1116;border-color:var(--accent)}
 .mv{font-family:var(--fd);font-size:36px;letter-spacing:.04em;color:var(--accent);line-height:1}
+.exo-hist-avg-row td{padding:2px 14px 6px;border-bottom:1px solid var(--border)}
+.exo-hist-avg-row .avg-val{font-size:11px;color:var(--text3)}
+.exo-hist-avg-row .avg-src{font-size:10px;color:var(--text3);opacity:.6;display:block;margin-top:1px}
 .mu{font-size:12px;color:var(--text2);margin-top:2px;font-weight:500}
 .ml{font-size:10px;color:var(--text3);margin-top:4px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
 
@@ -3633,6 +3636,7 @@ function _renderFreeExoBlock(exo, ei){
     h += '</th>';
   } else { h += '<th>—</th>'; }
   h += '<th>'+(isTimed?'Sec':'Reps')+'</th></tr>';
+  h += buildExoHistAvgRow(freeExos[ei]?.name||'', isTimed, false);
   for(let s=1;s<=n;s++){
     h += '<tr><td><span class="sn">'+s+'</span></td>';
     h += '<td>'+(isTimed?'<span style="color:var(--text3);font-size:12px">—</span>':'<input class="li" type="number" id="w_'+ei+'_'+s+'" placeholder="—" step="1" inputmode="decimal">')+'</td>';
@@ -3806,6 +3810,7 @@ function _refreshFreeExoRows(ei){
     t += '<th style="display:flex;align-items:center;gap:6px;padding:8px 14px 6px">Poids<button id="bw-toggle-'+ei+'" onclick="toggleBodyweight('+ei+')" style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;border:1px solid var(--border);background:var(--bg4);color:var(--text2);cursor:pointer">BW</button></th>';
   } else { t += '<th>—</th>'; }
   t += '<th>'+(isTimed?'Sec':'Reps')+'</th></tr>';
+  t += buildExoHistAvgRow(freeExos[ei]?.name||'', isTimed, isBW);
   for(let s=1;s<=n;s++){
     const pv = prev[s]||{};
     t += '<tr><td><span class="sn">'+s+'</span></td>';
@@ -3937,6 +3942,7 @@ function _refreshExoRows(ei){
     t += '<th>—</th>';
   }
   t += '<th>'+(isTimed?'Sec':'Reps')+'</th></tr>';
+  t += buildExoHistAvgRow(flatExos(curLog)[ei]?.name||'', isTimed, isBW);
   for(let s=1;s<=n;s++){
     const pv = prev[s]||{};
     t += '<tr><td><span class="sn">'+s+'</span></td>';
@@ -3986,6 +3992,45 @@ function renderLogNav(){
   renderLog(lform);
 }
 
+function getExoAvgHistory(exoName){
+  const hist = cachedHist||[];
+  const name = (exoName||'').toLowerCase().trim();
+  const matches = hist.filter(s=>
+    s.type==='muscu' &&
+    (s.exercises||[]).some(e=>(e.name||'').toLowerCase().trim()===name)
+  ).slice(0,2);
+  if(!matches.length) return null;
+  let wSum=0,wCnt=0,rSum=0,rCnt=0;
+  matches.forEach(s=>{
+    (s.exercises||[]).forEach(e=>{
+      if((e.name||'').toLowerCase().trim()!==name) return;
+      (e.sets||[]).forEach(set=>{
+        const w=parseFloat(set.weight); if(!isNaN(w)&&w>0){wSum+=w;wCnt++;}
+        const r=parseFloat(set.reps);   if(!isNaN(r)&&r>0){rSum+=r;rCnt++;}
+      });
+    });
+  });
+  return {
+    avgW: wCnt ? Math.round(wSum/wCnt*10)/10 : null,
+    avgR: rCnt ? Math.round(rSum/rCnt*10)/10 : null,
+    n: matches.length
+  };
+}
+
+function buildExoHistAvgRow(exoName, isTimed, isBW){
+  if(isTimed) return '';
+  const h = getExoAvgHistory(exoName);
+  if(!h || (h.avgW===null && h.avgR===null)) return '';
+  const wTxt = isBW ? '' : (h.avgW!==null ? h.avgW+' lbs' : '—');
+  const rTxt = h.avgR!==null ? h.avgR+' reps' : '—';
+  const src = 'sur '+h.n+' séance'+(h.n>1?'s':'');
+  return '<tr class="exo-hist-avg-row">' +
+    '<td></td>' +
+    (isBW ? '' : '<td><span class="avg-val">'+wTxt+'</span><span class="avg-src">'+src+'</span></td>') +
+    '<td><span class="avg-val">'+rTxt+'</span>'+(isBW?'<span class="avg-src">'+src+'</span>':'')+'</td>' +
+    '</tr>';
+}
+
 function renderLog(container){
   // Accept either a DOM element or default to lform
   const target = (container && container.nodeType) ? container : (document.getElementById('lm-form') || document.getElementById('lform'));
@@ -4030,6 +4075,7 @@ function renderLog(container){
         h += '<th>—</th>';
       }
       h += '<th>'+(isTimed?'Sec':'Reps')+'</th></tr>';
+      h += buildExoHistAvgRow(exo.name, isTimed, isBodyweight);
       for(let s=1;s<=n;s++){
         h += '<tr><td><span class="sn">'+s+'</span></td>';
         h += '<td>'+(isTimed?'<span style="color:var(--text3);font-size:12px">—</span>':'<input class="li" type="number" id="w_'+ei+'_'+s+'" placeholder="—" step="1" inputmode="decimal">')+'</td>';
