@@ -6161,8 +6161,8 @@ function renderCyAdviceCard(phase){
   el.innerHTML = `<div class="slabel" style="margin:14px 0 8px">Conseils</div>
   <div class="cy-advice-card">
     <div class="cy-advice-tabs">
-      <button class="cy-advice-tab${tab==='self'?' active':''}" onclick="_cyAdviceTab='self';renderCyAdviceCard('${phase}')">Pour moi</button>
-      <button class="cy-advice-tab${tab==='partner'?' active':''}" onclick="_cyAdviceTab='partner';renderCyAdviceCard('${phase}')">Pour le/la partenaire</button>
+      <button class="cy-advice-tab${tab==='self'?' active':''}" onclick="_cyAdviceTab='self';renderCyAdviceCard('${phase}')">Pour Nella</button>
+      <button class="cy-advice-tab${tab==='partner'?' active':''}" onclick="_cyAdviceTab='partner';renderCyAdviceCard('${phase}')">Pour Ju</button>
     </div>
     <div class="cy-advice-body">
       ${tips.map(t=>`<div class="cy-advice-tip"><span class="cy-advice-ico">${t.ico}</span><span class="cy-advice-txt">${t.txt}</span></div>`).join('')}
