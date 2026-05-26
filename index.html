@@ -777,6 +777,15 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .cy-stat-val{font-family:var(--fd);font-size:22px;letter-spacing:.04em;color:var(--text);line-height:1;}
 .cy-stat-lbl{font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-top:3px;}
 .cy-phase-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:10px;}
+.cy-advice-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:10px;}
+.cy-advice-tabs{display:flex;border-bottom:1px solid var(--border);}
+.cy-advice-tab{flex:1;padding:9px 6px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:transparent;border:none;color:var(--text3);cursor:pointer;font-family:var(--fb);transition:color .15s;}
+.cy-advice-tab.active{color:var(--accent);border-bottom:2px solid var(--accent);margin-bottom:-1px;}
+.cy-advice-body{padding:12px 14px;}
+.cy-advice-tip{display:flex;align-items:flex-start;gap:9px;padding:7px 0;border-bottom:1px solid var(--border);}
+.cy-advice-tip:last-child{border-bottom:none;}
+.cy-advice-ico{font-size:16px;flex-shrink:0;margin-top:1px;}
+.cy-advice-txt{font-size:12px;color:var(--text2);line-height:1.5;}
 .cy-phase-title{font-size:13px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:7px;}
 .cy-phase-desc{font-size:12px;color:var(--text2);line-height:1.5;}
 .cy-hormone-wrap{position:relative;height:140px;margin:8px 0;}
@@ -1469,32 +1478,36 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
         </div>
         <div class="slabel" style="margin-bottom:8px">Phase actuelle</div>
         <div id="cy-current-phase-card"></div>
-        <div class="slabel" style="margin-top:16px;margin-bottom:10px">Saisir</div>
-        <button class="cy-entry-btn" onclick="openCyModal('period')">
-          <span class="cy-entry-ico">🩸</span>
-          <div class="cy-entry-info">
-            <div class="cy-entry-title">Menstruations</div>
-            <div class="cy-entry-sub">Date de début · Flux · Durée</div>
-          </div>
-          <span style="color:var(--text3);font-size:18px">›</span>
-        </button>
-        <button class="cy-entry-btn" onclick="openCyModal('sex')">
-          <span class="cy-entry-ico">❤️</span>
-          <div class="cy-entry-info">
-            <div class="cy-entry-title">Activité sexuelle</div>
-            <div class="cy-entry-sub">Date · Protégé / Non protégé</div>
-          </div>
-          <span style="color:var(--text3);font-size:18px">›</span>
-        </button>
-        <button class="cy-entry-btn" onclick="openCyModal('opk')">
-          <span class="cy-entry-ico">🔵</span>
-          <div class="cy-entry-info">
-            <div class="cy-entry-title">Test OPK</div>
-            <div class="cy-entry-sub">Date · Résultat positif / négatif</div>
-          </div>
-          <span style="color:var(--text3);font-size:18px">›</span>
-        </button>
+        <div id="cy-advice-card"></div>
       </div>
+    </div>
+    <!-- Saisie rapide — sous le calendrier -->
+    <div class="sec" style="padding-top:0">
+      <div class="slabel" style="margin-bottom:10px">Saisir</div>
+      <button class="cy-entry-btn" onclick="openCyModal('period')">
+        <span class="cy-entry-ico">🩸</span>
+        <div class="cy-entry-info">
+          <div class="cy-entry-title">Menstruations</div>
+          <div class="cy-entry-sub">Date de début · Flux · Durée</div>
+        </div>
+        <span style="color:var(--text3);font-size:18px">›</span>
+      </button>
+      <button class="cy-entry-btn" onclick="openCyModal('sex')">
+        <span class="cy-entry-ico">❤️</span>
+        <div class="cy-entry-info">
+          <div class="cy-entry-title">Activité sexuelle</div>
+          <div class="cy-entry-sub">Date · Protégé / Non protégé</div>
+        </div>
+        <span style="color:var(--text3);font-size:18px">›</span>
+      </button>
+      <button class="cy-entry-btn" onclick="openCyModal('opk')">
+        <span class="cy-entry-ico">🔵</span>
+        <div class="cy-entry-info">
+          <div class="cy-entry-title">Test OPK</div>
+          <div class="cy-entry-sub">Date · Résultat positif / négatif</div>
+        </div>
+        <span style="color:var(--text3);font-size:18px">›</span>
+      </button>
     </div>
   </div>
 
@@ -6063,6 +6076,100 @@ const CY_PHASE_INFO = {
   luteal:      {label:'🌙 Phase lutéale',       color:'#C89A62', desc:'La progestérone domine. Énergie plus calme, bons moments pour le travail de fond et la récupération.'},
 };
 
+const CY_ADVICE = {
+  period: {
+    self: [
+      {ico:'🛁', txt:'Prends un bain chaud ou utilise une bouillotte pour soulager les crampes abdominales.'},
+      {ico:'🧘', txt:'Privilégie le yoga doux, la marche légère ou le repos complet — écoute ton corps.'},
+      {ico:'🍫', txt:'Du magnésium (chocolat noir, noix) peut réduire les crampes et l'irritabilité.'},
+      {ico:'😴', txt:'Dors autant que nécessaire — la fatigue est normale et légitime cette semaine.'},
+    ],
+    partner: [
+      {ico:'🤗', txt:'Propose du réconfort physique : couverture, coussin chauffant, câlins si elle le souhaite.'},
+      {ico:'🍜', txt:'Cuisine ou commande son plat réconfort préféré sans qu'elle ait à le demander.'},
+      {ico:'🔇', txt:'Réduis les sollicitations inutiles — c'est une période d'énergie basse, pas d'inaction.'},
+      {ico:'💬', txt:'Demande « qu'est-ce qui t'aiderait là maintenant ? » plutôt que de supposer.'},
+    ]
+  },
+  follicular: {
+    self: [
+      {ico:'🏋️', txt:'C'est le bon moment pour pousser l'intensité à l'entraînement — force et endurance sont au pic.'},
+      {ico:'💡', txt:'Lance de nouveaux projets ou prends des décisions importantes : ton énergie mentale est élevée.'},
+      {ico:'🌿', txt:'Mise sur des protéines et des légumes verts pour soutenir la montée des œstrogènes.'},
+      {ico:'🤸', txt:'Essaie de nouveaux exercices ou activités — c'est la phase idéale pour sortir de ta zone de confort.'},
+    ],
+    partner: [
+      {ico:'🎉', txt:'Propose des sorties, des activités nouvelles — son énergie sociale est en hausse.'},
+      {ico:'💬', txt:'C'est un bon moment pour aborder des sujets importants : elle est plus réceptive et communicative.'},
+      {ico:'🏃', txt:'Rejoins-la dans une activité physique — elle sera motivée et ça renforcera votre lien.'},
+      {ico:'✨', txt:'Souligne ses succès et initiatives : la confiance en soi est élevée, les compliments sincères résonnent.'},
+    ]
+  },
+  fertile: {
+    self: [
+      {ico:'🏋️', txt:'Ton énergie est à son maximum — profites-en pour des entraînements intensifs ou des PR.'},
+      {ico:'💡', txt:'Lance de nouveaux projets ou prends des décisions importantes : ton énergie mentale est élevée.'},
+      {ico:'🌿', txt:'Mise sur des protéines et des légumes verts pour soutenir la montée des œstrogènes.'},
+      {ico:'🤸', txt:'Essaie de nouvelles activités — c'est la phase idéale pour sortir de ta zone de confort.'},
+    ],
+    partner: [
+      {ico:'❤️', txt:'La libido est souvent plus élevée cette semaine — sois présent(e) et attentif(ve) à ses signaux.'},
+      {ico:'🎉', txt:'Propose des sorties ou activités stimulantes — son énergie sociale est à son sommet.'},
+      {ico:'💬', txt:'Discussions importantes : elle est au maximum de son ouverture et de sa clarté mentale.'},
+      {ico:'✨', txt:'Moments d'intimité et de connexion profonde sont particulièrement bien accueillis en ce moment.'},
+    ]
+  },
+  ovulation: {
+    self: [
+      {ico:'⚡', txt:'Ton pic d'énergie — idéal pour les compétitions, les gros entraînements ou les présentations importantes.'},
+      {ico:'🗣️', txt:'Tu es au sommet de ta confiance verbale et sociale : parfait pour les réunions ou conversations difficiles.'},
+      {ico:'🥑', txt:'Soutiens ton foie avec des légumes crucifères (brocoli, chou) pour métaboliser les œstrogènes en excès.'},
+      {ico:'🌡️', txt:'Si tu suis ta température basale, attends la hausse de 0,2–0,3°C pour confirmer l'ovulation.'},
+    ],
+    partner: [
+      {ico:'❤️', txt:'La libido et le désir de connexion sont au maximum — c'est une période d'intimité privilégiée.'},
+      {ico:'🌹', txt:'Un geste romantique spontané aura beaucoup d'impact : elle est réceptive à l'attention.'},
+      {ico:'💬', txt:'Elle est au top de sa sociabilité — planifiez quelque chose ensemble, elle sera enthousiaste.'},
+      {ico:'🤝', txt:'Soutiens ses ambitions cette semaine : elle se sent capable de tout et ton encouragement compte.'},
+    ]
+  },
+  luteal: {
+    self: [
+      {ico:'🧘', txt:'Réduis progressivement l'intensité — cardio léger, yoga et étirements sont tes meilleurs alliés.'},
+      {ico:'🚫', txt:'Limite la caféine et l'alcool qui amplifient l'anxiété et les ballonnements en phase lutéale.'},
+      {ico:'📓', txt:'Journaling ou méditation : les émotions sont plus intenses, les exprimer aide à les réguler.'},
+      {ico:'🍌', txt:'Magnésium, vitamine B6 et potassium aident à réduire le SPM — banane, graines de courge.'},
+    ],
+    partner: [
+      {ico:'👂', txt:'Écoute sans chercher à résoudre — parfois elle a besoin d'être entendue, pas conseillée.'},
+      {ico:'🏠', txt:'Contribue davantage aux tâches domestiques cette semaine : ça soulage une charge mentale réelle.'},
+      {ico:'🚫', txt:'Évite les critiques ou débats non essentiels — la sensibilité émotionnelle est accrue.'},
+      {ico:'🫂', txt:'Propose de la chaleur physique : câlins, massage des épaules — le toucher réconfortant aide vraiment.'},
+    ]
+  }
+};
+
+let _cyAdviceTab = 'self';
+
+function renderCyAdviceCard(phase){
+  const el = document.getElementById('cy-advice-card');
+  if(!el) return;
+  const advice = CY_ADVICE[phase] || CY_ADVICE.follicular;
+  const tab = _cyAdviceTab;
+  const tips = advice[tab] || [];
+  const phaseInfo = CY_PHASE_INFO[phase] || CY_PHASE_INFO.follicular;
+  el.innerHTML = `<div class="slabel" style="margin:14px 0 8px">Conseils</div>
+  <div class="cy-advice-card">
+    <div class="cy-advice-tabs">
+      <button class="cy-advice-tab${tab==='self'?' active':''}" onclick="_cyAdviceTab='self';renderCyAdviceCard('${phase}')">Pour moi</button>
+      <button class="cy-advice-tab${tab==='partner'?' active':''}" onclick="_cyAdviceTab='partner';renderCyAdviceCard('${phase}')">Pour le/la partenaire</button>
+    </div>
+    <div class="cy-advice-body">
+      ${tips.map(t=>`<div class="cy-advice-tip"><span class="cy-advice-ico">${t.ico}</span><span class="cy-advice-txt">${t.txt}</span></div>`).join('')}
+    </div>
+  </div>`;
+}
+
 function renderCyPhaseCard(){
   if(!_cyMeta) return;
   const _now=new Date();
@@ -6085,6 +6192,7 @@ function renderCyPhaseCard(){
     </div>
     <div class="cy-phase-desc">${info.desc}</div>
   </div>`;
+  renderCyAdviceCard(phase);
 }
 
 // ── Hormones chart (animated SVG curves) ──
