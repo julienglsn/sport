@@ -1739,6 +1739,17 @@ function fmtDist(m){
   if(!m) return '—';
   return m>=1000 ? (m/1000).toFixed(2)+' km' : m+' m';
 }
+// Parse an activity date string as local date (avoids UTC→local 1-day shift)
+function _actDate(dateStr){
+  if(!dateStr) return new Date(dateStr);
+  // If it's a full ISO string like "2026-05-26T12:00:00.000Z", use UTC components directly
+  // to reconstruct a local-noon date so toLocaleDateString shows the right day
+  const iso = dateStr.slice(0,10); // "YYYY-MM-DD"
+  return new Date(iso+'T12:00:00');
+}
+function fmtActivityDate(dateStr, opts){
+  return _actDate(dateStr).toLocaleDateString('fr-FR', opts||{weekday:'short',day:'numeric',month:'short'});
+}
 
 // ════ RENDER ACTIVITIES ════
 async function renderActivities(sport){
@@ -1758,8 +1769,7 @@ async function renderActivities(sport){
   }
 
   listEl.innerHTML = acts.map((a,i)=>{
-    const d = new Date(a.date);
-    const ds = d.toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'});
+    const ds = fmtActivityDate(a.date);
     const isCourse = sport==='course';
 
     const isGolf = sport==='golf';
@@ -2004,8 +2014,7 @@ async function showManualForm(sport, linkedSessionId, existingActivity){
     const sessions = cachedHist !== null ? cachedHist : await dbLoad('muscu');
     cachedHist = sessions;
     const opts = sessions.slice(0,20).map(s=>{
-      const d = new Date(s.date);
-      const ds = d.toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'});
+      const ds = fmtActivityDate(s.date);
       const lbl = s.session_label||s.label||'';
       const sel = s.id===linkedSessionId?' selected':'';
       const fm=FEELING_META[s.feeling]; return '<option value="'+s.id+'"'+sel+'>'+(fm?fm.lbl+' · ':'')+lbl+' — '+ds+'</option>';
@@ -2802,8 +2811,7 @@ function renderRecentActivities(activities){
   }
 
   el.innerHTML = recent.map(a=>{
-    const d = new Date(a.date);
-    const ds = d.toLocaleDateString('fr-FR',{weekday:'short', day:'numeric', month:'short'});
+    const ds = fmtActivityDate(a.date);
     const ico   = SPORT_ICO2[a.type] || '🏅';
     const color = SPORT_CLR[a.type]  || 'var(--text2)';
     const label = a.session_label || a.label || a.strava_name ||
@@ -3114,8 +3122,7 @@ function _renderWeekDetail(idx){
   }
 
   el.innerHTML = sorted.map(a=>{
-    const d = new Date(a.date);
-    const ds = d.toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'});
+    const ds = fmtActivityDate(a.date);
     const ico   = SPORT_ICO2[a.type]||'🏅';
     const color = SPORT_CLR[a.type]||'var(--text2)';
     const label = a.session_label||a.label||a.strava_name||(a.type==='muscu'?'Musculation':a.type==='course'?'Course à pied':a.type==='golf'?'Golf':'Vélo de route');
@@ -4223,8 +4230,7 @@ async function openStravaLinkModal(muscuId, dateStr){
   } else {
     body = '<div style="margin-bottom:16px">';
     stravaActs.forEach(a=>{
-      const d = new Date(a.date);
-      const ds = d.toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'});
+      const ds = fmtActivityDate(a.date);
       const dur = a.duration_sec ? fmtDuration(a.duration_sec) : '—';
       const name = a.strava_name || a.session_label || a.label || 'Weight Training';
       body +=
@@ -4334,7 +4340,7 @@ async function openMergeToManualModal(stravaId){
 
     const stravaName = stravaEntry.strava_name || stravaEntry.session_label || 'Weight Training';
     const stravaDur  = stravaEntry.duration_sec ? fmtDuration(stravaEntry.duration_sec) : '—';
-    const stravaDate = new Date(stravaEntry.date).toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'});
+    const stravaDate = fmtActivityDate(stravaEntry.date);
 
     let body = '';
 
@@ -4358,8 +4364,7 @@ async function openMergeToManualModal(stravaId){
     } else {
       body += '<div style="margin-bottom:16px">';
       manualActs.forEach(a=>{
-        const d = new Date(a.date);
-        const ds = d.toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'});
+        const ds = fmtActivityDate(a.date);
         const lbl = a.session_label||a.label||'Séance manuelle';
         const exoCount = (a.exercises||[]).length;
         body +=
@@ -4468,8 +4473,7 @@ async function renderHist(){
 
   // Build HTML string all at once (much faster than DOM mutations)
   const html = h.map((e,i)=>{
-    const d = new Date(e.date);
-    const ds = d.toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'});
+    const ds = fmtActivityDate(e.date);
     const exos = e.exercises || [];
     const isStravaOnly = e.source === 'strava' && !(e.exercises && e.exercises.length);
     const isMerged     = !!e.strava_activity_id;
@@ -4572,7 +4576,7 @@ function _fillHistDetail(i){
       ? '<button class="edit-btn" style="color:#fc4c02;border-color:rgba(252,76,2,.3)" onclick="openMergeToManualModal('+e.id+')">⚡ Fusionner avec séance manuelle</button>'
       : e.strava_activity_id
         ? '<span style="font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;background:rgba(252,76,2,.15);color:#fc4c02;border:1px solid rgba(252,76,2,.25)">🟠 Strava lié</span>'
-        : '<button class="edit-btn" style="color:#fc4c02;border-color:rgba(252,76,2,.3)" onclick="openStravaLinkModal('+e.id+',&quot;'+new Date(e.date).toISOString().slice(0,10)+'&quot;)">🔗 Lier Strava</button>')+
+        : '<button class="edit-btn" style="color:#fc4c02;border-color:rgba(252,76,2,.3)" onclick="openStravaLinkModal('+e.id+',&quot;'+e.date.slice(0,10)+'&quot;)">🔗 Lier Strava</button>')+
     '</div>'+
     '<div id="hd-view-'+i+'">'+
     (isStravaOnly
@@ -4610,8 +4614,7 @@ function startEdit(i, ev){
   viewDiv.style.display='none';
   btn.textContent='✕ Annuler';
 
-  const d = new Date(entry.date);
-  const dateVal = d.toISOString().slice(0,10);
+  const dateVal = entry.date.slice(0,10);
 
   let h = '';
   // Date
@@ -4695,7 +4698,7 @@ async function saveEdit(i){
   const ds2 = parseInt(document.getElementById('edit-dur-s-'+i)?.value)||0;
   const duration_sec = (dh||dm||ds2) ? dh*3600+dm*60+ds2 : null;
   const patch = {
-    date: (()=>{ const existingDate = new Date(entry.date); const existingDay = existingDate.toISOString().slice(0,10); return (dateVal === existingDay) ? entry.date : new Date(dateVal+'T12:00:00').toISOString(); })(),
+    date: (()=>{ const existingDay = entry.date.slice(0,10); return (dateVal === existingDay) ? entry.date : new Date(dateVal+'T12:00:00').toISOString(); })(),
     feeling, note, exercises, hr_avg, hr_max, calories, duration_sec
   };
 
@@ -5120,7 +5123,7 @@ function renderMuscuLiftChart(acts){
     return;
   }
 
-  const labels = sorted.map(a=>{ const d=new Date(a.date); return d.getDate()+'/'+(d.getMonth()+1); });
+  const labels = sorted.map(a=>{ const d=_actDate(a.date); return d.getDate()+'/'+(d.getMonth()+1); });
   const COLORS = [CJ_ACCENT, CJ_GREEN, CJ_AMBER, CJ_RED, '#a855f7', '#f472b6'];
   const datasets = seriesDefs.map(({key, label}, i)=>{
     const data = sorted.map(a=>{
@@ -5204,7 +5207,7 @@ function renderMuscuIntensityChart(acts){
   const sorted = [...acts].sort((a,b)=>new Date(a.date)-new Date(b.date)).slice(-15);
   if(!sorted.length){ _destroyChart('muscu-intensity-chart'); return; }
 
-  const labels = sorted.map(a=>{ const d=new Date(a.date); return d.getDate()+'/'+(d.getMonth()+1); });
+  const labels = sorted.map(a=>{ const d=_actDate(a.date); return d.getDate()+'/'+(d.getMonth()+1); });
 
   // Tonnage = S (reps x weight) pour chaque serie de chaque exercice
   const tonnageData = sorted.map(a=>{
@@ -5241,7 +5244,7 @@ function renderMuscuIntensityChart(acts){
       plugins:{
         legend:{display:false},
         tooltip:{ callbacks:{
-          title: ctx=>{ const a=sorted[ctx[0].dataIndex]; const d=new Date(a.date); return (a.program_name||'Seance')+' - '+d.getDate()+'/'+(d.getMonth()+1); },
+          title: ctx=>{ const a=sorted[ctx[0].dataIndex]; const d=_actDate(a.date); return (a.program_name||'Seance')+' - '+d.getDate()+'/'+(d.getMonth()+1); },
           label: ctx=>{
             if(ctx.datasetIndex===1) return 'Tendance : '+ctx.raw+' lbs';
             const a = sorted[ctx.dataIndex];
@@ -5279,7 +5282,7 @@ function renderMuscuCharts(acts){
 function renderCoursePaceChart(acts){
   const cutoff = new Date(); cutoff.setMonth(cutoff.getMonth()-3);
   const sorted = [...acts].filter(a=>new Date(a.date)>=cutoff).sort((a,b)=>new Date(a.date)-new Date(b.date));
-  const labels = sorted.map(a=>{ const d=new Date(a.date); return d.getDate()+'/'+(d.getMonth()+1); });
+  const labels = sorted.map(a=>{ const d=_actDate(a.date); return d.getDate()+'/'+(d.getMonth()+1); });
   const paceData = sorted.map(a=>a.pace_sec_km ? +(a.pace_sec_km/60).toFixed(2) : null);
   const hrData   = sorted.map(a=>a.hr_avg||null);
 
@@ -5306,7 +5309,7 @@ function renderCourseKmChart(acts){
   const byMonthDate = {}; // store a real date per key for sorting
   acts.forEach(a=>{
     if(!a.distance_m) return;
-    const d = new Date(a.date);
+    const d = _actDate(a.date);
     const k = _monthKey(d);
     byMonth[k] = (byMonth[k]||0) + a.distance_m/1000;
     if(!byMonthDate[k]) byMonthDate[k] = new Date(d.getFullYear(), d.getMonth(), 1);
@@ -5362,7 +5365,7 @@ function renderCourseScatterChart(acts){
 function renderVeloSpeedChart(acts){
   const cutoff = new Date(); cutoff.setMonth(cutoff.getMonth()-3);
   const sorted = [...acts].filter(a=>new Date(a.date)>=cutoff).sort((a,b)=>new Date(a.date)-new Date(b.date));
-  const labels = sorted.map(a=>{ const d=new Date(a.date); return d.getDate()+'/'+(d.getMonth()+1); });
+  const labels = sorted.map(a=>{ const d=_actDate(a.date); return d.getDate()+'/'+(d.getMonth()+1); });
 
   // Taille des points proportionnelle au dénivelé (min 4px, max 18px)
   const elevations = sorted.map(a=>a.elevation_m||0);
@@ -5407,7 +5410,7 @@ function renderVeloKmChart(acts){
   const byMonthDate = {};
   acts.forEach(a=>{
     if(!a.distance_m) return;
-    const d = new Date(a.date);
+    const d = _actDate(a.date);
     const k = _monthKey(d);
     byMonth[k] = (byMonth[k]||0) + a.distance_m/1000;
     if(!byMonthDate[k]) byMonthDate[k] = new Date(d.getFullYear(), d.getMonth(), 1);
@@ -5490,7 +5493,7 @@ function renderFeelingChart(canvasId, acts, sport){
       plugins:{
         legend:{display:false},
         tooltip:{ callbacks:{
-          title: ctx=>{ const a=withFeeling[ctx[0].dataIndex]; const d=new Date(a.date); return (a.session_label||a.label||sport)+' · '+d.getDate()+'/'+(d.getMonth()+1); },
+          title: ctx=>{ const a=withFeeling[ctx[0].dataIndex]; const d=_actDate(a.date); return (a.session_label||a.label||sport)+' · '+d.getDate()+'/'+(d.getMonth()+1); },
           label: ctx=>FL_LABELS[ctx.raw]+' ('+ctx.raw+'/5)'
         }, backgroundColor:CJ_TT_BG(), titleColor:CJ_TT_TIT(), bodyColor:CJ_TT_BOD(), borderColor:CJ_TT_BOR(), borderWidth:1 }
       },
@@ -5522,7 +5525,7 @@ function _renderHomeFeelingChart(){
     .slice(-50);
   if(!withFeeling.length){ return; }
 
-  const labels   = withFeeling.map(a=>{ const d=new Date(a.date); return d.getDate()+'/'+(d.getMonth()+1); });
+  const labels   = withFeeling.map(a=>{ const d=_actDate(a.date); return d.getDate()+'/'+(d.getMonth()+1); });
   const data     = withFeeling.map(a=>parseInt(a.feeling));
   const ptColor  = withFeeling.map(a=>FL_SPORT_COLOR[a.type]||'#7a8eb0');
   const ptBorder = ptColor;
@@ -5542,7 +5545,7 @@ function _renderHomeFeelingChart(){
       plugins:{
         legend:{display:false},
         tooltip:{ callbacks:{
-          title: ctx=>{ const a=withFeeling[ctx[0].dataIndex]; const d=new Date(a.date); const sportLbl={muscu:'💪',course:'🏃',velo:'🚴'}[a.type]||''; return sportLbl+' '+(a.session_label||a.label||a.type)+' · '+d.getDate()+'/'+(d.getMonth()+1); },
+          title: ctx=>{ const a=withFeeling[ctx[0].dataIndex]; const d=_actDate(a.date); const sportLbl={muscu:'💪',course:'🏃',velo:'🚴'}[a.type]||''; return sportLbl+' '+(a.session_label||a.label||a.type)+' · '+d.getDate()+'/'+(d.getMonth()+1); },
           label: ctx=>FL_LABELS[ctx.raw]+' ('+ctx.raw+'/5)'
         }, backgroundColor:CJ_TT_BG(), titleColor:CJ_TT_TIT(), bodyColor:CJ_TT_BOD(), borderColor:CJ_TT_BOR(), borderWidth:1 }
       },
@@ -5622,7 +5625,7 @@ function renderGolfScoreChart(acts){
     .sort((a,b)=>new Date(a.date)-new Date(b.date));
   if(!sorted.length){ _destroyChart('golf-score-chart'); return; }
 
-  const labels = sorted.map(a=>{ const d=new Date(a.date); return d.getDate()+'/'+(d.getMonth()+1); });
+  const labels = sorted.map(a=>{ const d=_actDate(a.date); return d.getDate()+'/'+(d.getMonth()+1); });
   const scores = sorted.map(a=>a.score);
   const scores18 = sorted.map(a=>a.holes===9 ? null : a.score);
   const scores9  = sorted.map(a=>a.holes===9 ? a.score : null);
@@ -5654,7 +5657,7 @@ function renderGolfScoreChart(acts){
     options:{ responsive:true, maintainAspectRatio:false,
       plugins:{ legend:{display:false},
         tooltip:{ callbacks:{
-          title: ctx=>{ const a=sorted[ctx[0].dataIndex]; const d=new Date(a.date); return (a.course_name||'Partie')+' · '+d.getDate()+'/'+(d.getMonth()+1); },
+          title: ctx=>{ const a=sorted[ctx[0].dataIndex]; const d=_actDate(a.date); return (a.course_name||'Partie')+' · '+d.getDate()+'/'+(d.getMonth()+1); },
           label: ctx=>{
             if(ctx.datasetIndex===2) return 'Tendance : '+ctx.raw;
             const a = sorted[ctx.dataIndex];
