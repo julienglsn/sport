@@ -1994,7 +1994,7 @@ async function showManualForm(sport, linkedSessionId, existingActivity){
   if(!isUnlocked()){ requirePin(()=>showManualForm(sport, linkedSessionId, existingActivity)); return; }
   _manualLinkedSession = linkedSessionId || null;
   const cfg = MANUAL_FIELDS[sport];
-  const now = new Date().toISOString().slice(0,16);
+  const now = localDatetimeKey(new Date());
   const isEdit = !!existingActivity;
   const ex = existingActivity || {};
 
@@ -2019,9 +2019,9 @@ async function showManualForm(sport, linkedSessionId, existingActivity){
   cfg.fields.forEach(f=>{
     fieldsHtml += '<div class="modal-field"><label>'+f.label+(f.required?' *':'')+'</label>';
     if(f.type==='datetime-local'){
-      fieldsHtml += '<input class="modal-input" id="mf-'+f.key+'" type="datetime-local" lang="en-CA" value="'+(ex[f.key]?new Date(ex[f.key]).toISOString().slice(0,16):now)+'" max="'+now+'">';
+      fieldsHtml += '<input class="modal-input" id="mf-'+f.key+'" type="datetime-local" lang="en-CA" value="'+(ex[f.key]?localDatetimeKey(ex[f.key]):now)+'" max="'+now+'">';
     } else if(f.type==='date-only'){
-      const dv = ex.date ? new Date(ex.date).toISOString().slice(0,10) : now.slice(0,10);
+      const dv = ex.date ? localDateKey(ex.date) : now.slice(0,10);
       fieldsHtml += '<input class="modal-input" id="mf-'+f.key+'" type="date" lang="en-CA" value="'+dv+'" max="'+now.slice(0,10)+'">';
     } else if(f.type==='number'){
       fieldsHtml += '<input class="modal-input" id="mf-'+f.key+'" type="number" inputmode="decimal" placeholder="—" value="'+(ex[f.key]||'')+'">';
@@ -2528,10 +2528,19 @@ let activeWeekIdx = null;
 let customSets = {}; // ei -> number of sets
 let bodyweightExos = {}; // ei -> boolean
 
-function todayKey(){
-  const d = new Date();
+// Convertit un Date (ou une chaîne ISO) en date locale "YYYY-MM-DD".
+// À ne jamais remplacer par .toISOString().slice(0,10), qui renvoie la date en UTC
+// et décale d'un jour dès qu'on est loin de UTC (ex: Montréal, UTC-4/-5).
+function localDateKey(dOrIso){
+  const d = (dOrIso instanceof Date) ? dOrIso : new Date(dOrIso);
   return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 }
+// Idem pour un datetime-local "YYYY-MM-DDTHH:mm" en heure locale.
+function localDatetimeKey(dOrIso){
+  const d = (dOrIso instanceof Date) ? dOrIso : new Date(dOrIso);
+  return localDateKey(d)+'T'+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+}
+function todayKey(){ return localDateKey(new Date()); }
 
 // ════ NAV ════
 // ════ NAVIGATION ════
@@ -4576,7 +4585,7 @@ function _fillHistDetail(i){
       ? '<button class="edit-btn" style="color:#fc4c02;border-color:rgba(252,76,2,.3)" onclick="openMergeToManualModal('+e.id+')">⚡ Fusionner avec séance manuelle</button>'
       : e.strava_activity_id
         ? '<span style="font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;background:rgba(252,76,2,.15);color:#fc4c02;border:1px solid rgba(252,76,2,.25)">🟠 Strava lié</span>'
-        : '<button class="edit-btn" style="color:#fc4c02;border-color:rgba(252,76,2,.3)" onclick="openStravaLinkModal('+e.id+',&quot;'+new Date(e.date).toISOString().slice(0,10)+'&quot;)">🔗 Lier Strava</button>')+
+        : '<button class="edit-btn" style="color:#fc4c02;border-color:rgba(252,76,2,.3)" onclick="openStravaLinkModal('+e.id+',&quot;'+localDateKey(e.date)+'&quot;)">🔗 Lier Strava</button>')+
     '</div>'+
     '<div id="hd-view-'+i+'">'+
     (isStravaOnly
@@ -4615,7 +4624,7 @@ function startEdit(i, ev){
   btn.textContent='✕ Annuler';
 
   const d = new Date(entry.date);
-  const dateVal = d.toISOString().slice(0,10);
+  const dateVal = localDateKey(d);
 
   let h = '';
   // Date
@@ -4699,7 +4708,7 @@ async function saveEdit(i){
   const ds2 = parseInt(document.getElementById('edit-dur-s-'+i)?.value)||0;
   const duration_sec = (dh||dm||ds2) ? dh*3600+dm*60+ds2 : null;
   const patch = {
-    date: (()=>{ const existingDate = new Date(entry.date); const existingDay = existingDate.toISOString().slice(0,10); return (dateVal === existingDay) ? entry.date : new Date(dateVal+'T12:00:00').toISOString(); })(),
+    date: (()=>{ const existingDay = localDateKey(entry.date); return (dateVal === existingDay) ? entry.date : new Date(dateVal+'T12:00:00').toISOString(); })(),
     feeling, note, exercises, hr_avg, hr_max, calories, duration_sec
   };
 
@@ -6517,8 +6526,8 @@ function openCyEditModal(type, id){
   if(type==='period'){
     body=`<div class="modal-title">🩸 MODIFIER LES RÈGLES</div>
     <div class="modal-sub">Modifie les informations de cette période</div>
-    <div class="modal-field"><label>Date de début *</label><input class="modal-input" id="cym-date" type="date" value="${log.date}" max="${new Date().toISOString().slice(0,10)}"></div>
-    <div class="modal-field"><label>Date de fin</label><input class="modal-input" id="cym-end" type="date" value="${log.end_date||log.date}" max="${new Date().toISOString().slice(0,10)}"></div>
+    <div class="modal-field"><label>Date de début *</label><input class="modal-input" id="cym-date" type="date" value="${log.date}" max="${todayKey()}"></div>
+    <div class="modal-field"><label>Date de fin</label><input class="modal-input" id="cym-end" type="date" value="${log.end_date||log.date}" max="${todayKey()}"></div>
     <div class="modal-field"><label>Flux</label>
       <select class="modal-input" id="cym-flux">
         <option value="">— Non précisé —</option>
@@ -6531,7 +6540,7 @@ function openCyEditModal(type, id){
   } else if(type==='sex'){
     body=`<div class="modal-title">❤️ MODIFIER</div>
     <div class="modal-sub">Activité sexuelle</div>
-    <div class="modal-field"><label>Date *</label><input class="modal-input" id="cym-date" type="date" value="${log.date}" max="${new Date().toISOString().slice(0,10)}"></div>
+    <div class="modal-field"><label>Date *</label><input class="modal-input" id="cym-date" type="date" value="${log.date}" max="${todayKey()}"></div>
     <div class="modal-field"><label>Protection</label>
       <select class="modal-input" id="cym-protected">
         <option value="1"${log.protected?' selected':''}>✅ Protégé</option>
@@ -6541,7 +6550,7 @@ function openCyEditModal(type, id){
   } else if(type==='opk'){
     body=`<div class="modal-title">🔵 MODIFIER TEST OPK</div>
     <div class="modal-sub">Résultat du test d'ovulation</div>
-    <div class="modal-field"><label>Date *</label><input class="modal-input" id="cym-date" type="date" value="${log.date}" max="${new Date().toISOString().slice(0,10)}"></div>
+    <div class="modal-field"><label>Date *</label><input class="modal-input" id="cym-date" type="date" value="${log.date}" max="${todayKey()}"></div>
     <div class="modal-field"><label>Résultat</label>
       <select class="modal-input" id="cym-opk">
         <option value="1"${log.opk_positive?' selected':''}>🔵 Positif (pic LH détecté)</option>
@@ -6654,7 +6663,7 @@ function renderCyForecast(){
 
 // ── Entry modals ──
 function openCyModal(type, prefillDate){
-  const date = prefillDate || new Date().toISOString().slice(0,10);
+  const date = prefillDate || todayKey();
   const overlay=document.createElement('div');
   overlay.className='modal-overlay';
   overlay.id='cy-modal';
@@ -6663,8 +6672,8 @@ function openCyModal(type, prefillDate){
   if(type==='period'){
     body=`<div class="modal-title">🩸 RÈGLES</div>
     <div class="modal-sub">Saisie manuelle de tes menstruations</div>
-    <div class="modal-field"><label>Date de début *</label><input class="modal-input" id="cym-date" type="date" value="${date}" max="${new Date().toISOString().slice(0,10)}"></div>
-    <div class="modal-field"><label>Date de fin</label><input class="modal-input" id="cym-end" type="date" value="${date}" max="${new Date().toISOString().slice(0,10)}"></div>
+    <div class="modal-field"><label>Date de début *</label><input class="modal-input" id="cym-date" type="date" value="${date}" max="${todayKey()}"></div>
+    <div class="modal-field"><label>Date de fin</label><input class="modal-input" id="cym-end" type="date" value="${date}" max="${todayKey()}"></div>
     <div class="modal-field"><label>Flux</label>
       <select class="modal-input" id="cym-flux">
         <option value="">— Non précisé —</option>
@@ -6677,7 +6686,7 @@ function openCyModal(type, prefillDate){
   } else if(type==='sex'){
     body=`<div class="modal-title">❤️ SEXUALITÉ</div>
     <div class="modal-sub">Activité sexuelle</div>
-    <div class="modal-field"><label>Date *</label><input class="modal-input" id="cym-date" type="date" value="${date}" max="${new Date().toISOString().slice(0,10)}"></div>
+    <div class="modal-field"><label>Date *</label><input class="modal-input" id="cym-date" type="date" value="${date}" max="${todayKey()}"></div>
     <div class="modal-field"><label>Protection</label>
       <select class="modal-input" id="cym-protected">
         <option value="1">✅ Protégé</option>
@@ -6687,7 +6696,7 @@ function openCyModal(type, prefillDate){
   } else if(type==='opk'){
     body=`<div class="modal-title">🔵 TEST OPK</div>
     <div class="modal-sub">Résultat du test d'ovulation</div>
-    <div class="modal-field"><label>Date *</label><input class="modal-input" id="cym-date" type="date" value="${date}" max="${new Date().toISOString().slice(0,10)}"></div>
+    <div class="modal-field"><label>Date *</label><input class="modal-input" id="cym-date" type="date" value="${date}" max="${todayKey()}"></div>
     <div class="modal-field"><label>Résultat</label>
       <select class="modal-input" id="cym-opk">
         <option value="1">🔵 Positif (pic LH détecté)</option>
