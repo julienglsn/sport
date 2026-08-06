@@ -2528,7 +2528,10 @@ let activeWeekIdx = null;
 let customSets = {}; // ei -> number of sets
 let bodyweightExos = {}; // ei -> boolean
 
-function todayKey(){ return new Date().toISOString().slice(0,10); }
+function todayKey(){
+  const d = new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
 
 // ════ NAV ════
 // ════ NAVIGATION ════
@@ -3473,6 +3476,7 @@ function openLoggerModal(){
   requirePin(_openLoggerModalInner);
 }
 function _openLoggerModalInner(){
+  logDate = todayKey(); // toujours repartir sur la date du jour à l'ouverture (évite une date restée figée d'une session précédente)
   const overlay = document.createElement('div');
   overlay.className = 'modal-overlay';
   overlay.id = 'logger-modal';
@@ -3860,7 +3864,7 @@ async function saveSessLibre(){
     program: 'libre',
     session_type: 'libre',
     session_label: 'Séance libre',
-    date: (()=>{ const now=new Date(); const today=now.toISOString().slice(0,10); return (logDate===today)?now.toISOString():new Date(logDate+'T12:00:00').toISOString(); })(),
+    date: (()=>{ const now=new Date(); return (logDate===todayKey())?now.toISOString():new Date(logDate+'T12:00:00').toISOString(); })(),
     feeling: feeling||'3',
     note: document.getElementById('lnote')?.value||'',
     duration_sec: (()=>{ const h=parseInt(document.getElementById('l-dur-h')?.value)||0; const m=parseInt(document.getElementById('l-dur-m')?.value)||0; const s=parseInt(document.getElementById('l-dur-s')?.value)||0; return (h||m||s)?h*3600+m*60+s:null; })(),
@@ -4147,7 +4151,7 @@ async function saveSess(){
     program: curLogProg,
     session_type: curLog,
     session_label: sess.label,
-    date: (()=>{ const now = new Date(); const today = now.toISOString().slice(0,10); return (logDate === today) ? now.toISOString() : new Date(logDate+'T12:00:00').toISOString(); })(),
+    date: (()=>{ const now = new Date(); return (logDate === todayKey()) ? now.toISOString() : new Date(logDate+'T12:00:00').toISOString(); })(),
     feeling: feeling||'3',
     note: document.getElementById('lnote')?.value||'',
     duration_sec: (()=>{ const h=parseInt(document.getElementById('l-dur-h')?.value)||0; const m=parseInt(document.getElementById('l-dur-m')?.value)||0; const s=parseInt(document.getElementById('l-dur-s')?.value)||0; return (h||m||s)?h*3600+m*60+s:null; })(),
