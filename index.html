@@ -254,11 +254,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .li{background:var(--bg4);border:1px solid var(--border2);border-radius:8px;padding:6px 10px;color:var(--text);font-family:var(--fb);font-size:14px;font-weight:700;width:80px;text-align:center;outline:none;-webkit-appearance:none}
 .li:focus{border-color:var(--accent)}
 .sn{font-size:12px;font-weight:700;color:var(--text3);width:24px}
-.frow{display:flex;gap:7px;margin-bottom:14px}
-.fbtn{flex:1;padding:10px 6px;border-radius:10px;border:1px solid var(--border);background:var(--bg2);color:var(--text2);font-size:13px;cursor:pointer;text-align:center;transition:all .18s;display:flex;flex-direction:column;align-items:center;gap:3px}
-.fbtn.active{border-color:var(--accent);background:var(--accent2)}
-.fbtn-num{font-size:20px;font-weight:700;line-height:1}
-.fbtn-lbl{font-size:9px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--text2);line-height:1}
 .flbl{font-size:9px;margin-top:3px;font-weight:600;letter-spacing:.04em}
 .ni{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;color:var(--text);font-family:var(--fb);font-size:14px;resize:none;height:76px;outline:none;margin-bottom:12px}
 .ni:focus{border-color:var(--accent)}
@@ -896,24 +891,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
         </div>
       </div>
 
-      <!-- Forme au fil du temps -->
-      <div>
-        <div class="slabel" style="margin-bottom:8px">Forme au fil du temps</div>
-        <div class="cal-grid-wrap chart-card" style="padding:12px;">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:6px;">
-            <div style="font-size:11px;color:var(--text2);">Chaque point = une activité · 1 épuisé → 5 en feu</div>
-            <div style="display:flex;gap:6px;" id="home-feeling-filters">
-              <button class="subnav-item active" style="padding:4px 10px;font-size:11px;" onclick="setHomeFeelingFilter('all',this)">Tout</button>
-              <button class="subnav-item" style="padding:4px 10px;font-size:11px;" onclick="setHomeFeelingFilter('muscu',this)">💪</button>
-              <button class="subnav-item" style="padding:4px 10px;font-size:11px;" onclick="setHomeFeelingFilter('course',this)">🏃</button>
-              <button class="subnav-item" style="padding:4px 10px;font-size:11px;" onclick="setHomeFeelingFilter('velo',this)">🚴</button>
-              <button class="subnav-item" style="padding:4px 10px;font-size:11px;" onclick="setHomeFeelingFilter('golf',this)">⛳</button>
-            </div>
-          </div>
-          <div class="chart-inner"><canvas id="home-feeling-chart"></canvas></div>
-        </div>
-      </div>
-
     </div>
   </div>
 
@@ -1117,14 +1094,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
           </div>
         </div>
 
-        <div>
-          <div class="slabel" style="margin-bottom:10px">Forme au fil du temps</div>
-          <div class="cal-grid-wrap chart-card" style="padding:14px;">
-            <div class="chart-inner"><canvas id="muscu-feeling-chart"></canvas></div>
-            <div style="font-size:11px;color:var(--text2);margin-top:8px;text-align:center;">Chaque point = une séance · 1 épuisé → 5 en feu</div>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
@@ -1200,14 +1169,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
           </div>
         </div>
 
-        <div>
-          <div class="slabel" style="margin-bottom:10px">Forme au fil du temps</div>
-          <div class="cal-grid-wrap chart-card" style="padding:14px;">
-            <div class="chart-inner"><canvas id="course-feeling-chart"></canvas></div>
-            <div style="font-size:11px;color:var(--text2);margin-top:8px;text-align:center;">Chaque point = une sortie · 1 épuisé → 5 en feu</div>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
@@ -1275,14 +1236,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
           </div>
         </div>
 
-        <div>
-          <div class="slabel" style="margin-bottom:10px">Forme au fil du temps</div>
-          <div class="cal-grid-wrap chart-card" style="padding:14px;">
-            <div class="chart-inner"><canvas id="velo-feeling-chart"></canvas></div>
-            <div style="font-size:11px;color:var(--text2);margin-top:8px;text-align:center;">Chaque point = une sortie · 1 épuisé → 5 en feu</div>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
@@ -1343,14 +1296,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
           <div class="cal-grid-wrap chart-card" style="padding:14px;">
             <div class="chart-inner"><canvas id="golf-holes-chart"></canvas></div>
             <div style="font-size:11px;color:var(--text2);margin-top:8px;text-align:center;">9 trous vs 18 trous</div>
-          </div>
-        </div>
-
-        <div>
-          <div class="slabel" style="margin-bottom:10px">Forme au fil du temps</div>
-          <div class="cal-grid-wrap chart-card" style="padding:14px;">
-            <div class="chart-inner"><canvas id="golf-feeling-chart"></canvas></div>
-            <div style="font-size:11px;color:var(--text2);margin-top:8px;text-align:center;">Chaque point = une partie · 1 épuisé → 5 en feu</div>
           </div>
         </div>
 
@@ -1588,12 +1533,10 @@ function setProfile(id){
   document.querySelectorAll('.profile-btn').forEach(b=>{
     b.classList.toggle('active', parseInt(b.dataset.pid)===id);
   });
-  // Réinitialiser toutes les données de feeling pour forcer le re-rendu avec le bon profil
-  _homeFeelingActs = [];
+  // Réinitialiser les caches de charts pour forcer le re-rendu avec le bon profil
   if(typeof _cachedMuscuActs !== 'undefined') _cachedMuscuActs = [];
   if(typeof _destroyChart === 'function'){
-    ['home-feeling-chart','muscu-feeling-chart','course-feeling-chart','velo-feeling-chart','golf-feeling-chart',
-     'muscu-intensity-chart','muscu-lift-chart','muscu-vol-chart',
+    ['muscu-intensity-chart','muscu-lift-chart','muscu-vol-chart',
      'course-pace-chart','course-km-chart','course-scatter-chart',
      'velo-speed-chart','velo-km-chart','velo-scatter-chart',
      'golf-score-chart','golf-course-chart','golf-holes-chart'
@@ -1843,7 +1786,7 @@ async function renderActivities(sport){
       '<div class="act-metric" style="cursor:pointer" onclick="editActivity(&quot;'+a.id+'&quot;,&quot;'+sport+'&quot;)"><div class="act-metric-val" style="font-size:18px">✏️</div><div class="act-metric-lbl">Modifier</div></div>'+
       '<div class="act-metric" style="cursor:pointer" onclick="deleteActivity(&quot;'+a.id+'&quot;,&quot;'+sport+'&quot;,event)"><div class="act-metric-val" style="font-size:18px">🗑️</div><div class="act-metric-lbl" style="color:var(--red)">Supprimer</div></div>'+
       '</div>'+
-      (a.feeling?(a.feeling?'<div style="padding:6px 14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:6px">'+feelBadge(a.feeling)+(a.note?'<span style="font-size:12px;color:var(--text2);font-style:italic">'+_esc(a.note)+'</span>':'')+'</div>':''):'')+
+      (a.note?'<div style="padding:6px 14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:6px"><span style="font-size:12px;color:var(--text2);font-style:italic">'+_esc(a.note)+'</span></div>':'')+
       '</div>';
   }).join('');
 }
@@ -1911,7 +1854,6 @@ const MANUAL_FIELDS = {
       {key:'hr_avg',       label:'FC moyenne (bpm)',type:'number',         required:false},
       {key:'hr_max',       label:'FC max (bpm)',    type:'number',         required:false},
       {key:'calories',     label:'Calories',        type:'number',         required:false},
-      {key:'feeling',      label:'Ressenti',        type:'feeling',        required:false},
       {key:'note',         label:'Note',            type:'textarea',       required:false},
     ]
   },
@@ -1926,7 +1868,6 @@ const MANUAL_FIELDS = {
       {key:'hr_avg',      label:'FC moyenne (bpm)',type:'number',         required:false},
       {key:'hr_max',      label:'FC max (bpm)',    type:'number',         required:false},
       {key:'calories',    label:'Calories',        type:'number',         required:false},
-      {key:'feeling',     label:'Ressenti',        type:'feeling',        required:false},
       {key:'note',        label:'Note',            type:'textarea',       required:false},
     ]
   },
@@ -1942,7 +1883,6 @@ const MANUAL_FIELDS = {
       {key:'hr_avg',      label:'FC moyenne (bpm)',type:'number',         required:false},
       {key:'hr_max',      label:'FC max (bpm)',    type:'number',         required:false},
       {key:'calories',    label:'Calories',        type:'number',         required:false},
-      {key:'feeling',     label:'Ressenti',        type:'feeling',        required:false},
       {key:'note',        label:'Note',            type:'textarea',       required:false},
     ]
   },
@@ -1964,7 +1904,6 @@ const MANUAL_FIELDS = {
       {key:'fairways',    label:'Fairways touchés %',    type:'number',         required:false},
       {key:'gir',         label:'GIR %',                 type:'number',         required:false},
       {key:'duration_sec',label:'Durée',                 type:'time-parts',     required:false},
-      {key:'feeling',     label:'Ressenti',              type:'feeling',        required:false},
       {key:'note',        label:'Note',                  type:'textarea',       required:false},
     ]
   }
@@ -2008,7 +1947,7 @@ async function showManualForm(sport, linkedSessionId, existingActivity){
       const ds = d.toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'});
       const lbl = s.session_label||s.label||'';
       const sel = s.id===linkedSessionId?' selected':'';
-      const fm=FEELING_META[s.feeling]; return '<option value="'+s.id+'"'+sel+'>'+(fm?fm.lbl+' · ':'')+lbl+' — '+ds+'</option>';
+      return '<option value="'+s.id+'"'+sel+'>'+lbl+' — '+ds+'</option>';
     }).join('');
     sessionPicker = '<div class="modal-field"><label>🏋️ Lier à une séance</label>'+
       '<select class="modal-input" id="mf-session"><option value="">— Ne pas lier —</option>'+opts+'</select></div>';
@@ -2058,10 +1997,6 @@ async function showManualForm(sport, linkedSessionId, existingActivity){
         teeOpts.map(t=>'<option value="'+t.val+'"'+(curTee===t.val?' selected':'')+'>'+t.label+'</option>').join('')+'</select>';
     } else if(f.type==='textarea'){
       fieldsHtml += '<textarea class="ni" id="mf-'+f.key+'" placeholder="—" style="margin-bottom:0;height:60px"></textarea>';
-    } else if(f.type==='feeling'){
-      fieldsHtml += '<div class="frow" id="mf-feeling-row" style="margin-bottom:0">'+
-        ['<button class="fbtn" onclick="pickModalFeel(this)" data-feel="1" title="Jambes lourdes, manque d&#39;énergie total"><div class="fbtn-num">1</div><div class="fbtn-lbl">Épuisé</div></button>','<button class="fbtn" onclick="pickModalFeel(this)" data-feel="2" title="Séance forcée, motivation basse"><div class="fbtn-num">2</div><div class="fbtn-lbl">Difficile</div></button>','<button class="fbtn" onclick="pickModalFeel(this)" data-feel="3" title="Séance standard, ni bonne ni mauvaise"><div class="fbtn-num">3</div><div class="fbtn-lbl">Correct</div></button>','<button class="fbtn" onclick="pickModalFeel(this)" data-feel="4" title="Bonne énergie, charges au rendez-vous"><div class="fbtn-num">4</div><div class="fbtn-lbl">Solide</div></button>','<button class="fbtn" onclick="pickModalFeel(this)" data-feel="5" title="PR, surpassement, tout passe facilement"><div class="fbtn-num">5</div><div class="fbtn-lbl">En feu</div></button>'].join("")+
-        '</div>';
     }
     fieldsHtml += '</div>';
   });
@@ -2088,11 +2023,6 @@ function closeModal(){
   if(m) m.remove();
 }
 
-function pickModalFeel(btn){
-  btn.closest('#mf-feeling-row').querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-}
-
 async function saveManualForm(sport, existingActivity){
   const btn = document.getElementById('modal-save-btn');
   if(btn){ btn.disabled=true; btn.textContent='SAUVEGARDE...'; }
@@ -2116,10 +2046,7 @@ async function saveManualForm(sport, existingActivity){
   cfg.fields.forEach(f=>{
     if(f.key==='date') return;
     const el = document.getElementById('mf-'+f.key);
-    if(f.type==='feeling'){
-      const active = document.querySelector('#mf-feeling-row .fbtn.active');
-      activity.feeling = active ? active.dataset.feel : null;
-    } else if(f.type==='time-parts'){
+    if(f.type==='time-parts'){
       const fh = parseInt(document.getElementById('mf-'+f.key+'-h')?.value)||0;
       const fm = parseInt(document.getElementById('mf-'+f.key+'-m')?.value)||0;
       const fs = parseInt(document.getElementById('mf-'+f.key+'-s')?.value)||0;
@@ -2497,20 +2424,6 @@ function flatExos(sessKey){
   return SESSIONS[sessKey].supersets.flatMap(ss=>ss.exercises);
 }
 
-// ════ FEELING META ════
-const FEELING_META = {
-  '1':{lbl:'Épuisé',   color:'#A32D2D', bg:'rgba(162,45,45,.15)'},
-  '2':{lbl:'Difficile',color:'#854F0B', bg:'rgba(133,79,11,.15)'},
-  '3':{lbl:'Correct',  color:'#5F5E5A', bg:'rgba(95,94,90,.12)'},
-  '4':{lbl:'Solide',   color:'#3B6D11', bg:'rgba(59,109,17,.15)'},
-  '5':{lbl:'En feu',   color:'#27500A', bg:'rgba(39,80,10,.15)'},
-};
-function feelBadge(f){
-  const m=FEELING_META[f];
-  if(!m) return '';
-  return '<span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:'+m.bg+';color:'+m.color+'">'+m.lbl+'</span>';
-}
-
 // ════ HTML ESCAPE HELPER ════
 function _esc(str){
   if(!str) return '';
@@ -2521,7 +2434,6 @@ function _esc(str){
 let curLog     = 'a';
 let curLogProg = 'sfb';
 let logDate    = todayKey();
-let feeling    = null;
 let cachedHist = null;
 let chartWeeks = []; // [{mon,sun,acts:[]}] populated by renderWeeklyChart
 let activeWeekIdx = null;
@@ -2610,7 +2522,6 @@ function showSport(sport, btn){
       renderCoursePaceChart(acts);
       renderCourseKmChart(acts);
       renderCourseScatterChart(acts);
-      renderFeelingChart('course-feeling-chart', acts, 'course');
     });
   }
   if(sport==='velo'){
@@ -2619,14 +2530,12 @@ function showSport(sport, btn){
       renderVeloSpeedChart(acts);
       renderVeloKmChart(acts);
       renderVeloScatterChart(acts);
-      renderFeelingChart('velo-feeling-chart', acts, 'velo');
     });
   }
   if(sport==='muscu'){
     renderHist();
     dbLoad('muscu').then(acts=>{
       renderMuscuCharts(acts);
-      if(typeof renderFeelingChart === 'function') renderFeelingChart('muscu-feeling-chart', acts, 'muscu');
     });
   }
   if(sport==='golf'){
@@ -2635,7 +2544,6 @@ function showSport(sport, btn){
       renderGolfScoreChart(acts);
       renderGolfCourseChart(acts);
       renderGolfHolesChart(acts);
-      renderFeelingChart('golf-feeling-chart', acts, 'golf');
     });
   }
 }
@@ -2834,7 +2742,7 @@ function renderRecentActivities(activities){
     return '<div class="feed-card" onclick="'+nav+'" style="border-left:3px solid '+color+'">'+
       '<span class="feed-ico">'+ico+'</span>'+
       '<div class="feed-left">'+
-      '<div class="feed-row1"><span class="feed-title">'+_esc(label)+(a.feeling?'&nbsp;'+feelBadge(a.feeling):'')+'</span><span class="feed-date">'+ds+'</span></div>'+
+      '<div class="feed-row1"><span class="feed-title">'+_esc(label)+'</span><span class="feed-date">'+ds+'</span></div>'+
       (chips.length ? '<div class="feed-metrics">'+chips.map(c=>'<span>'+c+'</span>').join('')+'</div>' : '')+
       '</div>'+
       '<div class="feed-day">›</div>'+
@@ -3143,7 +3051,7 @@ function _renderWeekDetail(idx){
     return '<div class="feed-card" onclick="'+nav+'" style="border-left:3px solid '+color+'">'+
       '<span class="feed-ico">'+ico+'</span>'+
       '<div class="feed-left">'+
-      '<div class="feed-row1"><span class="feed-title">'+_esc(label)+(a.feeling?'&nbsp;'+feelBadge(a.feeling):'')+'</span><span class="feed-date">'+ds+'</span></div>'+
+      '<div class="feed-row1"><span class="feed-title">'+_esc(label)+'</span><span class="feed-date">'+ds+'</span></div>'+
       (chips.length?'<div class="feed-metrics">'+chips.map(c=>'<span>'+c+'</span>').join('')+'</div>':'')+
       '</div>'+
       '<div class="feed-day">›</div>'+
@@ -3169,7 +3077,6 @@ async function renderHome(){
   // Détruire les charts Chart.js pour forcer le re-rendu propre
   if(typeof _destroyChart === 'function'){
     _destroyChart('home-donut-canvas');
-    _destroyChart('home-feeling-chart');
   }
 
   renderWeeklyChart(all);
@@ -3178,12 +3085,6 @@ async function renderHome(){
   renderRecentActivities(all);
   renderHomeStats(all);
   renderHomeSuggestions(all);
-
-  // Feeling chart home
-  _homeFeelingActs = all;
-  _homeFeelingFilter = 'all';
-  document.querySelectorAll('#home-feeling-filters .subnav-item').forEach((b,i)=>b.classList.toggle('active',i===0));
-  if(typeof _renderHomeFeelingChart === 'function') _renderHomeFeelingChart();
 }
 
 function renderHomeStats(all){
@@ -3285,13 +3186,6 @@ function renderHomeSuggestions(all){
   const course7 = recent7.filter(a=>a.type==='course');
   const velo7   = recent7.filter(a=>a.type==='velo');
 
-  // ── Feeling moyen récent ──
-  const avgFeeling = acts => {
-    const f = acts.filter(a=>a.feeling).map(a=>parseInt(a.feeling));
-    return f.length ? f.reduce((s,v)=>s+v,0)/f.length : null;
-  };
-  const feelMuscu = avgFeeling(byType('muscu').slice(0,5));
-
   // ── Km ──
   const kmSum = acts => acts.reduce((s,a)=>s+(a.distance_m||0)/1000, 0);
   const courseKmMonth = kmSum(all.filter(a=>a.type==='course' && inRange(a, d30)));
@@ -3383,8 +3277,6 @@ function renderHomeSuggestions(all){
     muscuTxt = hasProg
       ? '💪 Programme Supersets Full Body — commence par la séance A'
       : '💪 Ajoute ta première séance muscu pour suivre ta progression';
-  } else if(feelMuscu !== null && feelMuscu <= 2 && dsMus !== null && dsMus < 2){
-    muscuTxt = '💪 Feeling difficile lors de la dernière séance — charge légère aujourd\'hui';
   } else if(muscuStreak >= 4){
     muscuTxt = '💪 '+muscuStreak+' semaines de suite sans manquer — streak solide 🔥';
   } else if(dsMus !== null && dsMus >= 4){
@@ -3582,21 +3474,11 @@ function selLMSess(s){
 function renderFreeLog(){
   const target = document.getElementById('lm-form');
   if(!target) return;
-  feeling = null;
   let h = '';
 
   // Date
   h += '<div class="dpr" style="margin-top:14px"><label>📅 Date</label>';
   h += '<input class="di" type="date" lang="en-CA" id="l-date" value="'+logDate+'" max="'+todayKey()+'" onchange="logDate=this.value"></div>';
-
-  // Feeling
-  h += '<div class="slabel" style="margin-bottom:8px">Ressenti</div><div class="frow">';
-  h += '<button class="fbtn" onclick="setF(&quot;1&quot;,this)"><div class="fbtn-num">1</div><div class="fbtn-lbl">Épuisé</div></button>';
-  h += '<button class="fbtn" onclick="setF(&quot;2&quot;,this)"><div class="fbtn-num">2</div><div class="fbtn-lbl">Difficile</div></button>';
-  h += '<button class="fbtn" onclick="setF(&quot;3&quot;,this)"><div class="fbtn-num">3</div><div class="fbtn-lbl">Correct</div></button>';
-  h += '<button class="fbtn" onclick="setF(&quot;4&quot;,this)"><div class="fbtn-num">4</div><div class="fbtn-lbl">Solide</div></button>';
-  h += '<button class="fbtn" onclick="setF(&quot;5&quot;,this)"><div class="fbtn-num">5</div><div class="fbtn-lbl">En feu</div></button>';
-  h += '</div>';
 
   // Exercise list
   h += '<div class="slabel" style="margin:14px 0 8px">Exercices</div>';
@@ -3874,7 +3756,6 @@ async function saveSessLibre(){
     session_type: 'libre',
     session_label: 'Séance libre',
     date: (()=>{ const now=new Date(); return (logDate===todayKey())?now.toISOString():new Date(logDate+'T12:00:00').toISOString(); })(),
-    feeling: feeling||'3',
     note: document.getElementById('lnote')?.value||'',
     duration_sec: (()=>{ const h=parseInt(document.getElementById('l-dur-h')?.value)||0; const m=parseInt(document.getElementById('l-dur-m')?.value)||0; const s=parseInt(document.getElementById('l-dur-s')?.value)||0; return (h||m||s)?h*3600+m*60+s:null; })(),
     hr_avg:   parseInt(document.getElementById('l-hr-avg')?.value)||null,
@@ -4070,19 +3951,10 @@ function renderLog(container){
   const target = (container && container.nodeType) ? container : (document.getElementById('lm-form') || document.getElementById('lform'));
   if(!target) return;
 
-  feeling = null;
   let h = '';
 
   h += '<div class="dpr" style="margin-top:14px"><label>📅 Date</label>';
   h += '<input class="di" type="date" lang="en-CA" id="l-date" value="'+logDate+'" max="'+todayKey()+'" onchange="logDate=this.value"></div>';
-
-  h += '<div class="slabel" style="margin-bottom:8px">Ressenti</div><div class="frow">';
-  h += '<button class="fbtn" onclick="setF(\'1\',this)" title="Jambes lourdes, manque d&#39;énergie total"><div class="fbtn-num">1</div><div class="fbtn-lbl">Épuisé</div></button>';
-  h += '<button class="fbtn" onclick="setF(\'2\',this)" title="Séance forcée, motivation basse"><div class="fbtn-num">2</div><div class="fbtn-lbl">Difficile</div></button>';
-  h += '<button class="fbtn" onclick="setF(\'3\',this)" title="Séance standard, ni bonne ni mauvaise"><div class="fbtn-num">3</div><div class="fbtn-lbl">Correct</div></button>';
-  h += '<button class="fbtn" onclick="setF(\'4\',this)" title="Bonne énergie, charges au rendez-vous"><div class="fbtn-num">4</div><div class="fbtn-lbl">Solide</div></button>';
-  h += '<button class="fbtn" onclick="setF(\'5\',this)" title="PR, surpassement, tout passe facilement"><div class="fbtn-num">5</div><div class="fbtn-lbl">En feu</div></button>';
-  h += '</div>';
 
   let eiOffset = 0;
   SESSIONS[curLog].supersets.forEach((ss, ssi)=>{
@@ -4145,12 +4017,6 @@ function renderLog(container){
   target.innerHTML = h;
 }
 
-function setF(emoji, btn){
-  feeling = emoji;
-  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-}
-
 async function saveSess(){
   const sess = SESSIONS[curLog];
   const data = {
@@ -4161,7 +4027,6 @@ async function saveSess(){
     session_type: curLog,
     session_label: sess.label,
     date: (()=>{ const now = new Date(); return (logDate === todayKey()) ? now.toISOString() : new Date(logDate+'T12:00:00').toISOString(); })(),
-    feeling: feeling||'3',
     note: document.getElementById('lnote')?.value||'',
     duration_sec: (()=>{ const h=parseInt(document.getElementById('l-dur-h')?.value)||0; const m=parseInt(document.getElementById('l-dur-m')?.value)||0; const s=parseInt(document.getElementById('l-dur-s')?.value)||0; return (h||m||s)?h*3600+m*60+s:null; })(),
     hr_avg:   parseInt(document.getElementById('l-hr-avg')?.value)||null,
@@ -4514,7 +4379,7 @@ async function renderHist(){
     return '<div class="he" id="he-'+i+'"'+(isStravaOnly?' style="border-color:rgba(252,76,2,.2)"':'')+'>'+
       '<div class="heh" onclick="togHistEntry('+i+')">'+
       '<div>'+
-      '<div class="het" style="display:flex;align-items:center;gap:7px">'+feelBadge(e.feeling)+_esc(label)+'</div>'+
+      '<div class="het" style="display:flex;align-items:center;gap:7px">'+_esc(label)+'</div>'+
       '<div class="hed">'+ds+
       (exos.length ? ' · <span style="font-size:11px;color:var(--text3)">'+exos.length+' exo</span>' : '')+
       '</div>'+metaStr+
@@ -4630,14 +4495,6 @@ function startEdit(i, ev){
   // Date
   h += '<div class="edit-field"><label>📅 Date</label>';
   h += '<input class="di" type="date" lang="en-CA" id="edit-date-'+i+'" value="'+dateVal+'" max="'+todayKey()+'"></div>';
-  // Feeling
-  h += '<div class="edit-field"><label>Ressenti</label><div class="frow" style="margin-bottom:0">';
-    h += '<button class="fbtn'+( entry.feeling==='1'?' active':'')+'" onclick="pickEditFeel(this)" data-feel="1" title="Jambes lourdes, manque d&#39;énergie total"><div class="fbtn-num">1</div><div class="fbtn-lbl">Épuisé</div></button>';
-    h += '<button class="fbtn'+( entry.feeling==='2'?' active':'')+'" onclick="pickEditFeel(this)" data-feel="2" title="Séance forcée, motivation basse"><div class="fbtn-num">2</div><div class="fbtn-lbl">Difficile</div></button>';
-    h += '<button class="fbtn'+( entry.feeling==='3'?' active':'')+'" onclick="pickEditFeel(this)" data-feel="3" title="Séance standard, ni bonne ni mauvaise"><div class="fbtn-num">3</div><div class="fbtn-lbl">Correct</div></button>';
-    h += '<button class="fbtn'+( entry.feeling==='4'?' active':'')+'" onclick="pickEditFeel(this)" data-feel="4" title="Bonne énergie, charges au rendez-vous"><div class="fbtn-num">4</div><div class="fbtn-lbl">Solide</div></button>';
-    h += '<button class="fbtn'+( entry.feeling==='5'?' active':'')+'" onclick="pickEditFeel(this)" data-feel="5" title="PR, surpassement, tout passe facilement"><div class="fbtn-num">5</div><div class="fbtn-lbl">En feu</div></button>';
-  h += '</div></div>';
   // Exercises
   (entry.exercises||[]).forEach((exo,ei)=>{
     const isTimedExo = exo.name.toLowerCase().includes('plank');
@@ -4680,16 +4537,9 @@ function startEdit(i, ev){
   document.getElementById('hd-'+i).classList.add('open');
 }
 
-function pickEditFeel(btn){
-  btn.closest('.frow').querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-}
-
 async function saveEdit(i){
   const entry = cachedHist[i];
   const dateVal = document.getElementById('edit-date-'+i).value;
-  const feelBtn = document.querySelector('#hd-edit-'+i+' .fbtn.active');
-  const feeling = feelBtn ? (feelBtn.dataset.feel||feelBtn.textContent.trim().charAt(0)) : entry.feeling;
   const note = document.getElementById('edit-note-'+i).value;
 
   const exercises = (entry.exercises||[]).map((exo,ei)=>({
@@ -4709,7 +4559,7 @@ async function saveEdit(i){
   const duration_sec = (dh||dm||ds2) ? dh*3600+dm*60+ds2 : null;
   const patch = {
     date: (()=>{ const existingDay = localDateKey(entry.date); return (dateVal === existingDay) ? entry.date : new Date(dateVal+'T12:00:00').toISOString(); })(),
-    feeling, note, exercises, hr_avg, hr_max, calories, duration_sec
+    note, exercises, hr_avg, hr_max, calories, duration_sec
   };
 
   const btn = document.querySelector('#hd-edit-'+i+' .savebtn');
@@ -5466,107 +5316,6 @@ function renderVeloScatterChart(acts){
   });
 }
 
-// ════ FEELING CHARTS ════
-
-const FL_LABELS = {1:'Épuisé',2:'Difficile',3:'Correct',4:'Solide',5:'En feu'};
-const FL_COLORS = {1:'#E85D5D',2:'#C89A62',3:'#7a8eb0',4:'#BF5E40',5:'#4D9ABF'};
-const FL_SPORT_COLOR = {muscu:'#4D9ABF', course:'#BF5E40', velo:'#C89A62', golf:'#4AAD8A'};
-const FL_SPORT_BORDER = {muscu:'rgba(77,154,191,0.15)', course:'rgba(52,211,153,0.15)', velo:'rgba(200,154,98,0.15)'};
-
-function renderFeelingChart(canvasId, acts, sport){
-  const withFeeling = acts
-    .filter(a=>a.feeling && parseInt(a.feeling)>=1)
-    .sort((a,b)=>new Date(a.date)-new Date(b.date))
-    .slice(-40);
-  if(!withFeeling.length){ return; }
-
-  const labels = withFeeling.map(a=>{
-    const d=new Date(a.date);
-    return d.getDate()+'/'+(d.getMonth()+1);
-  });
-  const data    = withFeeling.map(a=>parseInt(a.feeling));
-  const ptColor = data.map(f=>FL_COLORS[f]||'#7a8eb0');
-  const lineCol = FL_SPORT_COLOR[sport]||'#4D9ABF';
-
-  _mkChart(canvasId,{
-    type:'line',
-    data:{ labels, datasets:[{
-      data,
-      borderColor: lineCol,
-      backgroundColor: FL_SPORT_BORDER[sport]||'rgba(77,154,191,0.08)',
-      borderWidth:2, tension:0.35, fill:true,
-      pointBackgroundColor: ptColor,
-      pointBorderColor: ptColor,
-      pointRadius:6, pointHoverRadius:8,
-    }]},
-    options:{ responsive:true, maintainAspectRatio:false,
-      plugins:{
-        legend:{display:false},
-        tooltip:{ callbacks:{
-          title: ctx=>{ const a=withFeeling[ctx[0].dataIndex]; const d=new Date(a.date); return (a.session_label||a.label||sport)+' · '+d.getDate()+'/'+(d.getMonth()+1); },
-          label: ctx=>FL_LABELS[ctx.raw]+' ('+ctx.raw+'/5)'
-        }, backgroundColor:CJ_TT_BG(), titleColor:CJ_TT_TIT(), bodyColor:CJ_TT_BOD(), borderColor:CJ_TT_BOR(), borderWidth:1 }
-      },
-      scales:{
-        x:{ grid:{color:CJ_GRID()}, ticks:{color:CJ_TICK(),font:{size:10},maxRotation:45,autoSkip:true,maxTicksLimit:10} },
-        y:{ min:0.5, max:5.5, grid:{color:CJ_GRID()}, ticks:{color:CJ_TT_BOD(),font:{size:10},stepSize:1,callback:v=>FL_LABELS[v]||''} }
-      }
-    }
-  });
-}
-
-// ════ HOME FEELING CHART (combiné) ════
-let _homeFeelingActs = [];
-let _homeFeelingFilter = 'all';
-
-function setHomeFeelingFilter(sport, btn){
-  _homeFeelingFilter = sport;
-  document.querySelectorAll('#home-feeling-filters .subnav-item').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  _renderHomeFeelingChart();
-}
-
-function _renderHomeFeelingChart(){
-  const all = _homeFeelingActs;
-  const filtered = _homeFeelingFilter==='all' ? all : all.filter(a=>a.type===_homeFeelingFilter);
-  const withFeeling = filtered
-    .filter(a=>a.feeling && parseInt(a.feeling)>=1)
-    .sort((a,b)=>new Date(a.date)-new Date(b.date))
-    .slice(-50);
-  if(!withFeeling.length){ return; }
-
-  const labels   = withFeeling.map(a=>{ const d=new Date(a.date); return d.getDate()+'/'+(d.getMonth()+1); });
-  const data     = withFeeling.map(a=>parseInt(a.feeling));
-  const ptColor  = withFeeling.map(a=>FL_SPORT_COLOR[a.type]||'#7a8eb0');
-  const ptBorder = ptColor;
-
-  _mkChart('home-feeling-chart',{
-    type:'line',
-    data:{ labels, datasets:[{
-      data,
-      borderColor:document.documentElement.classList.contains('light')?'rgba(0,0,0,0.12)':'rgba(255,255,255,0.15)',
-      backgroundColor:'transparent',
-      borderWidth:1.5, tension:0.35, fill:false,
-      pointBackgroundColor: ptColor,
-      pointBorderColor: ptBorder,
-      pointRadius:6, pointHoverRadius:8,
-    }]},
-    options:{ responsive:true, maintainAspectRatio:false,
-      plugins:{
-        legend:{display:false},
-        tooltip:{ callbacks:{
-          title: ctx=>{ const a=withFeeling[ctx[0].dataIndex]; const d=new Date(a.date); const sportLbl={muscu:'💪',course:'🏃',velo:'🚴'}[a.type]||''; return sportLbl+' '+(a.session_label||a.label||a.type)+' · '+d.getDate()+'/'+(d.getMonth()+1); },
-          label: ctx=>FL_LABELS[ctx.raw]+' ('+ctx.raw+'/5)'
-        }, backgroundColor:CJ_TT_BG(), titleColor:CJ_TT_TIT(), bodyColor:CJ_TT_BOD(), borderColor:CJ_TT_BOR(), borderWidth:1 }
-      },
-      scales:{
-        x:{ grid:{color:CJ_GRID()}, ticks:{color:CJ_TICK(),font:{size:10},maxRotation:45,autoSkip:true,maxTicksLimit:10} },
-        y:{ min:0.5, max:5.5, grid:{color:CJ_GRID()}, ticks:{color:CJ_TT_BOD(),font:{size:10},stepSize:1,callback:v=>FL_LABELS[v]||''} }
-      }
-    }
-  });
-}
-
 // ════ HOOK INTO EXISTING FLOW ════
 
 // Patch showSportTab to trigger chart rendering for course + velo
@@ -5578,21 +5327,18 @@ showSportTab = function(sport, tab, btn){
       renderCoursePaceChart(acts);
       renderCourseKmChart(acts);
       renderCourseScatterChart(acts);
-      renderFeelingChart('course-feeling-chart', acts, 'course');
     });
   } else if(sport==='velo' && tab==='charts'){
     dbLoad('velo').then(acts=>{
       renderVeloSpeedChart(acts);
       renderVeloKmChart(acts);
       renderVeloScatterChart(acts);
-      renderFeelingChart('velo-feeling-chart', acts, 'velo');
     });
   } else if(sport==='golf' && tab==='charts'){
     dbLoad('golf').then(acts=>{
       renderGolfScoreChart(acts);
       renderGolfCourseChart(acts);
       renderGolfHolesChart(acts);
-      renderFeelingChart('golf-feeling-chart', acts, 'golf');
     });
   } else if(sport==='golf' && tab==='main'){
     renderActivities('golf');
@@ -5606,7 +5352,6 @@ showMuscu = function(tab, btn){
   if(tab==='charts'){
     dbLoad('muscu').then(acts=>{
       renderMuscuCharts(acts);
-      renderFeelingChart('muscu-feeling-chart', acts, 'muscu');
     });
   }
 };
